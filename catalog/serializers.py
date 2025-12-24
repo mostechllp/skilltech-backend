@@ -1,0 +1,69 @@
+from rest_framework import serializers
+from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
+
+class ProductFeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductFeature
+        fields = ['description']
+
+class ProductSpecificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductSpecification
+        fields = ['key', 'value']
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['image']
+
+class ProductSerializer(serializers.ModelSerializer):
+    features = ProductFeatureSerializer(many=True, read_only=True)
+    specifications = ProductSpecificationSerializer(many=True, read_only=True)
+    images = ProductImageSerializer(many=True, read_only=True)
+    subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
+    category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
+
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+class SubCategorySerializer(serializers.ModelSerializer):
+    category_slug = serializers.CharField(source='category.slug', read_only=True)
+    products_count = serializers.IntegerField(source='products.count', read_only=True)
+    
+    class Meta:
+        model = SubCategory
+        fields = '__all__'
+
+class CategorySerializer(serializers.ModelSerializer):
+    subcategories = SubCategorySerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+class HomepageBannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HomepageBanner
+        fields = '__all__'
+
+class OfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Offer
+        fields = '__all__'
+
+class ProductEnquirySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductEnquiry
+        fields = '__all__'
+        read_only_fields = ['product']
+
+class ContactEnquirySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactEnquiry
+        fields = '__all__'
+
+class ServiceBookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceBooking
+        fields = '__all__'

@@ -5,7 +5,6 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='categories/', blank=True, null=True)
-    icon = models.ImageField(upload_to='category_icons/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -23,7 +22,6 @@ class SubCategory(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -50,9 +48,18 @@ class Product(models.Model):
     
     video_url = models.URLField(blank=True, null=True)
     
-    features = models.JSONField(default=list, blank=True, help_text='List of features')
-    specifications = models.JSONField(default=dict, blank=True, help_text='Key-Value pairs for specs')
     tags = models.JSONField(default=list, blank=True, help_text='List of tags')
+
+    # New fields
+    datasheet = models.FileField(upload_to='products/datasheets/', blank=True, null=True)
+    
+    # CBM Calculator Fields
+    units_per_carton = models.IntegerField(default=1, help_text='Units per Carton')
+    carton_length_cm = models.FloatField(default=0, help_text='Carton Length in cm')
+    carton_width_cm = models.FloatField(default=0, help_text='Carton Width in cm')
+    carton_height_cm = models.FloatField(default=0, help_text='Carton Height in cm')
+    gross_weight_per_carton_kg = models.FloatField(default=0, help_text='Gross Weight per Carton in Kg')
+    net_weight_per_carton_kg = models.FloatField(default=0, help_text='Net Weight per Carton in Kg')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -65,9 +72,102 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+class ProductFeature(models.Model):
+    product = models.ForeignKey(Product, related_name='features', on_delete=models.CASCADE)
+    description = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.description
+
+class ProductSpecification(models.Model):
+    product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
+    key = models.CharField(max_length=100)
+    value = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.key}: {self.value}'
+
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/gallery/')
     
     def __str__(self):
         return f'Image for {self.product.name}'
+
+class HomepageBanner(models.Model):
+    title = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+    button_text = models.CharField(max_length=50, default='Explore')
+    button_link = models.CharField(max_length=200, default='/')
+    image = models.ImageField(upload_to='banners/')
+    active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+class Offer(models.Model):
+    title = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=100, blank=True, help_text='e.g. New Arrival, Trending, Hot Pick')
+    image = models.ImageField(upload_to='offers/')
+    button_text = models.CharField(max_length=50, default='Explore')
+    button_link = models.CharField(max_length=200, default='/')
+    active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+class ProductEnquiry(models.Model):
+    product = models.ForeignKey(Product, related_name='enquiries', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Enquiry from {self.name} for {self.product.name}'
+
+class ContactEnquiry(models.Model):
+    name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    address = models.TextField(blank=True, null=True)
+    comments = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'Contact Enquiries'
+
+    def __str__(self):
+        return f'Contact from {self.name} - {self.company}'
+
+class ServiceBooking(models.Model):
+    INSTALLATION_TYPES = [
+        ('normal', 'Normal Installation'),
+        ('motorized', 'Motorized Bracket Installation'),
+        ('wall_mount', 'Wall Mounting'),
+        ('concealed', 'Concealed Wiring Setup'),
+    ]
+    
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    installation_type = models.CharField(max_length=50, choices=INSTALLATION_TYPES)
+    tv_size = models.CharField(max_length=50)
+    bracket = models.BooleanField(default=False)
+    date = models.DateField()
+    time = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Service Booking from {self.name} on {self.date}'
