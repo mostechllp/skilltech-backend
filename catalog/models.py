@@ -141,6 +141,7 @@ class ContactEnquiry(models.Model):
     company = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
+    subject = models.CharField(max_length=200, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -171,3 +172,156 @@ class ServiceBooking(models.Model):
 
     def __str__(self):
         return f'Service Booking from {self.name} on {self.date}'
+
+class Client(models.Model):
+
+    name = models.CharField(max_length=100)
+
+    image = models.ImageField(upload_to='clients/')
+
+    order = models.IntegerField(default=0)
+
+    active = models.BooleanField(default=True)
+
+
+
+    class Meta:
+
+        ordering = ['order']
+
+
+
+    def __str__(self):
+
+        return self.name
+
+
+
+class Catalogue(models.Model):
+
+    title = models.CharField(max_length=100)
+
+    thumbnail = models.ImageField(upload_to='catalogues/thumbnails/')
+
+    file = models.FileField(upload_to='catalogues/files/')
+
+    order = models.IntegerField(default=0)
+
+    active = models.BooleanField(default=True)
+
+
+
+    class Meta:
+
+        ordering = ['order']
+
+
+
+    def __str__(self):
+
+        return self.title
+
+
+
+class Certificate(models.Model):
+
+
+
+    title = models.CharField(max_length=100)
+
+
+
+    thumbnail = models.ImageField(upload_to='certificates/thumbnails/')
+
+
+
+    file = models.FileField(upload_to='certificates/files/')
+
+
+
+    order = models.IntegerField(default=0)
+
+
+
+    active = models.BooleanField(default=True)
+
+
+
+
+
+
+
+    class Meta:
+
+
+
+        ordering = ['order']
+
+
+
+
+
+
+
+    def __str__(self):
+
+
+
+        return self.title
+
+
+
+
+
+
+
+class Gallery(models.Model):
+    category = models.ForeignKey(Category, related_name='gallery_images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='gallery/')
+    title = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'Gallery'
+
+    def __str__(self):
+        return f'Gallery image for {self.category.name}'
+
+class PageBanner(models.Model):
+    PAGE_CHOICES = [
+        ('gallery', 'Gallery'),
+        ('career', 'Career'),
+        ('blog', 'Blog'),
+    ]
+    page = models.CharField(max_length=50, choices=PAGE_CHOICES, unique=True)
+    heading = models.CharField(max_length=100)
+    subheading = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='page_banners/')
+    
+    def __str__(self):
+        return f'Banner for {self.get_page_display()}'
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    image = models.ImageField(upload_to='blog/')
+    content = models.TextField()
+    short_description = models.TextField(blank=True, help_text="Summary displayed on the list page")
+    created_at = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+
+
+
+

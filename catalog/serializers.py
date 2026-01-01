@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
+from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost
 
 class ProductFeatureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,3 +67,257 @@ class ServiceBookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceBooking
         fields = '__all__'
+
+class ClientSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Client
+
+        fields = '__all__'
+
+
+
+class CatalogueSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Catalogue
+
+        fields = '__all__'
+
+
+
+class CertificateSerializer(serializers.ModelSerializer):
+
+
+
+    class Meta:
+
+
+
+        model = Certificate
+
+
+
+        fields = '__all__'
+
+
+
+
+
+
+
+class GallerySerializer(serializers.ModelSerializer):
+
+
+
+
+
+
+
+    category_slug = serializers.CharField(source='category.slug', read_only=True)
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    class Meta:
+
+
+
+
+
+
+
+        model = Gallery
+
+
+
+
+
+
+
+        fields = '__all__'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class PageBannerSerializer(serializers.ModelSerializer):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    class Meta:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        model = PageBanner
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        fields = '__all__'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class BlogPostSerializer(serializers.ModelSerializer):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    class Meta:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        model = BlogPost
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        fields = '__all__'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
