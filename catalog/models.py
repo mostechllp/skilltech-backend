@@ -46,7 +46,8 @@ class Product(models.Model):
     main_image = models.ImageField(upload_to='products/main/')
     drawing_image = models.ImageField(upload_to='products/drawings/', blank=True, null=True)
     
-    video_url = models.URLField(blank=True, null=True)
+    video_url = models.URLField(blank=True, null=True, help_text='Installation Video URL')
+    product_video_url = models.URLField(blank=True, null=True, help_text='Product Video URL')
     
     tags = models.JSONField(default=list, blank=True, help_text='List of tags')
 
