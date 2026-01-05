@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost
+from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage
 
 class ProductFeatureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -294,30 +294,20 @@ class BlogPostSerializer(serializers.ModelSerializer):
 
         fields = '__all__'
 
+class ProjectSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Project
+
+        fields = '__all__'
 
 
 
+class SEOPageSerializer(serializers.ModelSerializer):
 
+    class Meta:
 
+        model = SEOPage
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        fields = '__all__'

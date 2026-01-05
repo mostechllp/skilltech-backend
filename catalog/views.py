@@ -1,6 +1,6 @@
 from rest_framework import viewsets, status, mixins
-from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost
-from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer
+from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage
+from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -8,6 +8,22 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     lookup_field = 'slug'
+
+    def get_queryset(self):
+        queryset = Category.objects.all()
+        show_in_home = self.request.query_params.get('show_in_home')
+        if show_in_home is not None:
+            queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')
+        
+        show_in_explore_home = self.request.query_params.get('show_in_explore_home')
+        if show_in_explore_home is not None:
+            queryset = queryset.filter(show_in_explore_home=show_in_explore_home.lower() == 'true')
+
+        show_in_footer = self.request.query_params.get('show_in_footer')
+        if show_in_footer is not None:
+            queryset = queryset.filter(show_in_footer=show_in_footer.lower() == 'true')
+            
+        return queryset
 
 class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = SubCategory.objects.all()
@@ -31,6 +47,11 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         subcategory_slug = self.request.query_params.get('subcategory_slug')
         if subcategory_slug:
             queryset = queryset.filter(subcategory__slug=subcategory_slug)
+            
+        show_in_home = self.request.query_params.get('show_in_home')
+        if show_in_home is not None:
+             queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')
+             
         return queryset
     
     @action(detail=True, methods=['post'])
@@ -307,6 +328,15 @@ class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
 
 
     lookup_field = 'slug'
+
+class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Project.objects.filter(active=True).order_by('order')
+    serializer_class = ProjectSerializer
+
+class SEOPageViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = SEOPage.objects.all()
+    serializer_class = SEOPageSerializer
+    lookup_field = 'page'
 
 
 

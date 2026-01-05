@@ -5,6 +5,9 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='categories/', blank=True, null=True)
+    show_in_home=models.BooleanField(default=False)
+    show_in_explore_home=models.BooleanField(default=False)
+    show_in_footer=models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -53,6 +56,7 @@ class Product(models.Model):
 
     # New fields
     datasheet = models.FileField(upload_to='products/datasheets/', blank=True, null=True)
+    show_in_home = models.BooleanField(default=False)
     
     # CBM Calculator Fields
     units_per_carton = models.IntegerField(default=1, help_text='Units per Carton')
@@ -323,6 +327,68 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title
 
+class Project(models.Model):
+
+    title = models.CharField(max_length=100)
+
+    subtitle = models.CharField(max_length=100, blank=True)
+
+    location = models.CharField(max_length=100, blank=True)
+
+    image = models.ImageField(upload_to='projects/')
+
+    order = models.IntegerField(default=0)
+
+    active = models.BooleanField(default=True)
 
 
 
+    class Meta:
+
+        ordering = ['order']
+
+
+
+    def __str__(self):
+
+        return self.title
+
+
+
+class SEOPage(models.Model):
+
+    PAGE_CHOICES = [
+
+        ('home', 'Home'),
+
+        ('about', 'About Us'),
+
+        ('services', 'Services'),
+
+        ('support', 'Support'),
+
+        ('gallery', 'Gallery'),
+
+        ('career', 'Career'),
+
+        ('blog', 'Blog'),
+
+        ('contact', 'Contact'),
+
+    ]
+
+    page = models.CharField(max_length=50, choices=PAGE_CHOICES, unique=True)
+
+    meta_title = models.CharField(max_length=200, blank=True)
+
+    meta_description = models.TextField(blank=True)
+
+    meta_image = models.ImageField(upload_to='seo/', blank=True, null=True)
+
+    meta_keywords = models.TextField(blank=True, help_text="Comma separated keywords")
+
+
+
+    def __str__(self):
+
+        return self.get_page_display()

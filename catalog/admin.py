@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost
+from .models import Category, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -97,3 +97,7 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_filter = ('active', 'created_at')
     search_fields = ('title', 'content')
     prepopulated_fields = {'slug': ('title',)}
+    
+@admin.register(SEOPage)
+class SEOAdmin(admin.ModelAdmin):
+    list_display = ("page","meta_title","meta_description","meta_image","meta_keywords")
