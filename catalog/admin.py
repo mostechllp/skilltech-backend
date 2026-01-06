@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage
+from .models import Category, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -99,5 +99,40 @@ class BlogPostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     
 @admin.register(SEOPage)
+    
 class SEOAdmin(admin.ModelAdmin):
+    
     list_display = ("page","meta_title","meta_description","meta_image","meta_keywords")
+    
+
+    
+@admin.register(SiteSettings)
+    
+
+    
+class SiteSettingsAdmin(admin.ModelAdmin):
+    
+
+    
+    list_display = ('email', 'phone', 'phone_number2', 'no_follow')
+    
+
+    
+
+    
+
+    
+    def has_add_permission(self, request):
+    
+
+    
+
+    
+        # Limit to only one instance
+    
+        if self.model.objects.exists():
+    
+            return False
+    
+        return super().has_add_permission(request)
+    

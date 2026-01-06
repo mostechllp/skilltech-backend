@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
-from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet
+from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
@@ -21,6 +21,7 @@ router.register(r'page-banners', PageBannerViewSet)
 router.register(r'blogs', BlogPostViewSet)
 router.register(r'projects', ProjectViewSet)
 router.register(r'seo', SEOPageViewSet)
+router.register(r'settings', SiteSettingsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

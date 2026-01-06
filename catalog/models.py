@@ -392,3 +392,25 @@ class SEOPage(models.Model):
     def __str__(self):
 
         return self.get_page_display()
+
+
+class SiteSettings(models.Model):
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    phone_number2 = models.CharField(max_length=20, blank=True, null=True)
+    facebook = models.URLField(blank=True, null=True)
+    linkedin = models.URLField(blank=True, null=True)
+    instagram = models.URLField(blank=True, null=True)
+    whatsapp = models.CharField(max_length=20, blank=True, null=True)
+    
+    no_follow = models.BooleanField(default=False, help_text="Add rel='nofollow' to social media links")
+
+    email_host = models.CharField(max_length=255)
+    email_host_user = models.CharField(max_length=255)
+    email_host_password = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name_plural = 'Site Settings'
+
+    def __str__(self):
+        return "Site Settings"

@@ -1,8 +1,9 @@
 from rest_framework import viewsets, status, mixins
-from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage
-from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer
+from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings
+from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.db.models import Q
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
@@ -51,6 +52,21 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
              queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')
+             
+        search_query = self.request.query_params.get('search')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) | 
+                Q(description__icontains=search_query) |
+                Q(title__icontains=search_query)
+            )
+
+        limit = self.request.query_params.get('limit')
+        if limit:
+            try:
+                queryset = queryset[:int(limit)]
+            except ValueError:
+                pass
              
         return queryset
     
@@ -337,6 +353,17 @@ class SEOPageViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = SEOPage.objects.all()
     serializer_class = SEOPageSerializer
     lookup_field = 'page'
+
+class SiteSettingsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = SiteSettings.objects.all()
+    serializer_class = SiteSettingsSerializer
+
+    def list(self, request, *args, **kwargs):
+        instance = self.get_queryset().first()
+        if instance:
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        return Response({})
 
 
 
