@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-change-me-in-production'
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'jazzmin',
