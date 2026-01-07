@@ -1,5 +1,44 @@
 from rest_framework import serializers
-from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings
+from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation
+
+class InstallationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InstallationType
+        fields = ['id', 'name']
+
+class TVSizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TVSize
+        fields = ['id', 'size']
+
+class AvailableTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AvailableTime
+        fields = ['id', 'time_slot']
+
+class ServiceSerializer(serializers.ModelSerializer):
+    installation_types = InstallationTypeSerializer(many=True, read_only=True)
+    tv_sizes = TVSizeSerializer(many=True, read_only=True)
+    available_times = AvailableTimeSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Service
+        fields = '__all__'
+
+class CareerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Career
+        fields = '__all__'
+
+class CareerApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CareerApplication
+        fields = '__all__'
+
+class GlobalLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GlobalLocation
+        fields = '__all__'
 
 class ProductFeatureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -260,7 +299,103 @@ class BlogPostSerializer(serializers.ModelSerializer):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    tags = serializers.SerializerMethodField()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     class Meta:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -292,7 +427,245 @@ class BlogPostSerializer(serializers.ModelSerializer):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         fields = '__all__'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def get_tags(self, obj):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if not obj.tags:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return [tag.strip() for tag in obj.tags.split(',') if tag.strip()]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ProjectSerializer(serializers.ModelSerializer):
 

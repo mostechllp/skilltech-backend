@@ -158,17 +158,10 @@ class ContactEnquiry(models.Model):
         return f'Contact from {self.name} - {self.company}'
 
 class ServiceBooking(models.Model):
-    INSTALLATION_TYPES = [
-        ('normal', 'Normal Installation'),
-        ('motorized', 'Motorized Bracket Installation'),
-        ('wall_mount', 'Wall Mounting'),
-        ('concealed', 'Concealed Wiring Setup'),
-    ]
-    
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
-    installation_type = models.CharField(max_length=50, choices=INSTALLATION_TYPES)
+    installation_type = models.CharField(max_length=100)
     tv_size = models.CharField(max_length=50)
     bracket = models.BooleanField(default=False)
     date = models.DateField()
@@ -299,9 +292,11 @@ class PageBanner(models.Model):
         ('blog', 'Blog'),
     ]
     page = models.CharField(max_length=50, choices=PAGE_CHOICES, unique=True)
-    heading = models.CharField(max_length=100)
-    subheading = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
+    button_text = models.CharField(max_length=50, blank=True, default='Explore')
+    button_link = models.CharField(max_length=200, blank=True, default='/')
     image = models.ImageField(upload_to='page_banners/')
     
     def __str__(self):
@@ -313,6 +308,8 @@ class BlogPost(models.Model):
     image = models.ImageField(upload_to='blog/')
     content = models.TextField()
     short_description = models.TextField(blank=True, help_text="Summary displayed on the list page")
+    tags = models.TextField(blank=True, help_text="Comma separated tags, e.g. Tech, News, Update")
+    author = models.CharField(max_length=100, default="Admin")
     created_at = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 
@@ -403,6 +400,10 @@ class SiteSettings(models.Model):
     instagram = models.URLField(blank=True, null=True)
     whatsapp = models.CharField(max_length=20, blank=True, null=True)
     
+    address_heading = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
+    address = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")
+    google_map_link = models.URLField(blank=True, null=True, help_text="Google Maps Location URL")
+
     no_follow = models.BooleanField(default=False, help_text="Add rel='nofollow' to social media links")
 
     email_host = models.CharField(max_length=255)
@@ -414,3 +415,82 @@ class SiteSettings(models.Model):
 
     def __str__(self):
         return "Site Settings"
+
+
+class Service(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+class InstallationType(models.Model):
+    service = models.ForeignKey(Service, related_name='installation_types', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class TVSize(models.Model):
+    service = models.ForeignKey(Service, related_name='tv_sizes', on_delete=models.CASCADE)
+    size = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.size
+
+class AvailableTime(models.Model):
+    service = models.ForeignKey(Service, related_name='available_times', on_delete=models.CASCADE)
+    time_slot = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.time_slot
+
+
+
+class Career(models.Model):
+    position = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True)
+    experience = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    description = models.TextField()
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.position)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.position
+
+class CareerApplication(models.Model):
+    career = models.ForeignKey(Career, related_name='applications', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    cv = models.FileField(upload_to='career_cvs/')
+    cover_letter = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.career.position}"
+
+
+
+class GlobalLocation(models.Model):
+    country = models.CharField(max_length=100)
+    address = models.TextField()
+    email = models.EmailField()
+    map_iframe = models.TextField(help_text='Paste the full iframe code from Google Maps (Share -> Embed a map)')
+    map_link = models.URLField(help_text='Google Maps Link (for Get Directions button)')
+    active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.country
+

@@ -1,5 +1,44 @@
 from django.contrib import admin
-from .models import Category, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings
+from .models import Category, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation
+
+class InstallationTypeInline(admin.TabularInline):
+    model = InstallationType
+    extra = 1
+
+class TVSizeInline(admin.TabularInline):
+    model = TVSize
+    extra = 1
+
+class AvailableTimeInline(admin.TabularInline):
+    model = AvailableTime
+    extra = 1
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'active')
+    search_fields = ('name', 'description')
+    inlines = [InstallationTypeInline, TVSizeInline, AvailableTimeInline]
+
+@admin.register(Career)
+class CareerAdmin(admin.ModelAdmin):
+    list_display = ('position', 'location', 'experience', 'active', 'created_at')
+    list_filter = ('active', 'created_at')
+    search_fields = ('position', 'location', 'description')
+    prepopulated_fields = {'slug': ('position',)}
+
+@admin.register(CareerApplication)
+class CareerApplicationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'phone', 'career', 'created_at')
+    list_filter = ('career', 'created_at')
+    search_fields = ('name', 'email', 'phone', 'cover_letter')
+    readonly_fields = ('created_at',)
+
+@admin.register(GlobalLocation)
+class GlobalLocationAdmin(admin.ModelAdmin):
+    list_display = ('country', 'email', 'active', 'order')
+    list_editable = ('active', 'order')
+    search_fields = ('country', 'address')
+    fields = ('country', 'address', 'email', 'map_iframe', 'map_link', 'active', 'order')
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -36,11 +75,13 @@ class ProductAdmin(admin.ModelAdmin):
 class HomepageBannerAdmin(admin.ModelAdmin):
     list_display = ('title', 'active', 'order')
     list_editable = ('active', 'order')
+    fields = ('subtitle', 'title', 'description', 'button_text', 'button_link', 'image', 'active', 'order')
 
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
     list_display = ('title', 'subtitle', 'active', 'order')
     list_editable = ('active', 'order')
+    fields=('subtitle','title','image','button_text','button_link','active','order')
 
 @admin.register(ProductEnquiry)
 class ProductEnquiryAdmin(admin.ModelAdmin):
@@ -88,8 +129,9 @@ class GalleryAdmin(admin.ModelAdmin):
 
 @admin.register(PageBanner)
 class PageBannerAdmin(admin.ModelAdmin):
-    list_display = ('page', 'heading')
-    search_fields = ('page', 'heading')
+    list_display = ('page', 'title')
+    search_fields = ('page', 'title')
+    fields = ('page', 'subtitle', 'title', 'description', 'button_text', 'button_link', 'image')
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):

@@ -1,6 +1,6 @@
 from rest_framework import viewsets, status, mixins
-from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings
-from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
+from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, Career, CareerApplication, GlobalLocation
+from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
@@ -391,4 +391,27 @@ class SiteSettingsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
+
+
+
+class ServiceViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Service.objects.filter(active=True)
+    serializer_class = ServiceSerializer
+
+
+
+class CareerViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Career.objects.filter(active=True).order_by('-created_at')
+    serializer_class = CareerSerializer
+    lookup_field = 'slug'
+
+class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    queryset = CareerApplication.objects.all()
+    serializer_class = CareerApplicationSerializer
+
+
+
+class GlobalLocationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = GlobalLocation.objects.filter(active=True).order_by('order')
+    serializer_class = GlobalLocationSerializer
 
