@@ -54,19 +54,22 @@ class ProductSpecificationInline(admin.TabularInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
+    list_display = ('name', 'slug', 'active')
+    list_editable = ('active',)
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'slug')
-    list_filter = ('category',)
+    list_display = ('name', 'category', 'slug', 'active')
+    list_editable = ('active',)
+    list_filter = ('category', 'active')
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'title', 'subcategory', 'slug')
-    list_filter = ('subcategory', 'subcategory__category')
+    list_display = ('name', 'title', 'subcategory', 'slug', 'active')
+    list_editable = ('active',)
+    list_filter = ('subcategory', 'subcategory__category', 'active')
     search_fields = ('name', 'title', 'description')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductFeatureInline, ProductSpecificationInline, ProductImageInline]
@@ -156,7 +159,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     
 
     
-    list_display = ('email', 'phone', 'phone_number2', 'no_follow')
+    list_display = ('email', 'phone', 'phone_number2', 'demo')
     
 
     

@@ -6,12 +6,12 @@ from rest_framework.response import Response
 from django.db.models import Q
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.filter(active=True)
     serializer_class = CategorySerializer
     lookup_field = 'slug'
 
     def get_queryset(self):
-        queryset = Category.objects.all()
+        queryset = Category.objects.filter(active=True)
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
             queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')
@@ -27,24 +27,24 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = SubCategory.objects.all()
+    queryset = SubCategory.objects.filter(active=True, category__active=True)
     serializer_class = SubCategorySerializer
     lookup_field = 'slug'
     
     def get_queryset(self):
-        queryset = SubCategory.objects.all()
+        queryset = SubCategory.objects.filter(active=True, category__active=True)
         category_slug = self.request.query_params.get('category_slug')
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
         return queryset
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True)
     serializer_class = ProductSerializer
     lookup_field = 'slug'
 
     def get_queryset(self):
-        queryset = Product.objects.all()
+        queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True)
         subcategory_slug = self.request.query_params.get('subcategory_slug')
         if subcategory_slug:
             queryset = queryset.filter(subcategory__slug=subcategory_slug)

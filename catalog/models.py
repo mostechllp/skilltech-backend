@@ -8,6 +8,7 @@ class Category(models.Model):
     show_in_home=models.BooleanField(default=False)
     show_in_explore_home=models.BooleanField(default=False)
     show_in_footer=models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -25,6 +26,7 @@ class SubCategory(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True, null=True)
+    active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -66,6 +68,7 @@ class Product(models.Model):
     gross_weight_per_carton_kg = models.FloatField(default=0, help_text='Gross Weight per Carton in Kg')
     net_weight_per_carton_kg = models.FloatField(default=0, help_text='Net Weight per Carton in Kg')
 
+    active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -404,7 +407,7 @@ class SiteSettings(models.Model):
     address = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")
     google_map_link = models.URLField(blank=True, null=True, help_text="Google Maps Location URL")
 
-    no_follow = models.BooleanField(default=False, help_text="Add rel='nofollow' to social media links")
+    demo = models.BooleanField(default=False, help_text="If checked, adds 'noindex' to meta tags")
 
     email_host = models.CharField(max_length=255)
     email_host_user = models.CharField(max_length=255)
