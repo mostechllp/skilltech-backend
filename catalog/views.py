@@ -699,9 +699,19 @@ def generate_captcha(request):
     draw = ImageDraw.Draw(img)
 
     try:
-        # Try to load a standard font. On Linux/Docker, paths might differ.
-        # This is a basic fallback mechanism.
-        font = ImageFont.truetype("arial.ttf", 40)
+        # Try to load a custom font from static files
+        import os
+        font_path = os.path.join(settings.BASE_DIR, 'static', 'fonts', 'captcha.ttf')
+        
+        if os.path.exists(font_path):
+            font = ImageFont.truetype(font_path, 40)
+        else:
+            # Fallback to system fonts if custom font is missing
+            try:
+                # Common linux paths
+                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 40)
+            except:
+                font = ImageFont.truetype("arial.ttf", 40)
     except:
         font = ImageFont.load_default()
 
