@@ -1,17 +1,36 @@
 from rest_framework import viewsets, status, mixins
+import logging
+
+logger = logging.getLogger(__name__)
+
 from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, Career, CareerApplication, GlobalLocation
 from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
+from django.core.mail import send_mail, get_connection
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from rest_framework.pagination import PageNumberPagination
+import random, string, json
+from io import BytesIO
+from django.http import HttpResponse, JsonResponse
+from PIL import Image, ImageDraw, ImageFont
+from django.views.decorators.csrf import csrf_exempt
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 32
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.filter(active=True)
+    queryset = Category.objects.filter(active=True).order_by('name')
     serializer_class = CategorySerializer
     lookup_field = 'slug'
 
     def get_queryset(self):
-        queryset = Category.objects.filter(active=True)
+        queryset = Category.objects.filter(active=True).order_by('name')
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
             queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')
@@ -27,24 +46,25 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = SubCategory.objects.filter(active=True, category__active=True)
+    queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('name')
     serializer_class = SubCategorySerializer
     lookup_field = 'slug'
     
     def get_queryset(self):
-        queryset = SubCategory.objects.filter(active=True, category__active=True)
+        queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('name')
         category_slug = self.request.query_params.get('category_slug')
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
         return queryset
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True)
+    queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).order_by('name')
     serializer_class = ProductSerializer
     lookup_field = 'slug'
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True)
+        queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).order_by('name')
         subcategory_slug = self.request.query_params.get('subcategory_slug')
         if subcategory_slug:
             queryset = queryset.filter(subcategory__slug=subcategory_slug)
@@ -75,7 +95,52 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         product = self.get_object()
         serializer = ProductEnquirySerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(product=product)
+            instance = serializer.save(product=product)
+            
+            # Send email to admin
+            try:
+                site_settings = SiteSettings.objects.first()
+                if site_settings and site_settings.email_host and site_settings.admin_email:
+                    connection = get_connection(
+                        host=site_settings.email_host,
+                        port=settings.EMAIL_PORT,
+                        username=site_settings.email_host_user,
+                        password=site_settings.email_host_password,
+                        use_tls=settings.EMAIL_USE_TLS
+                    )
+                    
+                    subject = f"Product Enquiry: {product.name} - from {instance.name}"
+                    
+                    context = {
+                        'name': instance.name,
+                        'email': instance.email,
+                        'phone': instance.phone,
+                        'message': instance.message,
+                        'product_name': product.name,
+                        'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                    }
+                    
+                    html_message = render_to_string('emails/product_enquiry.html', context)
+                    plain_message = strip_tags(html_message)
+                    
+                    from django.core.mail import EmailMultiAlternatives
+
+                    # Split admin emails by comma and strip whitespace
+                    admin_emails = [email.strip() for email in site_settings.admin_email.split(',') if email.strip()]
+                    
+                    msg = EmailMultiAlternatives(
+                        subject,
+                        plain_message,
+                        site_settings.email_host_user, # From email
+                        admin_emails, # To email list
+                        connection=connection
+                    )
+                    msg.attach_alternative(html_message, "text/html")
+                    msg.send(fail_silently=False)
+                    
+            except Exception as e:
+                logger.error(f"Error sending product enquiry email: {e}")
+
             return Response({'status': 'Enquiry submitted successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -91,9 +156,139 @@ class ContactEnquiryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = ContactEnquiry.objects.all()
     serializer_class = ContactEnquirySerializer
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        
+        # Send email to admin
+        logger.info("Attempting to send email...")
+        try:
+            site_settings = SiteSettings.objects.first()
+            # logger.debug(f"Site Settings found: {site_settings}")
+            if site_settings:
+                 logger.info(f"Host: {site_settings.email_host}, User: {site_settings.email_host_user}, Admin Email: {site_settings.admin_email}")
+
+            if site_settings and site_settings.email_host and site_settings.admin_email:
+                logger.info("Configuring connection...")
+                connection = get_connection(
+                    host=site_settings.email_host,
+                    port=settings.EMAIL_PORT,
+                    username=site_settings.email_host_user,
+                    password=site_settings.email_host_password,
+                    use_tls=settings.EMAIL_USE_TLS
+                )
+                
+                subject = f"New Contact Enquiry from {instance.name}"
+                if instance.subject:
+                    subject += f": {instance.subject}"
+                
+                context = {
+                    'name': instance.name,
+                    'company': instance.company,
+                    'email': instance.email,
+                    'phone': instance.phone,
+                    'subject': instance.subject,
+                    'message': instance.comments,
+                    'address': instance.address,
+                    'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                }
+                
+                html_message = render_to_string('emails/contact_enquiry.html', context)
+                plain_message = strip_tags(html_message)
+                
+                from django.core.mail import EmailMultiAlternatives
+
+                # Split admin emails by comma and strip whitespace
+                admin_emails = [email.strip() for email in site_settings.admin_email.split(',') if email.strip()]
+                
+                msg = EmailMultiAlternatives(
+                    subject,
+                    plain_message,
+                    site_settings.email_host_user, # From email
+                    admin_emails, # To email list
+                    connection=connection
+                )
+                msg.attach_alternative(html_message, "text/html")
+                logger.info("Sending email to admin...")
+                msg.send(fail_silently=False)
+                logger.info("Email to admin sent successfully.")
+
+                # Send acknowledgment email to user
+                user_subject = "Thank you for contacting Skill Tech"
+                user_html_message = render_to_string('emails/contact_acknowledgement.html', context)
+                user_plain_message = strip_tags(user_html_message)
+                
+                user_msg = EmailMultiAlternatives(
+                    user_subject,
+                    user_plain_message,
+                    site_settings.email_host_user, # From email
+                    [instance.email], # To user's email
+                    connection=connection
+                )
+                user_msg.attach_alternative(user_html_message, "text/html")
+                logger.info("Sending acknowledgment email to user...")
+                user_msg.send(fail_silently=False)
+                logger.info("Acknowledgment email sent successfully.")
+
+            else:
+                logger.warning("Missing site settings or email configuration.")
+
+        except Exception as e:
+            logger.error(f"Error sending email: {e}")
+            # pass
+
 class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = ServiceBooking.objects.all()
     serializer_class = ServiceBookingSerializer
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        
+        # Send email to admin
+        try:
+            site_settings = SiteSettings.objects.first()
+            if site_settings and site_settings.email_host and site_settings.admin_email:
+                connection = get_connection(
+                    host=site_settings.email_host,
+                    port=settings.EMAIL_PORT,
+                    username=site_settings.email_host_user,
+                    password=site_settings.email_host_password,
+                    use_tls=settings.EMAIL_USE_TLS
+                )
+                
+                subject = f"New Service Booking: {instance.installation_type} - {instance.name}"
+                
+                context = {
+                    'name': instance.name,
+                    'email': instance.email,
+                    'phone': instance.phone,
+                    'installation_type': instance.installation_type,
+                    'tv_size': instance.tv_size,
+                    'bracket': instance.bracket,
+                    'date': instance.date,
+                    'time': instance.time,
+                    'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                }
+                
+                html_message = render_to_string('emails/service_booking.html', context)
+                plain_message = strip_tags(html_message)
+                
+                from django.core.mail import EmailMultiAlternatives
+
+                # Split admin emails by comma and strip whitespace
+                admin_emails = [email.strip() for email in site_settings.admin_email.split(',') if email.strip()]
+                
+                msg = EmailMultiAlternatives(
+                    subject,
+                    plain_message,
+                    site_settings.email_host_user, # From email
+                    admin_emails, # To email list
+                    connection=connection
+                )
+                msg.attach_alternative(html_message, "text/html")
+                msg.send(fail_silently=False)
+                
+        except Exception as e:
+            logger.error(f"Error sending service booking email: {e}")
 
 class ClientViewSet(viewsets.ReadOnlyModelViewSet):
 
@@ -409,9 +604,153 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
     queryset = CareerApplication.objects.all()
     serializer_class = CareerApplicationSerializer
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        
+        # Send email to admin
+        try:
+            site_settings = SiteSettings.objects.first()
+            if site_settings and site_settings.email_host and site_settings.admin_email:
+                connection = get_connection(
+                    host=site_settings.email_host,
+                    port=settings.EMAIL_PORT,
+                    username=site_settings.email_host_user,
+                    password=site_settings.email_host_password,
+                    use_tls=settings.EMAIL_USE_TLS
+                )
+                
+                subject = f"New Career Application: {instance.career.position} - {instance.name}"
+                
+                # Construct absolute URL for CV
+                if instance.cv:
+                    cv_url = settings.MEDIA_BASE_URL + instance.cv.url if hasattr(settings, 'MEDIA_BASE_URL') else instance.cv.url
+                else:
+                    cv_url = '#'
+
+                context = {
+                    'name': instance.name,
+                    'email': instance.email,
+                    'phone': instance.phone,
+                    'position': instance.career.position,
+                    'cover_letter': instance.cover_letter,
+                    'cv_url': cv_url,
+                    'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                }
+                
+                html_message = render_to_string('emails/career_application.html', context)
+                plain_message = strip_tags(html_message)
+                
+                from django.core.mail import EmailMultiAlternatives
+
+                # Split admin emails by comma and strip whitespace
+                admin_emails = [email.strip() for email in site_settings.admin_email.split(',') if email.strip()]
+                
+                msg = EmailMultiAlternatives(
+                    subject,
+                    plain_message,
+                    site_settings.email_host_user, # From email
+                    admin_emails, # To email list
+                    connection=connection
+                )
+                msg.attach_alternative(html_message, "text/html")
+                
+                # Optionally attach the CV file directly to the email
+                # if instance.cv:
+                #     msg.attach_file(instance.cv.path)
+
+                msg.send(fail_silently=False)
+                
+        except Exception as e:
+            logger.error(f"Error sending career application email: {e}")
+
 
 
 class GlobalLocationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = GlobalLocation.objects.filter(active=True).order_by('order')
     serializer_class = GlobalLocationSerializer
 
+class SitemapDataViewSet(viewsets.ViewSet):
+    def list(self, request):
+        products = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).select_related('subcategory__category').values(
+            'slug', 'updated_at', 'subcategory__slug', 'subcategory__category__slug'
+        )
+        categories = Category.objects.filter(active=True).values('slug')
+        subcategories = SubCategory.objects.filter(active=True, category__active=True).select_related('category').values('slug', 'category__slug')
+        blogs = BlogPost.objects.filter(active=True).values('slug', 'created_at')
+        careers = Career.objects.filter(active=True).values('slug', 'created_at')
+
+        return Response({
+            'products': list(products),
+            'categories': list(categories),
+            'subcategories': list(subcategories),
+            'blogs': list(blogs),
+            'careers': list(careers)
+        })
+
+def generate_captcha(request):
+    text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    request.session['captcha_text'] = text
+    request.session.modified = True
+    request.session.save() # Force save
+    
+    logger.debug(f"Generated Captcha: '{text}', Session ID: {request.session.session_key}")
+
+    img = Image.new("RGB", (200, 70), "white")
+    draw = ImageDraw.Draw(img)
+
+    try:
+        # Try to load a standard font. On Linux/Docker, paths might differ.
+        # This is a basic fallback mechanism.
+        font = ImageFont.truetype("arial.ttf", 40)
+    except:
+        font = ImageFont.load_default()
+
+    # Draw text with some offset
+    draw.text((40, 15), text, font=font, fill="black")
+    
+    # Add some noise lines
+    for _ in range(5):
+        x1 = random.randint(0, 200)
+        y1 = random.randint(0, 70)
+        x2 = random.randint(0, 200)
+        y2 = random.randint(0, 70)
+        draw.line([(x1, y1), (x2, y2)], fill="black", width=1)
+
+    buffer = BytesIO()
+    img.save(buffer, "PNG")
+    buffer.seek(0)
+
+    return HttpResponse(buffer, content_type="image/png")
+
+@csrf_exempt
+def validate_captcha(request):
+    try:
+        # Check if captcha is enabled globally
+        settings_obj = SiteSettings.objects.first()
+        if settings_obj and not settings_obj.enable_captcha:
+             return JsonResponse({"status": "ok"})
+    except:
+        pass
+
+    if request.method != "POST":
+        return JsonResponse({"status": "invalid"}, status=400)
+
+    try:
+        data = json.loads(request.body)
+        user_input = data.get("captcha")
+        # Ensure session is saved and accessible. 
+        # Note: Frontend must send credentials (cookies) for this to work.
+        real = request.session.get("captcha_text", "")
+        
+        # print(f"DEBUG: User Input: '{user_input}', Real Captcha: '{real}', Session ID: {request.session.session_key}")
+
+        if user_input and real and user_input.upper() == real:
+            return JsonResponse({"status": "ok"})
+        else:
+            # print("DEBUG: Validation Failed")
+            pass
+    except Exception as e:
+        # print(f"DEBUG: Exception in validate_captcha: {e}")
+        pass
+
+    return JsonResponse({"status": "fail"})

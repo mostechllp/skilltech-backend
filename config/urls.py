@@ -2,10 +2,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
-from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet
+from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, generate_captcha, validate_captcha
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Disallow: /admin/",
+        "Disallow: /static/",
+        "Disallow: /media/",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 router = DefaultRouter()
+# ... (rest of router registrations remains same)
 router.register(r'categories', CategoryViewSet)
 router.register(r'subcategories', SubCategoryViewSet)
 router.register(r'products', ProductViewSet)
@@ -26,10 +37,14 @@ router.register(r'services', ServiceViewSet)
 router.register(r'careers', CareerViewSet)
 router.register(r'career-applications', CareerApplicationViewSet)
 router.register(r'global-locations', GlobalLocationViewSet)
+router.register(r'sitemap-data', SitemapDataViewSet, basename='sitemap-data')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/captcha/', generate_captcha, name='captcha'),
+    path('api/validate-captcha/', validate_captcha, name='validate_captcha'),
     path('api/', include(router.urls)),
+    path('robots.txt', robots_txt),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Service Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #1a1a1a;
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+        }
+        .content {
+            padding: 30px;
+        }
+        .h2 {
+            color: #d10069; /* SkillTech Pink */
+            margin-top: 0;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .label {
+            font-weight: bold;
+            color: #555555;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .value {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #eeeeee;
+        }
+        .booking-details {
+            background-color: #e8f4fd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border-left: 5px solid #007bff;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ logo_url }}" alt="SkillTech Logo" style="color: #ffffff; font-size: 20px; font-weight: bold;">
+        </div>
+        <div class="content">
+            <h2 class="h2">New Service Booking</h2>
+            <p>You have received a new service booking request.</p>
+            
+            <div class="booking-details">
+                <strong>Installation Type:</strong> {{ installation_type }}<br>
+                <strong>TV Size:</strong> {{ tv_size }}<br>
+                <strong>Bracket Required:</strong> {% if bracket %}Yes{% else %}No{% endif %}
+            </div>
+
+            <div class="field">
+                <span class="label">Name:</span>
+                <div class="value">{{ name }}</div>
+            </div>
+
+            <div class="field">
+                <span class="label">Email:</span>
+                <div class="value"><a href="mailto:{{ email }}">{{ email }}</a></div>
+            </div>
+
+            <div class="field">
+                <span class="label">Phone:</span>
+                <div class="value"><a href="tel:{{ phone }}">{{ phone }}</a></div>
+            </div>
+            
+            <div class="field">
+                <span class="label">Requested Date:</span>
+                <div class="value">{{ date }}</div>
+            </div>
+
+            <div class="field">
+                <span class="label">Requested Time:</span>
+                <div class="value">{{ time }}</div>
+            </div>
+
+        </div>
+        <div class="footer">
+            <p>&copy; {% now "Y" %} Skill Tech. All rights reserved.</p>
+            <p>This email was sent automatically from your website service booking form.</p>
+        </div>
+    </div>
+</body>
+</html>

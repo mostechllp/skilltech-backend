@@ -4,7 +4,7 @@ from django.utils.text import slugify
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
-    image = models.ImageField(upload_to='categories/', blank=True, null=True)
+    image = models.ImageField(upload_to='categories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio). Transparent PNG preferred.")
     show_in_home=models.BooleanField(default=False)
     show_in_explore_home=models.BooleanField(default=False)
     show_in_footer=models.BooleanField(default=False)
@@ -25,7 +25,7 @@ class SubCategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
-    image = models.ImageField(upload_to='subcategories/', blank=True, null=True)
+    image = models.ImageField(upload_to='subcategories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio).")
     active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
@@ -48,8 +48,8 @@ class Product(models.Model):
     short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(help_text='Full product description')
     
-    main_image = models.ImageField(upload_to='products/main/')
-    drawing_image = models.ImageField(upload_to='products/drawings/', blank=True, null=True)
+    main_image = models.ImageField(upload_to='products/main/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio). Transparent PNG preferred for listing consistency.")
+    drawing_image = models.ImageField(upload_to='products/drawings/', blank=True, null=True, help_text="Recommended size: 1200x800px or similar (Landscape/Technical drawing).")
     
     video_url = models.URLField(blank=True, null=True, help_text='Installation Video URL')
     product_video_url = models.URLField(blank=True, null=True, help_text='Product Video URL')
@@ -97,7 +97,7 @@ class ProductSpecification(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='products/gallery/')
+    image = models.ImageField(upload_to='products/gallery/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio).")
     
     def __str__(self):
         return f'Image for {self.product.name}'
@@ -108,7 +108,7 @@ class HomepageBanner(models.Model):
     description = models.TextField(blank=True)
     button_text = models.CharField(max_length=50, default='Explore')
     button_link = models.CharField(max_length=200, default='/')
-    image = models.ImageField(upload_to='banners/')
+    image = models.ImageField(upload_to='banners/', help_text="Recommended size: 2000x2000px (1:1 aspect ratio) for square desktop rendering. Ensure focal point is centered.")
     active = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
 
@@ -121,7 +121,7 @@ class HomepageBanner(models.Model):
 class Offer(models.Model):
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100, blank=True, help_text='e.g. New Arrival, Trending, Hot Pick')
-    image = models.ImageField(upload_to='offers/')
+    image = models.ImageField(upload_to='offers/', help_text="Size depends on position. Big: 1200x1200px, Small: 800x600px, Wide: 1600x600px.")
     button_text = models.CharField(max_length=50, default='Explore')
     button_link = models.CharField(max_length=200, default='/')
     active = models.BooleanField(default=True)
@@ -178,7 +178,7 @@ class Client(models.Model):
 
     name = models.CharField(max_length=100)
 
-    image = models.ImageField(upload_to='clients/')
+    image = models.ImageField(upload_to='clients/', help_text="Recommended size: 400x200px (Landscape). Transparent PNG preferred.")
 
     order = models.IntegerField(default=0)
 
@@ -202,7 +202,7 @@ class Catalogue(models.Model):
 
     title = models.CharField(max_length=100)
 
-    thumbnail = models.ImageField(upload_to='catalogues/thumbnails/')
+    thumbnail = models.ImageField(upload_to='catalogues/thumbnails/', help_text="Recommended size: 600x800px (Portrait/Cover).")
 
     file = models.FileField(upload_to='catalogues/files/')
 
@@ -232,7 +232,7 @@ class Certificate(models.Model):
 
 
 
-    thumbnail = models.ImageField(upload_to='certificates/thumbnails/')
+    thumbnail = models.ImageField(upload_to='certificates/thumbnails/', help_text="Recommended size: 800x600px (Landscape).")
 
 
 
@@ -278,7 +278,7 @@ class Certificate(models.Model):
 
 class Gallery(models.Model):
     category = models.ForeignKey(Category, related_name='gallery_images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='gallery/')
+    image = models.ImageField(upload_to='gallery/', help_text="Recommended size: 1600x1200px (Landscape).")
     title = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -300,7 +300,7 @@ class PageBanner(models.Model):
     description = models.TextField(blank=True)
     button_text = models.CharField(max_length=50, blank=True, default='Explore')
     button_link = models.CharField(max_length=200, blank=True, default='/')
-    image = models.ImageField(upload_to='page_banners/')
+    image = models.ImageField(upload_to='page_banners/', help_text="Recommended size: 3200x1200px (Wide landscape).")
     
     def __str__(self):
         return f'Banner for {self.get_page_display()}'
@@ -308,7 +308,7 @@ class PageBanner(models.Model):
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
-    image = models.ImageField(upload_to='blog/')
+    image = models.ImageField(upload_to='blog/', help_text="Recommended size: 1600x1000px (Landscape).")
     content = models.TextField()
     short_description = models.TextField(blank=True, help_text="Summary displayed on the list page")
     tags = models.TextField(blank=True, help_text="Comma separated tags, e.g. Tech, News, Update")
@@ -335,7 +335,7 @@ class Project(models.Model):
 
     location = models.CharField(max_length=100, blank=True)
 
-    image = models.ImageField(upload_to='projects/')
+    image = models.ImageField(upload_to='projects/', help_text="Recommended size: 1200x800px (Landscape).")
 
     order = models.IntegerField(default=0)
 
@@ -383,7 +383,7 @@ class SEOPage(models.Model):
 
     meta_description = models.TextField(blank=True)
 
-    meta_image = models.ImageField(upload_to='seo/', blank=True, null=True)
+    meta_image = models.ImageField(upload_to='seo/', blank=True, null=True, help_text="Recommended size: 2400x1260px (Social media sharing).")
 
     meta_keywords = models.TextField(blank=True, help_text="Comma separated keywords")
 
@@ -412,6 +412,9 @@ class SiteSettings(models.Model):
     email_host = models.CharField(max_length=255)
     email_host_user = models.CharField(max_length=255)
     email_host_password = models.CharField(max_length=255)
+    admin_email = models.TextField(blank=True, null=True, help_text="Email address(es) to receive contact form submissions. Separate multiple emails with a comma (e.g. admin@example.com, support@example.com)")
+    
+    enable_captcha = models.BooleanField(default=True, help_text="Enable/Disable captcha verification for all forms")
 
     class Meta:
         verbose_name_plural = 'Site Settings'
