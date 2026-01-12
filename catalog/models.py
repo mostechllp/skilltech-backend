@@ -54,7 +54,7 @@ class Product(models.Model):
     video_url = models.URLField(blank=True, null=True, help_text='Installation Video URL')
     product_video_url = models.URLField(blank=True, null=True, help_text='Product Video URL')
     
-    tags = models.JSONField(default=list, blank=True, help_text='List of tags')
+    tags = models.TextField(blank=True, help_text='Comma separated tags, e.g. Tag1, Tag2')
 
     # New fields
     datasheet = models.FileField(upload_to='products/datasheets/', blank=True, null=True)
@@ -82,7 +82,7 @@ class Product(models.Model):
 
 class ProductFeature(models.Model):
     product = models.ForeignKey(Product, related_name='features', on_delete=models.CASCADE)
-    description = models.CharField(max_length=255)
+    description = models.TextField(max_length=255)
 
     def __str__(self):
         return self.description
@@ -90,7 +90,7 @@ class ProductFeature(models.Model):
 class ProductSpecification(models.Model):
     product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
     key = models.CharField(max_length=100)
-    value = models.CharField(max_length=255)
+    value = models.CharField(max_length=200)
 
     def __str__(self):
         return f'{self.key}: {self.value}'
