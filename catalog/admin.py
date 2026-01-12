@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation
+from .models import Category, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation
 
 class InstallationTypeInline(admin.TabularInline):
     model = InstallationType
@@ -135,6 +135,12 @@ class PageBannerAdmin(admin.ModelAdmin):
     list_display = ('page', 'title')
     search_fields = ('page', 'title')
     fields = ('page', 'subtitle', 'title', 'description', 'button_text', 'button_link', 'image')
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display=('title','subtitle','location','image','order','active')
+
+    
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
