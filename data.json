@@ -234,11 +234,1693 @@
   }
 },
 {
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-01-08T07:40:12.696Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "How to Choose the Right TV Mount for Your Space",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2026-01-08T07:40:38.657Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "How to Choose the Right TV Mount for Your Space",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2026-01-08T07:45:49.925Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "1",
+    "object_repr": "SH 360R",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\", \"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2026-01-08T07:46:14.914Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "1",
+    "object_repr": "SH 360R",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2026-01-08T10:29:44.355Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "TV Wall Mount",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2026-01-08T10:32:53.885Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "TV Wall Mount",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Show in home\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2026-01-08T10:33:26.078Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "TV Wall Mount",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Show in explore home\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2026-01-08T10:35:35.277Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "6",
+    "object_repr": "Projector Mounts",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Show in home\", \"Show in explore home\", \"Show in footer\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2026-01-08T10:36:52.580Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "TV Wall Mount",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Show in home\", \"Show in explore home\", \"Show in footer\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2026-01-08T11:36:12.901Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "1",
+    "object_repr": "SH 360R",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Drawing image\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 29,
+  "fields": {
+    "action_time": "2026-01-09T04:21:18.310Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "1",
+    "object_repr": "SH 360R",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 30,
+  "fields": {
+    "action_time": "2026-01-09T04:53:33.264Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Admin email\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 31,
+  "fields": {
+    "action_time": "2026-01-09T05:10:38.072Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Admin email\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 32,
+  "fields": {
+    "action_time": "2026-01-09T05:36:26.250Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enha",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 33,
+  "fields": {
+    "action_time": "2026-01-09T05:37:13.296Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enha",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Short description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 34,
+  "fields": {
+    "action_time": "2026-01-09T05:37:39.871Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enha",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Content\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 35,
+  "fields": {
+    "action_time": "2026-01-09T05:41:33.072Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "up with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enha",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 36,
+  "fields": {
+    "action_time": "2026-01-09T05:42:36.819Z",
+    "user": 1,
+    "content_type": 31,
+    "object_id": "4",
+    "object_repr": "TV Engineer TV EngineerTV EngineerTV EngineerTV EngineerTV EngineerTV EngineerTV EngineerTV EngineeT",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Position\", \"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 37,
+  "fields": {
+    "action_time": "2026-01-09T05:43:12.480Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "TV Mount Catalogue TV Mount CatalogueTV Mount CatalogueTV Mount CatalogueTV Mount CatalogueTV Mount",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 38,
+  "fields": {
+    "action_time": "2026-01-09T05:43:59.071Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "26",
+    "object_repr": "Cable CableCableCableCableCableCableCableCableCableCableCableCableCableCableCableCableCableCableCabl",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Show in home\", \"Show in explore home\", \"Show in footer\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 39,
+  "fields": {
+    "action_time": "2026-01-09T05:46:02.771Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "26",
+    "object_repr": "Cable CableCableCableCableCableCableCab  leCableCableCableCableCableCableCableCableCabl",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 40,
+  "fields": {
+    "action_time": "2026-01-09T05:46:37.540Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "26",
+    "object_repr": "Cable CableCableCableCab leCableCableCab  leCableCableCableCableCableCa leCableCableCabl",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 41,
+  "fields": {
+    "action_time": "2026-01-09T05:47:11.853Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "5",
+    "object_repr": "Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 42,
+  "fields": {
+    "action_time": "2026-01-09T05:48:03.867Z",
+    "user": 1,
+    "content_type": 33,
+    "object_id": "6",
+    "object_repr": "China",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 43,
+  "fields": {
+    "action_time": "2026-01-09T05:48:30.012Z",
+    "user": 1,
+    "content_type": 33,
+    "object_id": "6",
+    "object_repr": "China",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 44,
+  "fields": {
+    "action_time": "2026-01-09T05:53:47.363Z",
+    "user": 1,
+    "content_type": 15,
+    "object_id": "1",
+    "object_repr": "Motorized Mantel TV Bracket Motorized Mantel TV BracketMotorized Mantel TV BracketMotorized Mantel T",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Subtitle\", \"Title\", \"Button text\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 45,
+  "fields": {
+    "action_time": "2026-01-09T05:54:24.333Z",
+    "user": 1,
+    "content_type": 16,
+    "object_id": "3",
+    "object_repr": "Banner for Blog",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Subtitle\", \"Title\", \"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 46,
+  "fields": {
+    "action_time": "2026-01-09T05:55:08.777Z",
+    "user": 1,
+    "content_type": 16,
+    "object_id": "3",
+    "object_repr": "Banner for Blog",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Subtitle\", \"Title\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 47,
+  "fields": {
+    "action_time": "2026-01-09T05:55:44.070Z",
+    "user": 1,
+    "content_type": 16,
+    "object_id": "3",
+    "object_repr": "Banner for Blog",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 48,
+  "fields": {
+    "action_time": "2026-01-09T07:18:33.411Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "1",
+    "object_repr": "SH 360R",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Show in home\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 49,
+  "fields": {
+    "action_time": "2026-01-09T07:20:13.768Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "1",
+    "object_repr": "SH 360R",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Carton length cm\", \"Carton width cm\", \"Carton height cm\", \"Gross weight per carton kg\", \"Net weight per carton kg\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 50,
+  "fields": {
+    "action_time": "2026-01-09T10:21:58.528Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Enable captcha\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 51,
+  "fields": {
+    "action_time": "2026-01-09T10:22:19.862Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Enable captcha\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 52,
+  "fields": {
+    "action_time": "2026-01-09T10:23:20.418Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Enable captcha\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 53,
+  "fields": {
+    "action_time": "2026-01-09T11:03:48.945Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Email host user\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 54,
+  "fields": {
+    "action_time": "2026-01-09T11:05:43.749Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Email host user\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 55,
+  "fields": {
+    "action_time": "2026-01-09T11:28:49.839Z",
+    "user": 1,
+    "content_type": 26,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Enable captcha\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 56,
+  "fields": {
+    "action_time": "2026-01-09T11:45:03.699Z",
+    "user": 1,
+    "content_type": 23,
+    "object_id": "6",
+    "object_repr": "TV Wall Mount - Full Motion Single Arm",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 3,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 3,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 3,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 3,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 2,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 2,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 2,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 2,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 4,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 4,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 4,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 4,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 5,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 5,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 5,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 5,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 6,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 6,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 6,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 6,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add blog post",
+    "content_type": 7,
+    "codename": "add_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change blog post",
+    "content_type": 7,
+    "codename": "change_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete blog post",
+    "content_type": 7,
+    "codename": "delete_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view blog post",
+    "content_type": 7,
+    "codename": "view_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add catalogue",
+    "content_type": 8,
+    "codename": "add_catalogue"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change catalogue",
+    "content_type": 8,
+    "codename": "change_catalogue"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete catalogue",
+    "content_type": 8,
+    "codename": "delete_catalogue"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view catalogue",
+    "content_type": 8,
+    "codename": "view_catalogue"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add category",
+    "content_type": 9,
+    "codename": "add_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change category",
+    "content_type": 9,
+    "codename": "change_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete category",
+    "content_type": 9,
+    "codename": "delete_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view category",
+    "content_type": 9,
+    "codename": "view_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add certificate",
+    "content_type": 10,
+    "codename": "add_certificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change certificate",
+    "content_type": 10,
+    "codename": "change_certificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete certificate",
+    "content_type": 10,
+    "codename": "delete_certificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view certificate",
+    "content_type": 10,
+    "codename": "view_certificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add client",
+    "content_type": 11,
+    "codename": "add_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change client",
+    "content_type": 11,
+    "codename": "change_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete client",
+    "content_type": 11,
+    "codename": "delete_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view client",
+    "content_type": 11,
+    "codename": "view_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add contact enquiry",
+    "content_type": 12,
+    "codename": "add_contactenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change contact enquiry",
+    "content_type": 12,
+    "codename": "change_contactenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete contact enquiry",
+    "content_type": 12,
+    "codename": "delete_contactenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view contact enquiry",
+    "content_type": 12,
+    "codename": "view_contactenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add homepage banner",
+    "content_type": 14,
+    "codename": "add_homepagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change homepage banner",
+    "content_type": 14,
+    "codename": "change_homepagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete homepage banner",
+    "content_type": 14,
+    "codename": "delete_homepagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view homepage banner",
+    "content_type": 14,
+    "codename": "view_homepagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add offer",
+    "content_type": 15,
+    "codename": "add_offer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change offer",
+    "content_type": 15,
+    "codename": "change_offer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete offer",
+    "content_type": 15,
+    "codename": "delete_offer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view offer",
+    "content_type": 15,
+    "codename": "view_offer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add page banner",
+    "content_type": 16,
+    "codename": "add_pagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change page banner",
+    "content_type": 16,
+    "codename": "change_pagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete page banner",
+    "content_type": 16,
+    "codename": "delete_pagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view page banner",
+    "content_type": 16,
+    "codename": "view_pagebanner"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 61,
+  "fields": {
+    "name": "Can add product",
+    "content_type": 17,
+    "codename": "add_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 62,
+  "fields": {
+    "name": "Can change product",
+    "content_type": 17,
+    "codename": "change_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 63,
+  "fields": {
+    "name": "Can delete product",
+    "content_type": 17,
+    "codename": "delete_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 64,
+  "fields": {
+    "name": "Can view product",
+    "content_type": 17,
+    "codename": "view_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 65,
+  "fields": {
+    "name": "Can add service booking",
+    "content_type": 22,
+    "codename": "add_servicebooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 66,
+  "fields": {
+    "name": "Can change service booking",
+    "content_type": 22,
+    "codename": "change_servicebooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 67,
+  "fields": {
+    "name": "Can delete service booking",
+    "content_type": 22,
+    "codename": "delete_servicebooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 68,
+  "fields": {
+    "name": "Can view service booking",
+    "content_type": 22,
+    "codename": "view_servicebooking"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 69,
+  "fields": {
+    "name": "Can add gallery",
+    "content_type": 13,
+    "codename": "add_gallery"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 70,
+  "fields": {
+    "name": "Can change gallery",
+    "content_type": 13,
+    "codename": "change_gallery"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 71,
+  "fields": {
+    "name": "Can delete gallery",
+    "content_type": 13,
+    "codename": "delete_gallery"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 72,
+  "fields": {
+    "name": "Can view gallery",
+    "content_type": 13,
+    "codename": "view_gallery"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 73,
+  "fields": {
+    "name": "Can add product enquiry",
+    "content_type": 18,
+    "codename": "add_productenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 74,
+  "fields": {
+    "name": "Can change product enquiry",
+    "content_type": 18,
+    "codename": "change_productenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 75,
+  "fields": {
+    "name": "Can delete product enquiry",
+    "content_type": 18,
+    "codename": "delete_productenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 76,
+  "fields": {
+    "name": "Can view product enquiry",
+    "content_type": 18,
+    "codename": "view_productenquiry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 77,
+  "fields": {
+    "name": "Can add product feature",
+    "content_type": 19,
+    "codename": "add_productfeature"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 78,
+  "fields": {
+    "name": "Can change product feature",
+    "content_type": 19,
+    "codename": "change_productfeature"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 79,
+  "fields": {
+    "name": "Can delete product feature",
+    "content_type": 19,
+    "codename": "delete_productfeature"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 80,
+  "fields": {
+    "name": "Can view product feature",
+    "content_type": 19,
+    "codename": "view_productfeature"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 81,
+  "fields": {
+    "name": "Can add product image",
+    "content_type": 20,
+    "codename": "add_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 82,
+  "fields": {
+    "name": "Can change product image",
+    "content_type": 20,
+    "codename": "change_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 83,
+  "fields": {
+    "name": "Can delete product image",
+    "content_type": 20,
+    "codename": "delete_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 84,
+  "fields": {
+    "name": "Can view product image",
+    "content_type": 20,
+    "codename": "view_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 85,
+  "fields": {
+    "name": "Can add product specification",
+    "content_type": 21,
+    "codename": "add_productspecification"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 86,
+  "fields": {
+    "name": "Can change product specification",
+    "content_type": 21,
+    "codename": "change_productspecification"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 87,
+  "fields": {
+    "name": "Can delete product specification",
+    "content_type": 21,
+    "codename": "delete_productspecification"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 88,
+  "fields": {
+    "name": "Can view product specification",
+    "content_type": 21,
+    "codename": "view_productspecification"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 89,
+  "fields": {
+    "name": "Can add sub category",
+    "content_type": 23,
+    "codename": "add_subcategory"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 90,
+  "fields": {
+    "name": "Can change sub category",
+    "content_type": 23,
+    "codename": "change_subcategory"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 91,
+  "fields": {
+    "name": "Can delete sub category",
+    "content_type": 23,
+    "codename": "delete_subcategory"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 92,
+  "fields": {
+    "name": "Can view sub category",
+    "content_type": 23,
+    "codename": "view_subcategory"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 93,
+  "fields": {
+    "name": "Can add project",
+    "content_type": 24,
+    "codename": "add_project"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 94,
+  "fields": {
+    "name": "Can change project",
+    "content_type": 24,
+    "codename": "change_project"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 95,
+  "fields": {
+    "name": "Can delete project",
+    "content_type": 24,
+    "codename": "delete_project"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 96,
+  "fields": {
+    "name": "Can view project",
+    "content_type": 24,
+    "codename": "view_project"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 97,
+  "fields": {
+    "name": "Can add seo page",
+    "content_type": 25,
+    "codename": "add_seopage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 98,
+  "fields": {
+    "name": "Can change seo page",
+    "content_type": 25,
+    "codename": "change_seopage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 99,
+  "fields": {
+    "name": "Can delete seo page",
+    "content_type": 25,
+    "codename": "delete_seopage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 100,
+  "fields": {
+    "name": "Can view seo page",
+    "content_type": 25,
+    "codename": "view_seopage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 101,
+  "fields": {
+    "name": "Can add site settings",
+    "content_type": 26,
+    "codename": "add_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 102,
+  "fields": {
+    "name": "Can change site settings",
+    "content_type": 26,
+    "codename": "change_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 103,
+  "fields": {
+    "name": "Can delete site settings",
+    "content_type": 26,
+    "codename": "delete_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 104,
+  "fields": {
+    "name": "Can view site settings",
+    "content_type": 26,
+    "codename": "view_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 105,
+  "fields": {
+    "name": "Can add installation type",
+    "content_type": 28,
+    "codename": "add_installationtype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 106,
+  "fields": {
+    "name": "Can change installation type",
+    "content_type": 28,
+    "codename": "change_installationtype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 107,
+  "fields": {
+    "name": "Can delete installation type",
+    "content_type": 28,
+    "codename": "delete_installationtype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 108,
+  "fields": {
+    "name": "Can view installation type",
+    "content_type": 28,
+    "codename": "view_installationtype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 109,
+  "fields": {
+    "name": "Can add available time",
+    "content_type": 27,
+    "codename": "add_availabletime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 110,
+  "fields": {
+    "name": "Can change available time",
+    "content_type": 27,
+    "codename": "change_availabletime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 111,
+  "fields": {
+    "name": "Can delete available time",
+    "content_type": 27,
+    "codename": "delete_availabletime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 112,
+  "fields": {
+    "name": "Can view available time",
+    "content_type": 27,
+    "codename": "view_availabletime"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 113,
+  "fields": {
+    "name": "Can add service",
+    "content_type": 29,
+    "codename": "add_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 114,
+  "fields": {
+    "name": "Can change service",
+    "content_type": 29,
+    "codename": "change_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 115,
+  "fields": {
+    "name": "Can delete service",
+    "content_type": 29,
+    "codename": "delete_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 116,
+  "fields": {
+    "name": "Can view service",
+    "content_type": 29,
+    "codename": "view_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 117,
+  "fields": {
+    "name": "Can add tv size",
+    "content_type": 30,
+    "codename": "add_tvsize"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 118,
+  "fields": {
+    "name": "Can change tv size",
+    "content_type": 30,
+    "codename": "change_tvsize"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 119,
+  "fields": {
+    "name": "Can delete tv size",
+    "content_type": 30,
+    "codename": "delete_tvsize"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 120,
+  "fields": {
+    "name": "Can view tv size",
+    "content_type": 30,
+    "codename": "view_tvsize"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 121,
+  "fields": {
+    "name": "Can add career",
+    "content_type": 31,
+    "codename": "add_career"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 122,
+  "fields": {
+    "name": "Can change career",
+    "content_type": 31,
+    "codename": "change_career"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 123,
+  "fields": {
+    "name": "Can delete career",
+    "content_type": 31,
+    "codename": "delete_career"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 124,
+  "fields": {
+    "name": "Can view career",
+    "content_type": 31,
+    "codename": "view_career"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 125,
+  "fields": {
+    "name": "Can add career application",
+    "content_type": 32,
+    "codename": "add_careerapplication"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 126,
+  "fields": {
+    "name": "Can change career application",
+    "content_type": 32,
+    "codename": "change_careerapplication"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 127,
+  "fields": {
+    "name": "Can delete career application",
+    "content_type": 32,
+    "codename": "delete_careerapplication"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 128,
+  "fields": {
+    "name": "Can view career application",
+    "content_type": 32,
+    "codename": "view_careerapplication"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 129,
+  "fields": {
+    "name": "Can add global location",
+    "content_type": 33,
+    "codename": "add_globallocation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 130,
+  "fields": {
+    "name": "Can change global location",
+    "content_type": 33,
+    "codename": "change_globallocation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 131,
+  "fields": {
+    "name": "Can delete global location",
+    "content_type": 33,
+    "codename": "delete_globallocation"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 132,
+  "fields": {
+    "name": "Can view global location",
+    "content_type": 33,
+    "codename": "view_globallocation"
+  }
+},
+{
   "model": "auth.user",
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$1200000$DmXIknCXOL3tW8KZcypTIV$CAV1/rgSdIPGsQvp7K08IEMsuW2DNJCtj+IAp8Gho5A=",
-    "last_login": "2026-01-07T05:47:05.809Z",
+    "last_login": "2026-01-12T05:28:09.921Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -252,11 +1934,355 @@
   }
 },
 {
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "catalog",
+    "model": "blogpost"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "catalog",
+    "model": "catalogue"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "catalog",
+    "model": "category"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "catalog",
+    "model": "certificate"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "catalog",
+    "model": "client"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "catalog",
+    "model": "contactenquiry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "catalog",
+    "model": "gallery"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "catalog",
+    "model": "homepagebanner"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "catalog",
+    "model": "offer"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 16,
+  "fields": {
+    "app_label": "catalog",
+    "model": "pagebanner"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 17,
+  "fields": {
+    "app_label": "catalog",
+    "model": "product"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 18,
+  "fields": {
+    "app_label": "catalog",
+    "model": "productenquiry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 19,
+  "fields": {
+    "app_label": "catalog",
+    "model": "productfeature"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 20,
+  "fields": {
+    "app_label": "catalog",
+    "model": "productimage"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 21,
+  "fields": {
+    "app_label": "catalog",
+    "model": "productspecification"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 22,
+  "fields": {
+    "app_label": "catalog",
+    "model": "servicebooking"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 23,
+  "fields": {
+    "app_label": "catalog",
+    "model": "subcategory"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 24,
+  "fields": {
+    "app_label": "catalog",
+    "model": "project"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 25,
+  "fields": {
+    "app_label": "catalog",
+    "model": "seopage"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 26,
+  "fields": {
+    "app_label": "catalog",
+    "model": "sitesettings"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 27,
+  "fields": {
+    "app_label": "catalog",
+    "model": "availabletime"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 28,
+  "fields": {
+    "app_label": "catalog",
+    "model": "installationtype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 29,
+  "fields": {
+    "app_label": "catalog",
+    "model": "service"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 30,
+  "fields": {
+    "app_label": "catalog",
+    "model": "tvsize"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 31,
+  "fields": {
+    "app_label": "catalog",
+    "model": "career"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 32,
+  "fields": {
+    "app_label": "catalog",
+    "model": "careerapplication"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 33,
+  "fields": {
+    "app_label": "catalog",
+    "model": "globallocation"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "0a84621kkwzucavrmn3q6dtc01kgh3ct",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJLQURGOCJ9:1veBYB:8lSlFiZIHubHvO9AoyTgs74WiR5zj4yJoSmHLSSfNXA",
+    "expire_date": "2026-01-23T12:25:07.796Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "0ztscf04jfjn5j8cx5y781anprg6hirn",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJGVjM1MCJ9:1veBeV:OzVDt9C7KVxBCrXsRH_mx3oruqDxXMEF0c0eYiqwTOM",
+    "expire_date": "2026-01-23T12:31:39.517Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "1mjqqjcbk6p7dq049gshb57564vbwy5t",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJMMldaWSJ9:1veBdu:vLYQl3N4AA0ToV2in4vsqRqsiUOH5uewiYjCEOJ9beM",
+    "expire_date": "2026-01-23T12:31:02.533Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "1wr8l52ew7s6svx0vz7ggrv6lc8rk611",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiIyVzg2MiJ9:1ve8tf:Y78ssbbdHwV3gg1SPF22P4OTTG6yTOFOARXONRshxJ0",
+    "expire_date": "2026-01-23T09:35:07.609Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "3bh3o2mtuhqzws8md3iamfmspw62ny4d",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiIzSFNBNyJ9:1vfB6b:w99ieUnGFGXb-PKCxmJCkYqpRy7MVai3-gs8dugNKbA",
+    "expire_date": "2026-01-26T06:08:45.310Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "3garmrgrujtfe1xpwb478m4vc6dka2be",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiIwNDI3WCJ9:1ve8tv:lI3fRq_PHtoB7k9EIG4QMrC1LjfN9uG0ljZovqsR6lE",
+    "expire_date": "2026-01-23T09:35:23.096Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "441fh32ihsv9ptbkm6zhalr5muojw2au",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJSTUkxNiJ9:1veBdU:HjZZ2YQFh0vuttQKoL0lC9RVaBkBxbzzQyj-LHE9zTY",
+    "expire_date": "2026-01-23T12:30:36.549Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4dl25ed37ucd6taw9qcaffhpdjmf2zpy",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJZREhDMCJ9:1veArY:-Ez2a6ELiI0FFGd9Ft2CguGXNviB2yjt3ET-CUKZixo",
+    "expire_date": "2026-01-23T11:41:04.256Z"
+  }
+},
+{
   "model": "sessions.session",
   "pk": "4j768k0sgxuv8qdpdjpbr9z7duh4pnh2",
   "fields": {
     "session_data": ".eJxVjEEOwiAQRe_C2pChDAIu3XuGZmBGqRpISrsy3l2bdKHb_977LzXSupRx7TKPE6uTMurwuyXKD6kb4DvVW9O51WWekt4UvdOuL43led7dv4NCvXxrDykikkCWRETOOkKQAR0jCtqYU85OgAf2ZDEcwzUAMUKIxnnjknp_APYkN-4:1vdMNt:aQzXuzOPCZ1cLpJR1kKs_Qh01L69ZPVo0j4AFtXxL7Y",
     "expire_date": "2026-01-21T05:47:05.823Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4lkpd20e12ehndj8qmkk6zwavbnfe22k",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJQVlkzWiJ9:1ve8wb:OSn9-rzu_4enpJ7EYatxxfJCmFELA7zoIWDNU90-6oY",
+    "expire_date": "2026-01-23T09:38:09.134Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "6kjkm8ah3yq0ieoigk1e7xa0snoxqx27",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiIxTVlKTiJ9:1veAfm:VxCsAO2Jf5vC2ifa-xedo7LTHyMGTQJDOSwe_shyfWk",
+    "expire_date": "2026-01-23T11:28:54.124Z"
   }
 },
 {
@@ -269,10 +2295,242 @@
 },
 {
   "model": "sessions.session",
+  "pk": "6r2habv5xiunov59dcb6u30rgvuxh0ie",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJIT1VRRCJ9:1ve8ti:Wi4WKY-pNDLxbSBKq29iW1NCg4kpicPhMWcv56AtPrg",
+    "expire_date": "2026-01-23T09:35:10.370Z"
+  }
+},
+{
+  "model": "sessions.session",
   "pk": "76her8dmdexfgbsgbzdaxq2m883za5dj",
   "fields": {
     "session_data": ".eJxVjEEOwiAQRe_C2pChDAIu3XuGZmBGqRpISrsy3l2bdKHb_977LzXSupRx7TKPE6uTMurwuyXKD6kb4DvVW9O51WWekt4UvdOuL43led7dv4NCvXxrDykikkCWRETOOkKQAR0jCtqYU85OgAf2ZDEcwzUAMUKIxnnjknp_APYkN-4:1vce7s:gXzFa7N7cj0lB3WCD6EudtyHPAl9USANLMzSgTw8LPo",
     "expire_date": "2026-01-19T06:31:36.524Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "7csz352l4hfrxru4k5euz9pjub0p55as",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiI0VVczTSJ9:1vfB4n:mzH5pAcp3ecKBG4Wmtj6ONIySqQfDkVm29vdyxTruBU",
+    "expire_date": "2026-01-26T06:06:53.720Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "7m9u1nrlrqbakd4qxb1qwejmhbbkkd5t",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiI5UkZBUSJ9:1ve91g:X8PqXUxl3o3D7vZ3ovGAsjZlX_yfxomaaZGnSH-_Jnw",
+    "expire_date": "2026-01-23T09:43:24.206Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "8y30cx8qixhts6pepvvqlh2ylpn5hadp",
+  "fields": {
+    "session_data": ".eJxVjEEOgjAQRe_StWlamEpxady44AzNdGa0qKEGSmJivLuQsGH73vv_qwjfhRKGIp-iTupi7bVTBxVwLinMk4yh54XbPYtITxlWwQ8c7llTHsrYR70merOT7jLL67y1u4OEU1rWjYktAIohiYjoaodgpALHAAJ1S5HIieGKG6zBH_3NG2QwvrWusS6q3x8diz8Q:1veAxX:lMWQV5oVaezxscrZ4dgewIlGi81j5RJDM-qQygymq6E",
+    "expire_date": "2026-01-23T11:47:15.824Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "9mqyuoe24twsryz4kf2of51mtweoktmf",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJXRTE1VyJ9:1ve8tm:_zBhR64svSXwVItzqAyByrBfhLmxAdKCW133q0KNVoo",
+    "expire_date": "2026-01-23T09:35:14.458Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "asvxjz2b1ke17dfztsjzsrvdb1rleh1z",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJXTlAyWSJ9:1ve8tW:WP3dg2_m95PQUYpNAi4-aYX8YEyrCsjumaM4F4cBNk0",
+    "expire_date": "2026-01-23T09:34:58.508Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "b21i2xzv1h3qzgq5dc02x6vh85sp2hd1",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiI0SVZXRyJ9:1ve9KN:M-ujemUm9o8OkQkac3mzrDfrovBa2Lxe3FHVwvUiEys",
+    "expire_date": "2026-01-23T10:02:43.667Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "dwt7vugf2d9u8o7pjyr4k7c7q5c738r0",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJCWVE1SSJ9:1ve8wg:7mD3hTQuuQjUyPTOlRDhdMdTkpKfr-cLB2bGOWjVLW8",
+    "expire_date": "2026-01-23T09:38:14.528Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "e3srh28x3jjo1z4497eomibbhk42rdqo",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJUWjlQMyJ9:1veArY:d5VdrktEYx25Y-wH80rDS_aGPgpyxUKtjZW5y9eMn1I",
+    "expire_date": "2026-01-23T11:41:04.259Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "end2e0k3wrsy1svhp9jsnovfa7c3pxb5",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiI4TTlSNiJ9:1vfAyF:dP90ZVR5VAlh09sQmqFcIZUqUmFmBs-zlPRrUws8p3w",
+    "expire_date": "2026-01-26T06:00:07.838Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fu55vqb0min45xdfo8qnwpflf7srhgn8",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJCME5MUiJ9:1ve8uk:b-fl6SCnpYT36gqi0RFB33S5H944lvXyxOCT9V5O5C8",
+    "expire_date": "2026-01-23T09:36:14.679Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "grox8phb6s5rnxdc7ddt8qmv80u3b2sb",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJZVEpTTyJ9:1ve8tk:O3870-Ic8VogcLL5MRYJ4z34z84-VPV_A7Z_t3JVWr4",
+    "expire_date": "2026-01-23T09:35:12.328Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "gyo1izlmqdxqtxu62zmc6c8wxsytxlgv",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJaTjYwVCJ9:1vfB1R:a_JFnLcBXyHLUZKU9Qmifd6OdCNxhY2UeFsN2udGqB0",
+    "expire_date": "2026-01-26T06:03:25.285Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hdlexnfrdrytqu5zdtzbohzi0ze7ztrn",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiI5MDc4NCJ9:1vfB20:7uf0W6J7N4CYRZLN3GpXa3OUewStyu_9Xut0lGKZE8Y",
+    "expire_date": "2026-01-26T06:04:00.578Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ifpu0r06pqcc9ggu440t4rlqylwwl083",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJMWTFNRCJ9:1vfAkM:v-12MkGnlHzT8_yERsaXteMrUNr7PBtHTa3ByhrHleg",
+    "expire_date": "2026-01-26T05:45:46.518Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "igghaktokbae5wa195ea1oqzrglv51ys",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJBU0M0MiJ9:1ve92F:VhYfmZp8sCKuLLfanP2IP1dvFxDzWUoQG98mGW06h88",
+    "expire_date": "2026-01-23T09:43:59.804Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "jnwkepohcz1rhga7hu7pqe6dpzzbjg5c",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiI5R0hFNCJ9:1veBeL:C-xuq1_-lzY9Qg2HY-LPqFbrT4yCQWzfcPc8VmmINSs",
+    "expire_date": "2026-01-23T12:31:29.989Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "k49rwlvz3m2vtpcsqu0h0madm74dw8sj",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pChDAIu3XuGZmBGqRpISrsy3l2bdKHb_977LzXSupRx7TKPE6uTMurwuyXKD6kb4DvVW9O51WWekt4UvdOuL43led7dv4NCvXxrDykikkCWRETOOkKQAR0jCtqYU85OgAf2ZDEcwzUAMUKIxnnjknp_APYkN-4:1vdjFG:xi29vXJflp5MHSmH-BhtXmujhIU4cSKt0Q4am5XzQq8",
+    "expire_date": "2026-01-22T06:11:42.496Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "k91w4iul2gnki2761fh88nzc742rhgn0",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJHUTNRNiJ9:1ve8yM:PpY3VwTad1tbYC2xq_p71D-KORkUjBuZz1s2iAIxwlA",
+    "expire_date": "2026-01-23T09:39:58.794Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ndyk28ukhrlxehvynq3d3wb739m5l8i3",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJIOElPNiJ9:1ve932:IuVPL0N4wIgp8mj5fxX8EO1l1YCkesSdax_deIAFVX0",
+    "expire_date": "2026-01-23T09:44:48.137Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "p71cre0l390bz26wf1x1og6m953suc1c",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJHWlFMTCJ9:1ve9Hi:Km6WZuxfPMncQAdnjivRnKPsSok6ZYww1becjG2ASCk",
+    "expire_date": "2026-01-23T09:59:58.036Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "q4imf7ibnvdxn6wbv95sb9dz74rinp5z",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJSOUszRyJ9:1ve8u2:UBN9Q8dnWUmS9M6-GX9BtN1S7IEuQWe6KU2OcYCPXZw",
+    "expire_date": "2026-01-23T09:35:30.534Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "qmjdj787bgkx4r6ixk651o8l9fv6wgu3",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJXMDI3SCJ9:1ve8wh:ZuI7dS9BCFJYgfstxiuLKfSwSdNeesyGku9VE8wXhS4",
+    "expire_date": "2026-01-23T09:38:15.141Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "srq4mxdd0ejbx05bi3v2g1mbp39cjzs4",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiI3MEQ1TyJ9:1ve903:ULJshPQjAN_7-jqJuYG9gZLv7oINq9C2dVM4lPuUzhg",
+    "expire_date": "2026-01-23T09:41:43.256Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "v6oghi7w41cjp6nud387p80yrvrt6d3q",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2pChDAIu3XuGZmBGqRpISrsy3l2bdKHb_977LzXSupRx7TKPE6uTMurwuyXKD6kb4DvVW9O51WWekt4UvdOuL43led7dv4NCvXxrDykikkCWRETOOkKQAR0jCtqYU85OgAf2ZDEcwzUAMUKIxnnjknp_APYkN-4:1vfBMG:xosZ4paHPI74Xco4Qg1BJC5AEzwqE2fuTFWCjwmF2Kc",
+    "expire_date": "2026-01-26T06:24:56.507Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "vxya0478gb7552lv639zfla2dkmvaxlq",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJQS1VPViJ9:1ve97I:JUR3UU1ILaGPPCmXHLAGaBZ5lUKGV3le-mtDnJGGWPI",
+    "expire_date": "2026-01-23T09:49:12.711Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "wc2b50rvjgs0wtkgp6ad6ihzw2p932cw",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJSTkkyNCJ9:1vfAU7:XPAqRXhYb4MMnZ8rN7kJs6DOLkjTiem67A4W2YPD-Fg",
+    "expire_date": "2026-01-26T05:28:59.785Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "wvxb42rcar5kn0j77so0h5gnhw06hknf",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiIzREEyNSJ9:1veAfm:V9_3W_es6-miTKUVcdXhGfutINWWhosdYPdDBTCFQUw",
+    "expire_date": "2026-01-23T11:28:54.127Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "yck7m1rz1w98cg3ghgmj3alp2henfcca",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJOSklUMSJ9:1ve8zs:F8r1z8L-TBRiYCSIV7hnnHSlVXUINWOFADQmeMKwNMw",
+    "expire_date": "2026-01-23T09:41:32.464Z"
   }
 },
 {
@@ -284,6 +2542,30 @@
   }
 },
 {
+  "model": "sessions.session",
+  "pk": "zmekfjo9cqd5q9kpu4fxp5dljnun944n",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJWRDRMMSJ9:1vfAUJ:nJEkDBuZLRoRuXUXcK7qKJsrXeg98SrQzB0bJaM-nj8",
+    "expire_date": "2026-01-26T05:29:11.800Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "zvlerc4k4zvvd2m8x8juzzfm9xpgdjwr",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJVN05aNSJ9:1ve8yv:eiRJ9Kaq9Lzem68QbwqcbUHhVAjIo_4IUswLYrqZGz4",
+    "expire_date": "2026-01-23T09:40:33.004Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "zz59xc5cvjc6azvkybh915m0pf82txeb",
+  "fields": {
+    "session_data": "eyJjYXB0Y2hhX3RleHQiOiJCWUVIWiJ9:1ve8tW:YPavN6zI7JfCVRQBZk2HRPNX_lQIrfr7B1jaBwHpci4",
+    "expire_date": "2026-01-23T09:34:58.645Z"
+  }
+},
+{
   "model": "catalog.category",
   "pk": 1,
   "fields": {
@@ -292,7 +2574,8 @@
     "image": "categories/tv-wall.png",
     "show_in_home": true,
     "show_in_explore_home": true,
-    "show_in_footer": false
+    "show_in_footer": true,
+    "active": true
   }
 },
 {
@@ -302,9 +2585,10 @@
     "name": "Desktop Mounts",
     "slug": "desktop-mounts",
     "image": "categories/desktop.png",
-    "show_in_home": true,
-    "show_in_explore_home": true,
-    "show_in_footer": false
+    "show_in_home": false,
+    "show_in_explore_home": false,
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -314,9 +2598,10 @@
     "name": "Ergonomic Mounts",
     "slug": "ergonomic-mounts",
     "image": "categories/erogonomic.png",
-    "show_in_home": true,
-    "show_in_explore_home": true,
-    "show_in_footer": false
+    "show_in_home": false,
+    "show_in_explore_home": false,
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -326,9 +2611,10 @@
     "name": "Floor Stands",
     "slug": "floor-stands",
     "image": "categories/floor-stand.png",
-    "show_in_home": true,
-    "show_in_explore_home": true,
-    "show_in_footer": false
+    "show_in_home": false,
+    "show_in_explore_home": false,
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -338,9 +2624,10 @@
     "name": "Motorized Mounts",
     "slug": "motorized-mounts",
     "image": "categories/motorized.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -351,8 +2638,9 @@
     "slug": "projector-mounts",
     "image": "categories/projector.png",
     "show_in_home": true,
-    "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_explore_home": true,
+    "show_in_footer": true,
+    "active": true
   }
 },
 {
@@ -362,9 +2650,10 @@
     "name": "Gaming",
     "slug": "gaming",
     "image": "categories/gaming-table.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -374,9 +2663,10 @@
     "name": "Tablet Mounts",
     "slug": "tablet-mounts",
     "image": "categories/tablet.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -386,9 +2676,10 @@
     "name": "TV Ceiling Mounts",
     "slug": "tv-ceiling-mounts",
     "image": "categories/ceillling.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -398,9 +2689,10 @@
     "name": "POS Mounts",
     "slug": "pos-mounts",
     "image": "categories/pos.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -410,9 +2702,10 @@
     "name": "Video Wall Mounts",
     "slug": "video-wall-mounts",
     "image": "categories/video-wall.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -422,9 +2715,10 @@
     "name": "HDMI Cables",
     "slug": "hdmi-cables",
     "image": "categories/cable.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -434,9 +2728,10 @@
     "name": "DVD / Receiver Mounts",
     "slug": "dvd-receiver-mounts",
     "image": "categories/dvd.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -446,9 +2741,10 @@
     "name": "AC Brackets",
     "slug": "ac-brackets",
     "image": "categories/ac-braklets.png",
-    "show_in_home": true,
+    "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": true
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -460,7 +2756,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -472,7 +2769,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -484,7 +2782,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -496,7 +2795,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -508,7 +2808,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -520,7 +2821,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -532,7 +2834,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -544,7 +2847,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -556,7 +2860,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -568,7 +2873,8 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
@@ -580,19 +2886,21 @@
     "image": "",
     "show_in_home": false,
     "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_footer": false,
+    "active": true
   }
 },
 {
   "model": "catalog.category",
   "pk": 26,
   "fields": {
-    "name": "Cable",
+    "name": "Cable CableCableCableCab leCableCableCab  leCableCableCableCableCableCa leCableCableCabl",
     "slug": "cable",
     "image": "",
-    "show_in_home": false,
-    "show_in_explore_home": false,
-    "show_in_footer": false
+    "show_in_home": true,
+    "show_in_explore_home": true,
+    "show_in_footer": true,
+    "active": true
   }
 },
 {
@@ -602,7 +2910,8 @@
     "category": 1,
     "name": "TV Wall Mount",
     "slug": "tv-wall-mount",
-    "image": ""
+    "image": "",
+    "active": true
   }
 },
 {
@@ -612,7 +2921,8 @@
     "category": 1,
     "name": "Fixed / Flat Wall Mounts",
     "slug": "fixed-flat-wall-mounts",
-    "image": ""
+    "image": "",
+    "active": true
   }
 },
 {
@@ -622,7 +2932,8 @@
     "category": 1,
     "name": "Tilt Wall Mounts",
     "slug": "tilt-wall-mounts",
-    "image": ""
+    "image": "",
+    "active": true
   }
 },
 {
@@ -632,7 +2943,8 @@
     "category": 2,
     "name": "Desktop Mounts",
     "slug": "desktop-mounts",
-    "image": ""
+    "image": "",
+    "active": true
   }
 },
 {
@@ -642,7 +2954,8 @@
     "category": 2,
     "name": "Articulating Monitor Arm",
     "slug": "articulating-monitor-arm",
-    "image": ""
+    "image": "",
+    "active": true
   }
 },
 {
@@ -652,7 +2965,8 @@
     "category": 1,
     "name": "Full Motion Single Arm",
     "slug": "full-motion-single-arm",
-    "image": ""
+    "image": "",
+    "active": true
   }
 },
 {
@@ -661,25 +2975,26 @@
   "fields": {
     "subcategory": 2,
     "name": "SH 360R",
-    "title": "SH 360R\n\t\t\t\t\t\t\t\t\t\t360° Rotate Wall Mount For Flat Panel Display TV Wall Mount",
+    "title": "SH 360R\t\t\t\t\t\t\t\t\t\t360° Rotate Wall Mount For Flat Panel Display TV Wall Mount",
     "slug": "sh-360r",
     "short_description": null,
-    "description": "The SH 360R is a 360° rotating TV wall mount designed for 37\"~70\" flat panel displays. Built from durable steel and plastic with a fine texture black powder-coated finish, it supports up to 50kg (110lbs). Its ultra-slim 51mm profile and built-in bubble level ensure easy, precise installation. Compatible with VESA up to 600x400mm, it features a detachable panel and fits solid wall or single stud setups for versatile digital signage mounting.",
+    "description": "The SH 360R is a 360° rotating TV wall mount designed for 37\"~70\" flat panel displays. Built from durable steel and plastic with a fine texture black powder-coated finish, it supports up to 50kg (110lbs). Its ultra-slim 51mm profile and built-in bubble level ensure easy, \r\n\r\nprecise installation. Compatible with VESA up to 600x400mm, it features a detachable panel and fits solid wall or single stud setups for versatile digital signage mounting.",
     "main_image": "products/main/Fixed_Flat_Wall_Mountsb19b5c35bdac2403dbdfe6caad626a09.jpg",
-    "drawing_image": "",
+    "drawing_image": "products/drawings/image_5.png",
     "video_url": null,
     "product_video_url": null,
     "tags": [],
     "datasheet": "products/datasheets/SH_360R_Datasheet.pdf",
-    "show_in_home": false,
+    "show_in_home": true,
     "units_per_carton": 1,
-    "carton_length_cm": 0.0,
-    "carton_width_cm": 0.0,
-    "carton_height_cm": 0.0,
-    "gross_weight_per_carton_kg": 0.0,
-    "net_weight_per_carton_kg": 0.0,
+    "carton_length_cm": 25.4,
+    "carton_width_cm": 32.8,
+    "carton_height_cm": 22.7,
+    "gross_weight_per_carton_kg": 55.6,
+    "net_weight_per_carton_kg": 44.5,
+    "active": true,
     "created_at": "2026-01-02T09:50:48.066Z",
-    "updated_at": "2026-01-07T06:24:10.162Z"
+    "updated_at": "2026-01-09T07:20:13.766Z"
   }
 },
 {
@@ -718,6 +3033,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:51:04.105Z",
     "updated_at": "2026-01-02T11:19:53.965Z"
   }
@@ -758,6 +3074,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:51:20.564Z",
     "updated_at": "2026-01-07T06:24:09.944Z"
   }
@@ -785,6 +3102,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:51:33.630Z",
     "updated_at": "2026-01-07T06:24:10.278Z"
   }
@@ -825,6 +3143,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:51:49.234Z",
     "updated_at": "2026-01-02T09:52:02.477Z"
   }
@@ -852,6 +3171,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:52:02.494Z",
     "updated_at": "2026-01-02T09:52:16.977Z"
   }
@@ -892,6 +3212,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:52:16.990Z",
     "updated_at": "2026-01-02T09:52:32.950Z"
   }
@@ -919,6 +3240,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:52:32.964Z",
     "updated_at": "2026-01-02T09:52:48.674Z"
   }
@@ -959,6 +3281,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:52:48.688Z",
     "updated_at": "2026-01-02T09:53:07.632Z"
   }
@@ -986,6 +3309,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:53:07.647Z",
     "updated_at": "2026-01-02T09:53:20.403Z"
   }
@@ -1013,6 +3337,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:53:20.417Z",
     "updated_at": "2026-01-07T06:24:10.245Z"
   }
@@ -1053,6 +3378,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:53:35.729Z",
     "updated_at": "2026-01-07T06:24:10.095Z"
   }
@@ -1093,6 +3419,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:53:49.584Z",
     "updated_at": "2026-01-02T09:54:08.732Z"
   }
@@ -1120,6 +3447,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:54:08.749Z",
     "updated_at": "2026-01-07T06:24:10.228Z"
   }
@@ -1160,6 +3488,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:54:23.196Z",
     "updated_at": "2026-01-02T09:54:39.036Z"
   }
@@ -1200,6 +3529,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:54:39.052Z",
     "updated_at": "2026-01-02T09:54:55.742Z"
   }
@@ -1240,6 +3570,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:54:55.778Z",
     "updated_at": "2026-01-07T06:24:10.128Z"
   }
@@ -1280,6 +3611,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:55:20.886Z",
     "updated_at": "2026-01-02T09:55:40.143Z"
   }
@@ -1320,6 +3652,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:55:40.162Z",
     "updated_at": "2026-01-02T09:58:34.669Z"
   }
@@ -1360,6 +3693,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:58:34.686Z",
     "updated_at": "2026-01-02T09:58:47.919Z"
   }
@@ -1387,6 +3721,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:58:47.933Z",
     "updated_at": "2026-01-07T06:24:09.994Z"
   }
@@ -1414,6 +3749,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:59:04.368Z",
     "updated_at": "2026-01-02T09:59:16.661Z"
   }
@@ -1454,6 +3790,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:59:16.674Z",
     "updated_at": "2026-01-02T09:59:30.993Z"
   }
@@ -1494,6 +3831,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:59:31.008Z",
     "updated_at": "2026-01-07T06:24:10.228Z"
   }
@@ -1534,6 +3872,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T09:59:49.024Z",
     "updated_at": "2026-01-07T06:24:10.176Z"
   }
@@ -1574,6 +3913,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:00:07.264Z",
     "updated_at": "2026-01-02T10:00:21.395Z"
   }
@@ -1614,6 +3954,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:00:21.410Z",
     "updated_at": "2026-01-02T10:00:34.828Z"
   }
@@ -1641,6 +3982,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:00:34.841Z",
     "updated_at": "2026-01-07T06:24:10.212Z"
   }
@@ -1681,6 +4023,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:00:52.366Z",
     "updated_at": "2026-01-07T06:24:10.245Z"
   }
@@ -1721,6 +4064,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:01:07.203Z",
     "updated_at": "2026-01-07T06:24:09.977Z"
   }
@@ -1761,6 +4105,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:01:21.619Z",
     "updated_at": "2026-01-02T10:01:41.195Z"
   }
@@ -1801,6 +4146,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:01:41.210Z",
     "updated_at": "2026-01-07T06:24:10.264Z"
   }
@@ -1828,6 +4174,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:01:58.634Z",
     "updated_at": "2026-01-02T10:02:16.570Z"
   }
@@ -1868,6 +4215,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:02:16.583Z",
     "updated_at": "2026-01-07T06:24:10.195Z"
   }
@@ -1908,6 +4256,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:02:31.351Z",
     "updated_at": "2026-01-07T06:24:10.011Z"
   }
@@ -1935,6 +4284,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:02:47.832Z",
     "updated_at": "2026-01-02T10:03:04.241Z"
   }
@@ -1975,6 +4325,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:03:04.256Z",
     "updated_at": "2026-01-07T06:24:10.128Z"
   }
@@ -2002,6 +4353,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:06:43.679Z",
     "updated_at": "2026-01-07T06:24:10.195Z"
   }
@@ -2039,6 +4391,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:06:57.536Z",
     "updated_at": "2026-01-07T06:24:10.111Z"
   }
@@ -2076,6 +4429,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:07:13.105Z",
     "updated_at": "2026-01-02T10:07:29.748Z"
   }
@@ -2113,6 +4467,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:07:29.764Z",
     "updated_at": "2026-01-07T06:24:10.080Z"
   }
@@ -2146,6 +4501,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:07:46.011Z",
     "updated_at": "2026-01-07T06:24:10.045Z"
   }
@@ -2179,6 +4535,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:08:04.282Z",
     "updated_at": "2026-01-07T06:24:09.961Z"
   }
@@ -2206,6 +4563,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:08:21.681Z",
     "updated_at": "2026-01-07T06:24:10.090Z"
   }
@@ -2233,6 +4591,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T10:08:37.246Z",
     "updated_at": "2026-01-02T10:08:38.737Z"
   }
@@ -2260,6 +4619,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:09:41.426Z",
     "updated_at": "2026-01-02T12:09:55.891Z"
   }
@@ -2300,6 +4660,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:09:55.903Z",
     "updated_at": "2026-01-07T06:24:10.061Z"
   }
@@ -2340,6 +4701,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:10:12.360Z",
     "updated_at": "2026-01-07T06:24:10.027Z"
   }
@@ -2380,6 +4742,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:10:27.916Z",
     "updated_at": "2026-01-07T06:24:09.927Z"
   }
@@ -2420,6 +4783,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:10:44.322Z",
     "updated_at": "2026-01-07T06:24:10.187Z"
   }
@@ -2460,6 +4824,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:10:59.529Z",
     "updated_at": "2026-01-02T12:11:14.677Z"
   }
@@ -2500,6 +4865,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:11:14.694Z",
     "updated_at": "2026-01-02T12:11:26.635Z"
   }
@@ -2527,6 +4893,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:11:28.486Z",
     "updated_at": "2026-01-02T12:11:45.066Z"
   }
@@ -2567,6 +4934,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:11:45.084Z",
     "updated_at": "2026-01-02T12:12:00.937Z"
   }
@@ -2594,6 +4962,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:12:00.954Z",
     "updated_at": "2026-01-02T12:12:16.311Z"
   }
@@ -2621,6 +4990,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:12:16.326Z",
     "updated_at": "2026-01-07T06:24:10.145Z"
   }
@@ -2648,6 +5018,7 @@
     "carton_height_cm": 0.0,
     "gross_weight_per_carton_kg": 0.0,
     "net_weight_per_carton_kg": 0.0,
+    "active": true,
     "created_at": "2026-01-02T12:12:31.060Z",
     "updated_at": "2026-01-02T12:12:31.060Z"
   }
@@ -15828,10 +18199,10 @@
   "model": "catalog.offer",
   "pk": 1,
   "fields": {
-    "title": "Motorized Mantel TV Bracket",
-    "subtitle": "New Arrival",
+    "title": "Motorized Mantel TV Bracket Motorized Mantel TV BracketMotorized Mantel TV BracketMotorized Mantel T",
+    "subtitle": "New Arrival New ArrivalNew ArrivalNew ArrivalNew ArrivalNew ArrivalNew ArrivalNew ArrivalNew Arrival",
     "image": "offers/new-arrival1.jpg",
-    "button_text": "Explore",
+    "button_text": "Explore ExploreExploreExploreExploreExploreExplore",
     "button_link": "https://www.google.com/",
     "active": true,
     "order": 1
@@ -15877,6 +18248,18 @@
   }
 },
 {
+  "model": "catalog.productenquiry",
+  "pk": 1,
+  "fields": {
+    "product": 1,
+    "name": "Abhinand",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "29932",
+    "message": "test",
+    "created_at": "2026-01-09T05:19:51.964Z"
+  }
+},
+{
   "model": "catalog.contactenquiry",
   "pk": 1,
   "fields": {
@@ -15905,6 +18288,258 @@
   }
 },
 {
+  "model": "catalog.contactenquiry",
+  "pk": 3,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": "Test",
+    "address": null,
+    "comments": "test",
+    "created_at": "2026-01-08T12:24:57.942Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 4,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "9484651653",
+    "subject": "asf",
+    "address": null,
+    "comments": "sdf",
+    "created_at": "2026-01-08T12:25:45.275Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 5,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "3409853043",
+    "subject": "asfdsad",
+    "address": null,
+    "comments": "asdfssddf sdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffs fdsffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff dssssfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "created_at": "2026-01-09T04:29:04.394Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 6,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": "Test",
+    "address": null,
+    "comments": "sdf",
+    "created_at": "2026-01-09T04:47:03.484Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 7,
+  "fields": {
+    "name": "asfsd",
+    "company": "sadf",
+    "email": "sdfsd@gmail.com",
+    "phone": "sdf",
+    "subject": "sjds",
+    "address": null,
+    "comments": "sdfs",
+    "created_at": "2026-01-09T04:48:42.597Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 8,
+  "fields": {
+    "name": "asfsadf",
+    "company": "asdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "sdfsdf",
+    "subject": "sfds",
+    "address": null,
+    "comments": "s",
+    "created_at": "2026-01-09T04:52:14.741Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 9,
+  "fields": {
+    "name": "Abhinandsdff",
+    "company": "sadfsd",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "9484651653",
+    "subject": "asfdsad",
+    "address": null,
+    "comments": "sdfsfsdf",
+    "created_at": "2026-01-09T04:53:54.188Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 10,
+  "fields": {
+    "name": "Abhinandsdff",
+    "company": "safsd",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "21316545",
+    "subject": "Test subject",
+    "address": null,
+    "comments": "asf",
+    "created_at": "2026-01-09T04:59:02.954Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 11,
+  "fields": {
+    "name": "Abhinandsdff",
+    "company": "test",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "21316545",
+    "subject": "Test subject",
+    "address": null,
+    "comments": "test",
+    "created_at": "2026-01-09T05:04:29.084Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 12,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": "test",
+    "address": null,
+    "comments": "test",
+    "created_at": "2026-01-09T05:10:56.029Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 13,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": "sd",
+    "address": null,
+    "comments": "fsd",
+    "created_at": "2026-01-09T05:13:49.738Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 14,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": null,
+    "address": "Kerala\nCalicut",
+    "comments": "test",
+    "created_at": "2026-01-09T05:15:01.170Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 15,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": "asf",
+    "address": null,
+    "comments": "SAFDS",
+    "created_at": "2026-01-09T10:04:10.358Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 16,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": null,
+    "address": "Kerala\nCalicut",
+    "comments": "TEST",
+    "created_at": "2026-01-09T10:06:33.619Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 17,
+  "fields": {
+    "name": "asdfsdf",
+    "company": "SADF",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "SDF",
+    "subject": "sadf",
+    "address": null,
+    "comments": "asdf",
+    "created_at": "2026-01-09T10:23:01.330Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 18,
+  "fields": {
+    "name": "Abhinand tk",
+    "company": "aasdfsdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "subject": "sfs",
+    "address": null,
+    "comments": "asdf",
+    "created_at": "2026-01-09T10:23:45.775Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 19,
+  "fields": {
+    "name": "sadf",
+    "company": "sdf",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "sf",
+    "subject": "Test",
+    "address": null,
+    "comments": "sf",
+    "created_at": "2026-01-09T11:03:52.066Z"
+  }
+},
+{
+  "model": "catalog.contactenquiry",
+  "pk": 20,
+  "fields": {
+    "name": "Shafana",
+    "company": "safsd",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "21316545",
+    "subject": "asfdsad",
+    "address": null,
+    "comments": "sdfsdf",
+    "created_at": "2026-01-09T11:05:54.449Z"
+  }
+},
+{
   "model": "catalog.servicebooking",
   "pk": 1,
   "fields": {
@@ -15917,6 +18552,21 @@
     "date": "2026-01-29",
     "time": "Morning (9 AM - 12 PM)",
     "created_at": "2026-01-07T07:42:21.803Z"
+  }
+},
+{
+  "model": "catalog.servicebooking",
+  "pk": 2,
+  "fields": {
+    "name": "Abhinand tk",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "installation_type": "Motorized Bracket Installation",
+    "tv_size": "55 Inches",
+    "bracket": false,
+    "date": "2026-01-29",
+    "time": "Afternoon (12 PM - 4 PM)",
+    "created_at": "2026-01-09T05:24:16.336Z"
   }
 },
 {
@@ -15963,7 +18613,7 @@
   "model": "catalog.client",
   "pk": 5,
   "fields": {
-    "name": "Partner 5",
+    "name": "Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5 Partner 5",
     "image": "clients/5.png",
     "order": 5,
     "active": true
@@ -15983,7 +18633,7 @@
   "model": "catalog.catalogue",
   "pk": 1,
   "fields": {
-    "title": "TV Mount Catalogue",
+    "title": "TV Mount Catalogue TV Mount CatalogueTV Mount CatalogueTV Mount CatalogueTV Mount CatalogueTV Mount",
     "thumbnail": "catalogues/thumbnails/catalogue.jpg",
     "file": "catalogues/files/Module_req_skilltech.pdf",
     "order": 1,
@@ -16456,9 +19106,9 @@
   "pk": 3,
   "fields": {
     "page": "blog",
-    "title": "Explore Insights, Ideas & Industry Stories",
-    "subtitle": "Blog",
-    "description": "Stay updated with expert articles, product guides, tech trends, and insider tips designed to keep you informed and inspired. Dive into blogs that help you learn, grow, and stay ahead.",
+    "title": "Explore Insights, Ideas & Ind es Explore Insights, Ideas & Industry Stor iesExplore Insight",
+    "subtitle": "Blog BlogBlogBlogBlogB logBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBl ogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlogBlog",
+    "description": "sdf sdfsd f sddd sdfdddddddddddddddddd dddddddddddfsdg sdffffffffffs sdg sddddddddddddddddd sg fggggggggggggggg sdgssssssssssssss sadg sddddddddsdg sdddddddddd",
     "button_text": "Explore",
     "button_link": "/blog",
     "image": "page_banners/9.jpg"
@@ -16498,11 +19148,11 @@
   "model": "catalog.blogpost",
   "pk": 3,
   "fields": {
-    "title": "Enhancing Your Gaming Setup with the Right Mount",
+    "title": "up with the Right Mount Enhancing Your Gaming Setup with the Right Mount Enha",
     "slug": "enhancing-your-gaming-setup-with-the-right-mount",
     "image": "blog/unique3.jpg",
-    "content": "Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)",
-    "short_description": "Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.",
+    "content": "Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...) Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups. (Full content would go here...)",
+    "short_description": "Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.Take your gaming experience to the next level with ergonomic monitor mounts and immersive display setups.",
     "tags": "[]",
     "author": "Admin",
     "created_at": "2026-01-07T09:48:25.449Z",
@@ -16647,10 +19297,12 @@
     "address_heading": "Our Office",
     "address": "Skill Mount Electronics Trading LLC\r\nP.O.Box 38108, Deira, Dubai, UAE",
     "google_map_link": null,
-    "no_follow": true,
+    "demo": false,
     "email_host": "smtp.gmail.com",
     "email_host_user": "abhinandtk.primalcodes@gmail.com",
-    "email_host_password": "ozbk ntwp yhba ixur"
+    "email_host_password": "ozbk ntwp yhba ixur",
+    "admin_email": "abhinandtk69@gmail.com, ramkk086@gmail.com",
+    "enable_captcha": true
   }
 },
 {
@@ -16809,11 +19461,11 @@
   "model": "catalog.career",
   "pk": 4,
   "fields": {
-    "position": "TV Engineer",
+    "position": "TV Engineer TV EngineerTV EngineerTV EngineerTV EngineerTV EngineerTV EngineerTV EngineerTV EngineeT",
     "slug": "tv-engineer",
     "experience": "4+ Years",
     "location": "Dubai, UAE",
-    "description": "Senior TV Engineer required for complex mounting systems and video wall projects.",
+    "description": "Senior TV Engineer required for complex mounting systems and video wall projects. TV Engineer Senior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV EngineerSenior TV Engineer required for complex mounting systems and video wall projects. TV Engineer",
     "active": true,
     "created_at": "2026-01-07T09:20:16.343Z"
   }
@@ -16832,11 +19484,37 @@
   }
 },
 {
+  "model": "catalog.careerapplication",
+  "pk": 2,
+  "fields": {
+    "career": 4,
+    "name": "Abhinand tk",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "cv": "career_cvs/Verifeo_Website_Content_5.pdf",
+    "cover_letter": "sdfsa",
+    "created_at": "2026-01-09T05:28:10.078Z"
+  }
+},
+{
+  "model": "catalog.careerapplication",
+  "pk": 3,
+  "fields": {
+    "career": 4,
+    "name": "Abhinand tk",
+    "email": "abhinandtk.primalcodes@gmail.com",
+    "phone": "920789833",
+    "cv": "career_cvs/Web_page1_compressed_SXJ3G4N.pdf",
+    "cover_letter": "ASDFSD",
+    "created_at": "2026-01-09T10:08:00.357Z"
+  }
+},
+{
   "model": "catalog.globallocation",
   "pk": 6,
   "fields": {
     "country": "China",
-    "address": "Hongao Shi Village, Yinzhou, Ningbo, China 315100",
+    "address": "Hongao Shi Village, Yinzhou, Ningbo, China 315100 Hongao Shi 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100Hongao Shi Village, Yinzhou, Ningbo, China 315100",
     "email": "info@skilltechonline.com",
     "map_iframe": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15614.5491982085!2d75.56601624876296!3d11.93031031275792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba430ff0b802ed5%3A0x34c8285f1826dc2e!2sMattannur%2C%20Kerala%20670702!5e0!3m2!1sen!2sin!4v1767781985881!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
     "map_link": "https://www.google.com/maps?q=Ningbo,+China",
