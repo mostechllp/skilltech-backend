@@ -18,6 +18,7 @@ from io import BytesIO
 from django.http import HttpResponse, JsonResponse
 from PIL import Image, ImageDraw, ImageFont
 from django.views.decorators.csrf import csrf_exempt
+import threading
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 32
@@ -156,10 +157,7 @@ class ContactEnquiryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = ContactEnquiry.objects.all()
     serializer_class = ContactEnquirySerializer
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        
-        # Send email to admin
+    def send_contact_emails(instance):
         logger.info("Attempting to send email...")
         try:
             site_settings = SiteSettings.objects.first()
@@ -233,16 +231,23 @@ class ContactEnquiryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                 logger.warning("Missing site settings or email configuration.")
 
         except Exception as e:
-            logger.error(f"Error sending email: {e}")
+            logger.error(f"Error sending contact enquiry email: {e}")
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+
+        threading.Thread(
+            target=self.send_contact_emails,
+            args=(instance,),
+            daemon=True
+        ).start()
             # pass
 
 class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = ServiceBooking.objects.all()
     serializer_class = ServiceBookingSerializer
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        
+    def send_booking_emails(self, instance):
         # Send email to admin
         try:
             site_settings = SiteSettings.objects.first()
@@ -289,6 +294,15 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                 
         except Exception as e:
             logger.error(f"Error sending service booking email: {e}")
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        
+        threading.Thread(
+            target=self.send_booking_emails,
+            args=(instance,),
+            daemon=True
+        ).start()
 
 class ClientViewSet(viewsets.ReadOnlyModelViewSet):
 
@@ -604,9 +618,7 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
     queryset = CareerApplication.objects.all()
     serializer_class = CareerApplicationSerializer
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        
+    def send_career_emails(self, instance):
         # Send email to admin
         try:
             site_settings = SiteSettings.objects.first()
@@ -662,6 +674,15 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
                 
         except Exception as e:
             logger.error(f"Error sending career application email: {e}")
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        
+        threading.Thread(
+            target=self.send_career_emails,
+            args=(instance,),
+            daemon=True
+        ).start()
 
 
 
@@ -752,15 +773,15 @@ def validate_captcha(request):
         # Note: Frontend must send credentials (cookies) for this to work.
         real = request.session.get("captcha_text", "")
         
-        # print(f"DEBUG: User Input: '{user_input}', Real Captcha: '{real}', Session ID: {request.session.session_key}")
+        print(f"DEBUG: User Input: '{user_input}', Real Captcha: '{real}', Session ID: {request.session.session_key}")
 
         if user_input and real and user_input.upper() == real:
             return JsonResponse({"status": "ok"})
         else:
-            # print("DEBUG: Validation Failed")
+            print("DEBUG: Validation Failed")
             pass
     except Exception as e:
-        # print(f"DEBUG: Exception in validate_captcha: {e}")
+        print(f"DEBUG: Exception in validate_captcha: {e}")
         pass
 
     return JsonResponse({"status": "fail"})

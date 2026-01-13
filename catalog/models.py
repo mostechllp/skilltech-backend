@@ -401,6 +401,8 @@ class SiteSettings(models.Model):
     facebook = models.URLField(blank=True, null=True)
     linkedin = models.URLField(blank=True, null=True)
     instagram = models.URLField(blank=True, null=True)
+    youtube = models.URLField(blank=True, null=True)
+    x = models.URLField(blank=True, null=True, verbose_name="X (Twitter)")
     whatsapp = models.CharField(max_length=20, blank=True, null=True)
     
     address_heading = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
