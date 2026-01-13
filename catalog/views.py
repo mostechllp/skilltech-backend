@@ -157,7 +157,7 @@ class ContactEnquiryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = ContactEnquiry.objects.all()
     serializer_class = ContactEnquirySerializer
 
-    def send_contact_emails(instance):
+    def send_contact_emails(self,instance):
         logger.info("Attempting to send email...")
         try:
             site_settings = SiteSettings.objects.first()
