@@ -59,14 +59,15 @@ class Product(models.Model):
     # New fields
     datasheet = models.FileField(upload_to='products/datasheets/', blank=True, null=True)
     show_in_home = models.BooleanField(default=False)
+    show_cbm_calculator = models.BooleanField(default=False)
     
     # CBM Calculator Fields
-    units_per_carton = models.IntegerField(default=1, help_text='Units per Carton')
-    carton_length_cm = models.FloatField(default=0, help_text='Carton Length in cm')
-    carton_width_cm = models.FloatField(default=0, help_text='Carton Width in cm')
-    carton_height_cm = models.FloatField(default=0, help_text='Carton Height in cm')
-    gross_weight_per_carton_kg = models.FloatField(default=0, help_text='Gross Weight per Carton in Kg')
-    net_weight_per_carton_kg = models.FloatField(default=0, help_text='Net Weight per Carton in Kg')
+    units_per_carton = models.IntegerField(blank=True, null=True, help_text='Units per Carton')
+    carton_length_cm = models.FloatField(blank=True, null=True, help_text='Carton Length in cm')
+    carton_width_cm = models.FloatField(blank=True, null=True, help_text='Carton Width in cm')
+    carton_height_cm = models.FloatField(blank=True, null=True, help_text='Carton Height in cm')
+    gross_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Gross Weight per Carton in Kg')
+    net_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Net Weight per Carton in Kg')
 
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
