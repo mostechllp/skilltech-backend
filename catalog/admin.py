@@ -186,5 +186,4 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     
         return super().has_add_permission(request)
 
-admin.site.register(ProductFeature)
     
