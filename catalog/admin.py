@@ -44,9 +44,8 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
 
-class ProductFeatureInline(admin.TabularInline):
+class ProductFeatureInline(admin.StackedInline):
     model = ProductFeature
-    extra = 1
 
 class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification

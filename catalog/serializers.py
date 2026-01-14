@@ -43,7 +43,7 @@ class GlobalLocationSerializer(serializers.ModelSerializer):
 class ProductFeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductFeature
-        fields = ['description']
+        fields = ['screen_size', 'vesa_compatibility', 'profile_to_wall', 'weight_capacity', 'screen_rotation', 'direction_indicator', 'curved_tv']
 
 class ProductSpecificationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -56,11 +56,12 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ['image']
 
 class ProductSerializer(serializers.ModelSerializer):
-    features = ProductFeatureSerializer(many=True, read_only=True)
+    features = ProductFeatureSerializer(read_only=True)
     specifications = ProductSpecificationSerializer(many=True, read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
     category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
+    category=serializers.CharField(source='subcategory.category.name', read_only=True)
 
     class Meta:
         model = Product

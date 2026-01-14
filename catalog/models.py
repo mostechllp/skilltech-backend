@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -82,11 +83,17 @@ class Product(models.Model):
         return self.name
 
 class ProductFeature(models.Model):
-    product = models.ForeignKey(Product, related_name='features', on_delete=models.CASCADE)
-    description = models.TextField(max_length=255)
+    product = models.OneToOneField(Product, related_name='features', on_delete=models.CASCADE)
+    screen_size = models.CharField(max_length=100, blank=True, null=True)
+    vesa_compatibility = models.CharField(max_length=100, blank=True, null=True)
+    profile_to_wall = models.CharField(max_length=100, blank=True, null=True)
+    weight_capacity = models.CharField(max_length=100, blank=True, null=True)
+    screen_rotation = models.CharField(max_length=100, blank=True, null=True)
+    direction_indicator = models.CharField(max_length=100, blank=True, null=True)
+    curved_tv = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.description
+        return f'Features for {self.product.name}'
 
 class ProductSpecification(models.Model):
     product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
