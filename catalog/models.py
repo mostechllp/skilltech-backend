@@ -83,7 +83,7 @@ class Product(models.Model):
         return self.name
 
 class ProductFeature(models.Model):
-    product = models.OneToOneField(Product, related_name='features', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='features', on_delete=models.CASCADE)
     screen_size = models.CharField(max_length=100, blank=True, null=True)
     vesa_compatibility = models.CharField(max_length=100, blank=True, null=True)
     profile_to_wall = models.CharField(max_length=100, blank=True, null=True)
