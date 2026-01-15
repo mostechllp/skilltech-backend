@@ -50,7 +50,9 @@ class Product(models.Model):
     description = models.TextField(help_text='Full product description')
     
     main_image = models.ImageField(upload_to='products/main/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio). Transparent PNG preferred for listing consistency.")
+    main_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     drawing_image = models.ImageField(upload_to='products/drawings/', blank=True, null=True, help_text="Recommended size: 1200x800px or similar (Landscape/Technical drawing).")
+    drawing_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     
     video_url = models.URLField(blank=True, null=True, help_text='Installation Video URL')
     product_video_url = models.URLField(blank=True, null=True, help_text='Product Video URL')
@@ -106,9 +108,19 @@ class ProductSpecification(models.Model):
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/gallery/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio).")
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     
     def __str__(self):
         return f'Image for {self.product.name}'
+
+class ProductSeo(models.Model):
+    product = models.OneToOneField(Product, related_name='seo', on_delete=models.CASCADE)
+    meta_title = models.CharField(max_length=200, blank=True)
+    meta_description = models.TextField(blank=True)
+    meta_image = models.ImageField(upload_to='products/seo/', blank=True, null=True, help_text="Recommended size: 2400x1260px (Social media sharing).")
+
+    def __str__(self):
+        return f'SEO for {self.product.name}'
 
 class HomepageBanner(models.Model):
     title = models.CharField(max_length=100)
@@ -462,6 +474,20 @@ class AvailableTime(models.Model):
     def __str__(self):
         return self.time_slot
 
+class ServiceFAQ(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+    order = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Service FAQ'
+        verbose_name_plural = 'Service FAQs'
+
+    def __str__(self):
+        return f"{self.question}"
+
 
 
 class Career(models.Model):
@@ -509,4 +535,18 @@ class GlobalLocation(models.Model):
 
     def __str__(self):
         return self.country
+
+class Statistic(models.Model):
+    value = models.IntegerField(help_text="Numeric value for the counter (e.g. 100 for 100K)")
+    label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
+    suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
+    icon = models.ImageField(upload_to='statistics/', blank=True, null=True, help_text="Optional icon")
+    order = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.value}{self.suffix} - {self.label}"
 

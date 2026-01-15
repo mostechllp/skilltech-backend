@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation
+from .models import Category, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, Statistic
 
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,6 +15,11 @@ class AvailableTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AvailableTime
         fields = ['id', 'time_slot']
+
+class ServiceFAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceFAQ
+        fields = ['id', 'question', 'answer', 'order']
 
 class ServiceSerializer(serializers.ModelSerializer):
     installation_types = InstallationTypeSerializer(many=True, read_only=True)
@@ -53,7 +58,12 @@ class ProductSpecificationSerializer(serializers.ModelSerializer):
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ['image']
+        fields = ['image', 'alt_text']
+
+class ProductSeoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductSeo
+        fields = ['meta_title', 'meta_description', 'meta_image']
 
 class ProductSerializer(serializers.ModelSerializer):
     features = ProductFeatureSerializer(read_only=True)
@@ -62,6 +72,7 @@ class ProductSerializer(serializers.ModelSerializer):
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
     category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
     category=serializers.CharField(source='subcategory.category.name', read_only=True)
+    seo = ProductSeoSerializer(read_only=True)
 
     class Meta:
         model = Product
@@ -689,4 +700,9 @@ class SEOPageSerializer(serializers.ModelSerializer):
 class SiteSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SiteSettings
+        fields = '__all__'
+
+class StatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Statistic
         fields = '__all__'

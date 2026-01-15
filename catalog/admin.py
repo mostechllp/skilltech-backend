@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Category, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation
+from .models import Category, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation, Statistic
+from .models import ProductSeo
 
 class InstallationTypeInline(admin.TabularInline):
     model = InstallationType
@@ -51,6 +52,9 @@ class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
     extra = 1
 
+class ProductSeoInline(admin.StackedInline):
+    model = ProductSeo
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'active')
@@ -71,7 +75,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('subcategory', 'subcategory__category', 'active')
     search_fields = ('name', 'title', 'description')
     prepopulated_fields = {'slug': ('name',)}
-    inlines = [ProductFeatureInline, ProductSpecificationInline, ProductImageInline]
+    inlines = [ProductFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
 
 @admin.register(HomepageBanner)
 class HomepageBannerAdmin(admin.ModelAdmin):
@@ -158,8 +162,6 @@ class SEOAdmin(admin.ModelAdmin):
     
 @admin.register(SiteSettings)
     
-
-    
 class SiteSettingsAdmin(admin.ModelAdmin):
     
 
@@ -186,4 +188,12 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     
         return super().has_add_permission(request)
 
-    
+@admin.register(ServiceFAQ)
+class ServiceFAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'active')
+
+@admin.register(Statistic)
+class StatisticAdmin(admin.ModelAdmin):
+    list_display = ('label', 'value', 'suffix', 'active', 'order')
+    list_editable = ('active', 'order')
+    search_fields = ('label', 'value')

@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
-from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, generate_captcha, validate_captcha
+from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, generate_captcha, validate_captcha
 
 def robots_txt(request):
     lines = [
@@ -34,9 +34,11 @@ router.register(r'projects', ProjectViewSet)
 router.register(r'seo', SEOPageViewSet)
 router.register(r'settings', SiteSettingsViewSet)
 router.register(r'services', ServiceViewSet)
+router.register(r'service-faqs', ServiceFAQViewSet)
 router.register(r'careers', CareerViewSet)
 router.register(r'career-applications', CareerApplicationViewSet)
 router.register(r'global-locations', GlobalLocationViewSet)
+router.register(r'statistics', StatisticViewSet)
 router.register(r'sitemap-data', SitemapDataViewSet, basename='sitemap-data')
 
 urlpatterns = [

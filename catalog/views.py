@@ -3,8 +3,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, Career, CareerApplication, GlobalLocation
-from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer
+from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, Statistic
+from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
@@ -607,7 +607,11 @@ class ServiceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Service.objects.filter(active=True)
     serializer_class = ServiceSerializer
 
+class ServiceFAQViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ServiceFAQ.objects.filter(active=True).order_by('order')
+    serializer_class = ServiceFAQSerializer
 
+    
 
 class CareerViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Career.objects.filter(active=True).order_by('-created_at')
@@ -689,6 +693,10 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
 class GlobalLocationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = GlobalLocation.objects.filter(active=True).order_by('order')
     serializer_class = GlobalLocationSerializer
+
+class StatisticViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Statistic.objects.filter(active=True).order_by('order')
+    serializer_class = StatisticSerializer
 
 class SitemapDataViewSet(viewsets.ViewSet):
     def list(self, request):
