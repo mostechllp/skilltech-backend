@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation, Statistic
+from .models import Category, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
 from .models import ProductSeo
 
 class InstallationTypeInline(admin.TabularInline):
@@ -41,7 +41,7 @@ class GlobalLocationAdmin(admin.ModelAdmin):
     search_fields = ('country', 'address')
     fields = ('country', 'address', 'email', 'map_iframe', 'map_link', 'active', 'order')
 
-class ProductImageInline(admin.TabularInline):
+class ProductImageInline(admin.StackedInline):
     model = ProductImage
     extra = 1
 
@@ -70,12 +70,18 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'title', 'subcategory', 'slug', 'active')
-    list_editable = ('active',)
+    list_display = ('name', 'title', 'subcategory','order', 'slug', 'active')
+    list_editable = ('active','order')
     list_filter = ('subcategory', 'subcategory__category', 'active')
     search_fields = ('name', 'title', 'description')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "similar_products":
+            if request.resolver_match and request.resolver_match.kwargs.get('object_id'):
+                kwargs["queryset"] = Product.objects.exclude(pk=request.resolver_match.kwargs.get('object_id'))
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 @admin.register(HomepageBanner)
 class HomepageBannerAdmin(admin.ModelAdmin):
@@ -192,8 +198,14 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 class ServiceFAQAdmin(admin.ModelAdmin):
     list_display = ('question', 'active')
 
-@admin.register(Statistic)
-class StatisticAdmin(admin.ModelAdmin):
+@admin.register(HomeStatistic)
+class HomeStatisticAdmin(admin.ModelAdmin):
+    list_display = ('label', 'value', 'suffix', 'active', 'order')
+    list_editable = ('active', 'order')
+    search_fields = ('label', 'value')
+
+@admin.register(ServiceStatistic)
+class ServiceStatisticAdmin(admin.ModelAdmin):
     list_display = ('label', 'value', 'suffix', 'active', 'order')
     list_editable = ('active', 'order')
     search_fields = ('label', 'value')

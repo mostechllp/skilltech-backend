@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 
@@ -62,7 +64,9 @@ class Product(models.Model):
     # New fields
     datasheet = models.FileField(upload_to='products/datasheets/', blank=True, null=True)
     show_in_home = models.BooleanField(default=False)
+    similar_products = models.ManyToManyField('self', blank=True, related_name='similar_to')
     show_cbm_calculator = models.BooleanField(default=False)
+    show_economic=models.BooleanField(default=False)
     
     # CBM Calculator Fields
     units_per_carton = models.IntegerField(blank=True, null=True, help_text='Units per Carton')
@@ -75,6 +79,7 @@ class Product(models.Model):
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    order=models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -83,6 +88,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['order', 'name']
 
 class ProductFeature(models.Model):
     product = models.OneToOneField(Product, related_name='features', on_delete=models.CASCADE)
@@ -109,9 +117,13 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/gallery/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio).")
     alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
+    order=models.IntegerField(default=0)
     
     def __str__(self):
         return f'Image for {self.product.name}'
+    
+    class Meta:
+        ordering = ['order']
 
 class ProductSeo(models.Model):
     product = models.OneToOneField(Product, related_name='seo', on_delete=models.CASCADE)
@@ -536,11 +548,25 @@ class GlobalLocation(models.Model):
     def __str__(self):
         return self.country
 
-class Statistic(models.Model):
+class HomeStatistic(models.Model):
     value = models.IntegerField(help_text="Numeric value for the counter (e.g. 100 for 100K)")
     label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
     suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
     icon = models.ImageField(upload_to='statistics/', blank=True, null=True, help_text="Optional icon")
+    order = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.value}{self.suffix} - {self.label}"
+
+class ServiceStatistic(models.Model):
+    value = models.IntegerField(help_text="Numeric value for the counter (e.g. 100 for 100K)")
+    label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
+    suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
+    icon = models.ImageField(upload_to='service_statistics/', blank=True, null=True, help_text="Optional icon")
     order = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
 

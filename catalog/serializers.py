@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, Statistic
+from .models import Category, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic
 
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -65,6 +65,14 @@ class ProductSeoSerializer(serializers.ModelSerializer):
         model = ProductSeo
         fields = ['meta_title', 'meta_description', 'meta_image']
 
+class SimilarProductSerializer(serializers.ModelSerializer):
+    subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
+    category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
+    
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'title', 'slug', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
+
 class ProductSerializer(serializers.ModelSerializer):
     features = ProductFeatureSerializer(read_only=True)
     specifications = ProductSpecificationSerializer(many=True, read_only=True)
@@ -73,6 +81,7 @@ class ProductSerializer(serializers.ModelSerializer):
     category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
     category=serializers.CharField(source='subcategory.category.name', read_only=True)
     seo = ProductSeoSerializer(read_only=True)
+    similar_products = SimilarProductSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
@@ -704,5 +713,10 @@ class SiteSettingsSerializer(serializers.ModelSerializer):
 
 class StatisticSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Statistic
+        model = HomeStatistic
+        fields = '__all__'
+
+class ServiceStatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceStatistic
         fields = '__all__'

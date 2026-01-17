@@ -3,8 +3,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, Statistic
-from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer
+from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
+from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
@@ -695,8 +695,12 @@ class GlobalLocationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = GlobalLocationSerializer
 
 class StatisticViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Statistic.objects.filter(active=True).order_by('order')
+    queryset = HomeStatistic.objects.filter(active=True).order_by('order')
     serializer_class = StatisticSerializer
+
+class ServiceStatisticViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ServiceStatistic.objects.filter(active=True).order_by('order')
+    serializer_class = ServiceStatisticSerializer
 
 class SitemapDataViewSet(viewsets.ViewSet):
     def list(self, request):
