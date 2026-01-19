@@ -62,6 +62,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).order_by('name')
     serializer_class = ProductSerializer
     lookup_field = 'slug'
+    ordering_fields = ['order']
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):

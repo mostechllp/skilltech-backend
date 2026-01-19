@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic
+from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic
 
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,10 +45,16 @@ class GlobalLocationSerializer(serializers.ModelSerializer):
         model = GlobalLocation
         fields = '__all__'
 
+class FeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Feature
+        fields=['id','title','order']
+
 class ProductFeatureSerializer(serializers.ModelSerializer):
+    feature=FeatureSerializer(read_only=True)
     class Meta:
         model = ProductFeature
-        fields = ['screen_size', 'vesa_compatibility', 'profile_to_wall', 'weight_capacity', 'screen_rotation', 'direction_indicator', 'curved_tv']
+        fields = ['feature','value','icon']
 
 class ProductSpecificationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -74,7 +80,7 @@ class SimilarProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'title', 'slug', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
 
 class ProductSerializer(serializers.ModelSerializer):
-    features = ProductFeatureSerializer(read_only=True)
+    features = ProductFeatureSerializer(many=True, read_only=True)
     specifications = ProductSpecificationSerializer(many=True, read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)

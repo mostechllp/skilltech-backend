@@ -90,17 +90,22 @@ class Product(models.Model):
         return self.name
     
     class Meta:
-        ordering = ['order', 'name']
+        ordering = ['name']
+
+class Feature(models.Model):
+    title=models.CharField(max_length=100)
+    order=models.IntegerField(default=0)
+    class Meta:
+        ordering = ['order']
+    
+    def __str__(self):
+        return self.title
 
 class ProductFeature(models.Model):
-    product = models.OneToOneField(Product, related_name='features', on_delete=models.CASCADE)
-    screen_size = models.CharField(max_length=100, blank=True, null=True)
-    vesa_compatibility = models.CharField(max_length=100, blank=True, null=True)
-    profile_to_wall = models.CharField(max_length=100, blank=True, null=True)
-    weight_capacity = models.CharField(max_length=100, blank=True, null=True)
-    screen_rotation = models.CharField(max_length=100, blank=True, null=True)
-    direction_indicator = models.CharField(max_length=100, blank=True, null=True)
-    curved_tv = models.CharField(max_length=100, blank=True, null=True)
+    product = models.ForeignKey(Product, related_name='features', on_delete=models.CASCADE)
+    feature=models.ForeignKey(Feature,related_name='product_features',on_delete=models.SET_NULL,blank=True,null=True)
+    value=models.CharField(max_length=255) 
+    icon=models.ImageField(upload_to='products/features/',blank=True,null=True,help_text="Icon for the feature. Recommended size: 400x400px (1:1 aspect ratio).")
 
     def __str__(self):
         return f'Features for {self.product.name}'
@@ -436,6 +441,7 @@ class SiteSettings(models.Model):
     youtube = models.URLField(blank=True, null=True)
     x = models.URLField(blank=True, null=True, verbose_name="X (Twitter)")
     whatsapp = models.CharField(max_length=20, blank=True, null=True)
+    service_whatsapp = models.CharField(max_length=20, blank=True, null=True, help_text="WhatsApp number for service page")
     
     address_heading = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
     address = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")

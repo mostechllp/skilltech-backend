@@ -1,6 +1,10 @@
 from django.contrib import admin
 from .models import Category, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
-from .models import ProductSeo
+from .models import ProductSeo,Feature
+from import_export import resources,fields
+from import_export.admin import ImportExportModelAdmin
+from import_export.widgets import ForeignKeyWidget
+from import_export.results import RowResult,Error
 
 class InstallationTypeInline(admin.TabularInline):
     model = InstallationType
@@ -68,8 +72,48 @@ class SubCategoryAdmin(admin.ModelAdmin):
     list_filter = ('category', 'active')
     prepopulated_fields = {'slug': ('name',)}
 
+class ProductResource(resources.ModelResource):
+    subcategory = fields.Field(
+        column_name='subcategory',
+        attribute='subcategory',
+        widget=ForeignKeyWidget(SubCategory, 'name')  # or 'slug'
+    )
+    class Meta:
+        model = Product
+        import_id_fields = ['name']
+        skip_unchanged = True
+        report_skipped = True
+        fields=('name','title','slug','subcategory','order','active','description')
+
+    def import_row(self, row, instance_loader, **kwargs):
+        name = (row.get("name") or "").strip()
+
+        # ✅ Skip duplicates (don’t update existing)
+        if name and Product.objects.filter(name__iexact=name).exists():
+            rr = RowResult()
+            rr.import_type = RowResult.IMPORT_TYPE_SKIP
+            rr.diff = [f"Skipped: Product name '{name}' already exists"]
+            return rr
+
+        # ✅ If any error happens in this row, skip it and continue others
+        try:
+            rr = super().import_row(row, instance_loader, **kwargs)
+        except Exception as e:
+            rr = RowResult()
+            rr.import_type = RowResult.IMPORT_TYPE_SKIP
+            rr.diff = [f"Skipped: {type(e).__name__}: {e}"]
+            return rr
+
+        # ✅ If import-export reports validation errors in rr.errors, convert to SKIP
+        if getattr(rr, "errors", None):
+            rr.import_type = RowResult.IMPORT_TYPE_SKIP
+            rr.diff = [f"Skipped: {rr.errors[0]}"]
+            rr.errors = []  # so it appears under "Skipped" not "Errors"
+
+        return rr
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportModelAdmin):
+    resource_class = ProductResource
     list_display = ('name', 'title', 'subcategory','order', 'slug', 'active')
     list_editable = ('active','order')
     list_filter = ('subcategory', 'subcategory__category', 'active')
@@ -209,3 +253,11 @@ class ServiceStatisticAdmin(admin.ModelAdmin):
     list_display = ('label', 'value', 'suffix', 'active', 'order')
     list_editable = ('active', 'order')
     search_fields = ('label', 'value')
+
+@admin.register(Feature)
+class FeatureAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order')
+    list_editable = ('order',)
+
+
+
