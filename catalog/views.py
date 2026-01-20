@@ -7,7 +7,7 @@ from .models import Category, SubCategory, Product, HomepageBanner, Offer, Produ
 from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.core.mail import send_mail, get_connection
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -31,7 +31,9 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        queryset = Category.objects.filter(active=True).order_by('order')
+        queryset = Category.objects.filter(active=True).order_by('order').prefetch_related(
+            Prefetch('subcategories', queryset=SubCategory.objects.filter(active=True).order_by('order'))
+        )
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
             queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')
@@ -47,12 +49,12 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('name')
+    queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('order')
     serializer_class = SubCategorySerializer
     lookup_field = 'slug'
     
     def get_queryset(self):
-        queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('name')
+        queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('order')
         category_slug = self.request.query_params.get('category_slug')
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)

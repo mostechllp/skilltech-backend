@@ -33,6 +33,7 @@ class SubCategory(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio).")
     active = models.BooleanField(default=True)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
 
     def save(self, *args, **kwargs):
         if not self.slug:
