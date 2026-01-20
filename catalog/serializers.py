@@ -95,11 +95,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class SubCategorySerializer(serializers.ModelSerializer):
     category_slug = serializers.CharField(source='category.slug', read_only=True)
-    products_count = serializers.IntegerField(source='products.count', read_only=True)
+    products_count = serializers.SerializerMethodField()
     
     class Meta:
         model = SubCategory
         fields = '__all__'
+    
+    def get_products_count(self, obj):
+        return obj.products.filter(active=True).count()
 
 class CategorySerializer(serializers.ModelSerializer):
     subcategories = SubCategorySerializer(many=True, read_only=True)
