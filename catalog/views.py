@@ -26,12 +26,12 @@ class StandardResultsSetPagination(PageNumberPagination):
     max_page_size = 100
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Category.objects.filter(active=True).order_by('name')
+    queryset = Category.objects.filter(active=True).order_by('order')
     serializer_class = CategorySerializer
     lookup_field = 'slug'
 
     def get_queryset(self):
-        queryset = Category.objects.filter(active=True).order_by('name')
+        queryset = Category.objects.filter(active=True).order_by('order')
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
             queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')

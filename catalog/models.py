@@ -3,6 +3,7 @@ from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from django.contrib.admin.models import LogEntry
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -12,6 +13,8 @@ class Category(models.Model):
     show_in_explore_home=models.BooleanField(default=False)
     show_in_footer=models.BooleanField(default=False)
     active = models.BooleanField(default=True)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -79,7 +82,7 @@ class Product(models.Model):
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    order=models.IntegerField(default=0)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -94,7 +97,7 @@ class Product(models.Model):
 
 class Feature(models.Model):
     title=models.CharField(max_length=100)
-    order=models.IntegerField(default=0)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
     class Meta:
         ordering = ['order']
     
@@ -122,7 +125,7 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/gallery/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio).")
     alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
-    order=models.IntegerField(default=0)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
     
     def __str__(self):
         return f'Image for {self.product.name}'
@@ -140,20 +143,14 @@ class ProductSeo(models.Model):
         return f'SEO for {self.product.name}'
 
 class HomepageBanner(models.Model):
-    title = models.CharField(max_length=100)
-    subtitle = models.CharField(max_length=100, blank=True)
-    description = models.TextField(blank=True)
-    button_text = models.CharField(max_length=50, default='Explore')
-    button_link = models.CharField(max_length=200, default='/')
+    link = models.CharField(max_length=200, default='/')
     image = models.ImageField(upload_to='banners/', help_text="Recommended size: 2000x2000px (1:1 aspect ratio) for square desktop rendering. Ensure focal point is centered.")
+    image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     active = models.BooleanField(default=True)
-    order = models.IntegerField(default=0)
-
+    order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000)
     class Meta:
         ordering = ['order']
 
-    def __str__(self):
-        return self.title
 
 class Offer(models.Model):
     title = models.CharField(max_length=100)
@@ -582,3 +579,13 @@ class ServiceStatistic(models.Model):
     def __str__(self):
         return f"{self.value}{self.suffix} - {self.label}"
 
+class LogEntryExtra(models.Model):
+    log_entry = models.OneToOneField(LogEntry, on_delete=models.CASCADE, related_name="extra")
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.log_entry_id} - {self.ip_address}"
+
+    class Meta:
+        verbose_name = "Log Entry"
+        verbose_name_plural = "Log Entries"
