@@ -807,11 +807,11 @@ def validate_captcha(request):
 class CatalogueThumbnailDownloadView(APIView):
     def get(self,request,pk):
         catalogue=get_object_or_404(Catalogue,pk=pk)
-        if not catalogue.thumbnail:
-            return Response({"message":"Thumbnail not found."},status=status.HTTP_404_NOT_FOUND)
+        if not catalogue.file:
+            return Response({"message":"File not found."},status=status.HTTP_404_NOT_FOUND)
         response=FileResponse(
-            catalogue.thumbnail.open(),
+            catalogue.file.open(),
             as_attachment=True,
-            filename=catalogue.thumbnail.name.split('/')[-1],
+            filename=catalogue.file.name.split('/')[-1],
         )
         return response
