@@ -19,6 +19,9 @@ from django.http import HttpResponse, JsonResponse
 from PIL import Image, ImageDraw, ImageFont
 from django.views.decorators.csrf import csrf_exempt
 import threading
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
+from django.http import FileResponse
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 32
@@ -800,3 +803,15 @@ def validate_captcha(request):
         pass
 
     return JsonResponse({"status": "fail"})
+
+class CatalogueThumbnailDownloadView(APIView):
+    def get(self,request,pk):
+        catalogue=get_object_or_404(Catalogue,pk=pk)
+        if not catalogue.thumbnail:
+            return Response({"message":"Thumbnail not found."},status=status.HTTP_404_NOT_FOUND)
+        response=FileResponse(
+            catalogue.thumbnail.open(),
+            as_attachment=True,
+            filename=catalogue.thumbnail.name.split('/')[-1],
+        )
+        return response

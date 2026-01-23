@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
 from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha
-
+from catalog.views import CatalogueThumbnailDownloadView
 def robots_txt(request):
     lines = [
         "User-agent: *",
@@ -48,6 +48,7 @@ urlpatterns = [
     path('api/validate-captcha/', validate_captcha, name='validate_captcha'),
     path('api/', include(router.urls)),
     path('robots.txt', robots_txt),
+    path('api/catalogue/<int:pk>/download-thumbnail/',CatalogueThumbnailDownloadView.as_view(),name="catalogue-thumbnail-download")
 ]
 
 if settings.DEBUG:
