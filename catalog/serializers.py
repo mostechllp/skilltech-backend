@@ -79,13 +79,26 @@ class SimilarProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'name', 'title', 'slug', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductListSerializer(serializers.ModelSerializer):
+    subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
+    category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
+    category = serializers.CharField(source='subcategory.category.name', read_only=True)
+    
+    class Meta:
+        model = Product
+        # Explicitly listing fields is safer and faster than '__all__'
+        fields = [
+            'id', 'name', 'title', 'slug', 
+            'main_image', 'main_image_alt', 
+            'short_description', 
+            'subcategory_slug', 'category_slug', 'category',
+            'show_in_home', 'active', 'order'
+        ]
+
+class ProductDetailSerializer(serializers.ModelSerializer):
     features = ProductFeatureSerializer(many=True, read_only=True)
     specifications = ProductSpecificationSerializer(many=True, read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
-    subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
-    category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
-    category=serializers.CharField(source='subcategory.category.name', read_only=True)
     seo = ProductSeoSerializer(read_only=True)
     similar_products = SimilarProductSerializer(many=True, read_only=True)
 
@@ -95,17 +108,15 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class SubCategorySerializer(serializers.ModelSerializer):
     category_slug = serializers.CharField(source='category.slug', read_only=True)
-    products_count = serializers.SerializerMethodField()
     
     class Meta:
         model = SubCategory
         fields = '__all__'
     
-    def get_products_count(self, obj):
-        return obj.products.filter(active=True).count()
+   
 
 class CategorySerializer(serializers.ModelSerializer):
-    subcategories = SubCategorySerializer(many=True, read_only=True)
+    subcategories = SubCategorySerializer(many=True, read_only=True,source='active_subcategories')
     
     class Meta:
         model = Category

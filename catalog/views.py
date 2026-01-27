@@ -3,8 +3,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from .models import Category, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
-from .serializers import CategorySerializer, SubCategorySerializer, ProductSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer
+from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
+from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q, Prefetch
@@ -22,6 +22,7 @@ import threading
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
+from django.db.models import Count,Q,Prefetch
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 32
@@ -34,8 +35,11 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
 
     def get_queryset(self):
+        subcategories_qs = SubCategory.objects.filter(active=True).annotate(
+            products_count=Count('products', filter=Q(products__active=True))
+        ).order_by('order')
         queryset = Category.objects.filter(active=True).order_by('order').prefetch_related(
-            Prefetch('subcategories', queryset=SubCategory.objects.filter(active=True).order_by('order'))
+            Prefetch('subcategories', queryset=subcategories_qs, to_attr='active_subcategories')
         )
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
@@ -57,21 +61,35 @@ class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     
     def get_queryset(self):
-        queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('order')
+        queryset = SubCategory.objects.filter(active=True, category__active=True).annotate(
+            products_count=Count('products',filter=Q(products__active=True))
+        ).order_by('order')
         category_slug = self.request.query_params.get('category_slug')
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
         return queryset
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).order_by('name')
-    serializer_class = ProductSerializer
     lookup_field = 'slug'
     ordering_fields = ['order']
     pagination_class = StandardResultsSetPagination
 
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return ProductDetailSerializer
+        return ProductListSerializer
+
     def get_queryset(self):
         queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).order_by('name')
+        if self.action == "retrieve":
+            queryset = queryset.select_related('subcategory','subcategory__category','seo').prefetch_related(
+                'images',
+                'specifications',
+                'similar_products',
+                Prefetch('features',queryset=ProductFeature.objects.select_related('feature')))
+        else:
+            # LIST VIEW: Only fetch basic category info
+            queryset = queryset.select_related('subcategory', 'subcategory__category')
         subcategory_slug = self.request.query_params.get('subcategory_slug')
         if subcategory_slug:
             queryset = queryset.filter(subcategory__slug=subcategory_slug)

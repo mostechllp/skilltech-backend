@@ -9,11 +9,11 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='categories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio). Transparent PNG preferred.")
-    show_in_home=models.BooleanField(default=False)
-    show_in_explore_home=models.BooleanField(default=False)
-    show_in_footer=models.BooleanField(default=False)
-    active = models.BooleanField(default=True)
-    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
+    show_in_home=models.BooleanField(default=False, db_index=True)
+    show_in_explore_home=models.BooleanField(default=False, db_index=True)
+    show_in_footer=models.BooleanField(default=False, db_index=True)
+    active = models.BooleanField(default=True, db_index=True)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000, db_index=True)
 
 
     def save(self, *args, **kwargs):
@@ -32,8 +32,8 @@ class SubCategory(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio).")
-    active = models.BooleanField(default=True)
-    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
+    active = models.BooleanField(default=True, db_index=True)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000, db_index=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -48,8 +48,8 @@ class SubCategory(models.Model):
 
 class Product(models.Model):
     subcategory = models.ForeignKey(SubCategory, related_name='products', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, help_text='Model Name, e.g., SH 380R')
-    title = models.CharField(max_length=255, help_text='Full Title, e.g., 360 Rotate Wall Mount...')
+    name = models.CharField(max_length=100, help_text='Model Name, e.g., SH 380R',db_index=True)
+    title = models.CharField(max_length=255, help_text='Full Title, e.g., 360 Rotate Wall Mount...',db_index=True)
     slug = models.SlugField(unique=True, blank=True)
     
     short_description = models.CharField(max_length=255, blank=True, null=True)
@@ -67,7 +67,7 @@ class Product(models.Model):
 
     # New fields
     datasheet = models.FileField(upload_to='products/datasheets/', blank=True, null=True)
-    show_in_home = models.BooleanField(default=False)
+    show_in_home = models.BooleanField(default=False,db_index=True)
     similar_products = models.ManyToManyField('self', blank=True, related_name='similar_to')
     show_cbm_calculator = models.BooleanField(default=False)
     show_economic=models.BooleanField(default=False)
@@ -80,10 +80,10 @@ class Product(models.Model):
     gross_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Gross Weight per Carton in Kg')
     net_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Net Weight per Carton in Kg')
 
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=True,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000,db_index=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -95,6 +95,13 @@ class Product(models.Model):
     
     class Meta:
         ordering = ['name']
+        indexes = [
+            # CRITICAL OPTIMIZATION
+            # Used in: SubCategorySerializer.get_products_count
+            # Line: obj.products.filter(active=True).count()
+            # Why: This lets the DB count active products for a subcategory instantly.
+            models.Index(fields=['subcategory', 'active']),
+        ]
 
 class Feature(models.Model):
     title=models.CharField(max_length=100)
@@ -160,7 +167,7 @@ class Offer(models.Model):
     button_text = models.CharField(max_length=50, default='Explore')
     button_link = models.CharField(max_length=200, default='/')
     active = models.BooleanField(default=True)
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
     class Meta:
         ordering = ['order']
@@ -215,7 +222,7 @@ class Client(models.Model):
 
     image = models.ImageField(upload_to='clients/', help_text="Recommended size: 400x200px (Landscape). Transparent PNG preferred.")
 
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
     active = models.BooleanField(default=True)
 
@@ -241,7 +248,7 @@ class Catalogue(models.Model):
 
     file = models.FileField(upload_to='catalogues/files/')
 
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
     active = models.BooleanField(default=True)
 
@@ -275,7 +282,7 @@ class Certificate(models.Model):
 
 
 
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
 
 
@@ -372,7 +379,7 @@ class Project(models.Model):
 
     image = models.ImageField(upload_to='projects/', help_text="Recommended size: 1200x800px (Landscape).")
 
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
     active = models.BooleanField(default=True)
 
@@ -493,7 +500,7 @@ class AvailableTime(models.Model):
 class ServiceFAQ(models.Model):
     question = models.CharField(max_length=255)
     answer = models.TextField()
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -544,7 +551,7 @@ class GlobalLocation(models.Model):
     map_iframe = models.TextField(help_text='Paste the full iframe code from Google Maps (Share -> Embed a map)')
     map_link = models.URLField(help_text='Google Maps Link (for Get Directions button)')
     active = models.BooleanField(default=True)
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
 
     class Meta:
         ordering = ['order']
@@ -557,7 +564,7 @@ class HomeStatistic(models.Model):
     label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
     suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
     icon = models.ImageField(upload_to='statistics/', blank=True, null=True, help_text="Optional icon")
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -571,7 +578,7 @@ class ServiceStatistic(models.Model):
     label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
     suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
     icon = models.ImageField(upload_to='service_statistics/', blank=True, null=True, help_text="Optional icon")
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=0, db_index=True)
     active = models.BooleanField(default=True)
 
     class Meta:
