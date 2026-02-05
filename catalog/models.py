@@ -5,13 +5,40 @@ from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.contrib.admin.models import LogEntry
 
+
+class MainCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True, blank=True)
+    order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000, db_index=True)
+    active = models.BooleanField(default=True, db_index=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["order", "name"]
 class Category(models.Model):
+    main_category = models.ForeignKey(
+        MainCategory,
+        related_name="categories",
+        on_delete=models.CASCADE,
+        null=True,        # ✅ TEMP
+        blank=True,       # ✅ TEMP
+        db_index=True
+    )
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='categories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio). Transparent PNG preferred.")
     show_in_home=models.BooleanField(default=False, db_index=True)
     show_in_explore_home=models.BooleanField(default=False, db_index=True)
     show_in_footer=models.BooleanField(default=False, db_index=True)
+    # ✅ for Cables & Wires / Gaming
+    flatten_in_menu = models.BooleanField(default=False, db_index=True)
     active = models.BooleanField(default=True, db_index=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000, db_index=True)
 

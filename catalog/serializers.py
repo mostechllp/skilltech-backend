@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic
+from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic,MainCategory
 
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -122,6 +122,12 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
+class MainCategorySerializer(serializers.ModelSerializer):
+    categories = CategorySerializer(many=True)
+
+    class Meta:
+        model = MainCategory
+        fields = ["id", "name", "slug", "order", "categories"]
 class HomepageBannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = HomepageBanner

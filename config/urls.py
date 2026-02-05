@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
 from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha
-from catalog.views import CatalogueThumbnailDownloadView
+from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet
 def robots_txt(request):
     lines = [
         "User-agent: *",
@@ -17,6 +17,7 @@ def robots_txt(request):
 
 router = DefaultRouter()
 # ... (rest of router registrations remains same)
+router.register(r'maincategories', MainCategoryViewSet)
 router.register(r'categories', CategoryViewSet)
 router.register(r'subcategories', SubCategoryViewSet)
 router.register(r'products', ProductViewSet, basename='product')

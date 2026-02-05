@@ -3,8 +3,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
-from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer
+from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory
+from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q, Prefetch
@@ -28,6 +28,47 @@ class StandardResultsSetPagination(PageNumberPagination):
     page_size = 32
     page_size_query_param = 'page_size'
     max_page_size = 100
+
+class MainCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = MainCategory.objects.none()   # ✅ just to satisfy router
+    serializer_class = MainCategorySerializer
+    lookup_field = "slug"
+
+    def get_queryset(self):
+        # Subcategories with product counts
+        subcategories_qs = (
+            SubCategory.objects.filter(active=True)
+            .annotate(products_count=Count("products", filter=Q(products__active=True)))
+            .order_by("order", "name")
+        )
+
+        # Categories (filter flags belong here)
+        categories_qs = (
+            Category.objects.filter(active=True)
+            .prefetch_related(
+                Prefetch("subcategories", queryset=subcategories_qs, to_attr="active_subcategories")
+            )
+            .order_by("order", "name")
+        )
+
+        # Apply query params to CATEGORY queryset (not main category)
+        qp = self.request.query_params
+
+        if "show_in_home" in qp:
+            categories_qs = categories_qs.filter(show_in_home=qp.get("show_in_home").lower() == "true")
+
+        if "show_in_explore_home" in qp:
+            categories_qs = categories_qs.filter(show_in_explore_home=qp.get("show_in_explore_home").lower() == "true")
+
+        if "show_in_footer" in qp:
+            categories_qs = categories_qs.filter(show_in_footer=qp.get("show_in_footer").lower() == "true")
+
+        # Main categories + nested categories
+        return (
+            MainCategory.objects.filter(active=True)
+            .prefetch_related(Prefetch("categories", queryset=categories_qs))
+            .order_by("order", "name")
+        )
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.filter(active=True).order_by('order')
