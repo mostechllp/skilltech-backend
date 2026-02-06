@@ -108,6 +108,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
 class SubCategorySerializer(serializers.ModelSerializer):
     category_slug = serializers.CharField(source='category.slug', read_only=True)
+    products_count = serializers.IntegerField(read_only=True)
     
     class Meta:
         model = SubCategory
