@@ -1,6 +1,9 @@
 from rest_framework import serializers
-from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification, ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service, InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic,MainCategory
-
+from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification
+from .models import  ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client
+from .models import  Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service
+from .models import  InstallationType, TVSize, AvailableTime, ServiceFAQ, Career, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic,MainCategory
+from .models import NewsCategory,NewsPost
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallationType
@@ -77,7 +80,7 @@ class SimilarProductSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Product
-        fields = ['id', 'name', 'title', 'slug', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
+        fields = ['id', 'name', 'title', 'slug','slug_path', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
 
 class ProductListSerializer(serializers.ModelSerializer):
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
@@ -88,7 +91,7 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = Product
         # Explicitly listing fields is safer and faster than '__all__'
         fields = [
-            'id', 'name', 'title', 'slug', 
+            'id', 'name', 'title', 'slug', 'slug_path',
             'main_image', 'main_image_alt', 
             'short_description', 
             'subcategory_slug', 'category_slug', 'category',
@@ -747,3 +750,8 @@ class ServiceStatisticSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceStatistic
         fields = '__all__'
+
+class NewsPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=NewsPost
+        fields="__all__"

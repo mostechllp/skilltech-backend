@@ -3,8 +3,14 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory
-from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer, OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer, CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer, ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer
+from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
+from .models import ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service
+from .models import NewsCategory,NewsPost
+from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer
+from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
+from .serializers import  CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
+from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer
+from .serializers import NewsPostSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q, Prefetch
@@ -23,12 +29,17 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.db.models import Count,Q,Prefetch
+from django.db import connection,reset_queries
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 32
     page_size_query_param = 'page_size'
     max_page_size = 100
 
+class NewsPagination(PageNumberPagination):
+    page_size = 30
+    page_size_query_param = "page_size"
+    max_page_size = 50
 class MainCategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MainCategory.objects.none()   # ✅ just to satisfy router
     serializer_class = MainCategorySerializer
@@ -69,6 +80,18 @@ class MainCategoryViewSet(viewsets.ReadOnlyModelViewSet):
             .prefetch_related(Prefetch("categories", queryset=categories_qs))
             .order_by("order", "name")
         )
+    # 👇 ADD THIS
+    def list(self, request, *args, **kwargs):
+        reset_queries()  # clear previous queries
+
+        response = super().list(request, *args, **kwargs)
+
+        print("Total Queries:", len(connection.queries))
+
+        for q in connection.queries:
+            print(q["sql"])
+
+        return response
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.filter(active=True).order_by('order')
@@ -111,7 +134,7 @@ class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    lookup_field = 'slug'
+    lookup_field = 'slug_path'
     ordering_fields = ['order']
     pagination_class = StandardResultsSetPagination
 
@@ -874,3 +897,8 @@ class CatalogueThumbnailDownloadView(APIView):
             filename=catalogue.file.name.split('/')[-1],
         )
         return response
+
+class NewsPostViewset(viewsets.ReadOnlyModelViewSet):
+    queryset=NewsPost.objects.filter(status="published")
+    serializer_class=NewsPostSerializer
+    pagination_class = NewsPagination

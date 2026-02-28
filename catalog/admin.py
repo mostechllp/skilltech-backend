@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
-from .models import ProductSeo,Feature,MainCategory
+from .models import ProductSeo,Feature,MainCategory,NewsCategory,NewsPost
 from import_export import resources,fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
@@ -322,3 +322,11 @@ class LogEntryExtraAdmin(AdminIPLogMixin, admin.ModelAdmin):
         return obj.log_entry.action_time
     get_action_time.short_description = 'Action Time'
     get_action_time.admin_order_field = 'log_entry__action_time'
+
+@admin.register(NewsCategory)
+class NewsCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
+    pass
+
+@admin.register(NewsPost)
+class NewsPostAdmin(AdminIPLogMixin, admin.ModelAdmin):
+    pass

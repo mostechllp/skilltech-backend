@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.contrib.admin.models import LogEntry
+from django.utils import timezone
 
 
 class MainCategory(models.Model):
@@ -79,6 +80,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, help_text='Model Name, e.g., SH 380R',db_index=True)
     title = models.CharField(max_length=255, help_text='Full Title, e.g., 360 Rotate Wall Mount...',db_index=True)
     slug = models.SlugField(unique=True, blank=True)
+    slug_path = models.CharField(max_length=500)
     
     short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(help_text='Full product description')
@@ -625,3 +627,84 @@ class LogEntryExtra(models.Model):
     class Meta:
         verbose_name = "Log Entry"
         verbose_name_plural = "Log Entries"
+    
+class NewsCategory(models.Model):
+    name = models.CharField(max_length=120, unique=True)  # "Corporate News"
+    slug = models.SlugField(max_length=140, unique=True,blank=True)  # "corporate-news"
+    is_active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "name"]
+
+    def save(self,*args,**kwargs):
+        if not self.slug:
+            base_slug=slugify(self.name)
+            slug = base_slug
+            counter = 1
+
+            while NewsCategory.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                counter += 1
+                slug = f"{base_slug}-{counter}"
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.name
+    
+
+class NewsPost(models.Model):
+    class Status(models.TextChoices):
+        DRAFT = "draft", "Draft"
+        PUBLISHED = "published", "Published"
+        ARCHIVED = "archived", "Archived"
+
+    category = models.ForeignKey(
+        NewsCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts"
+    )
+
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=300, unique=True, blank=True)
+
+    # For cards
+    cover_image = models.ImageField(upload_to="news/", blank=True, null=True)
+
+    # Main content (simple version)
+    content = models.TextField()  # later you can replace with RichTextField / EditorJS\
+    video_url=models.URLField()
+
+    # Publishing
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT)
+    published_at = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # Control latest updates ordering (optional)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["-published_at", "-created_at"]
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        # Auto slug
+        if not self.slug:
+            base = slugify(self.title)
+            slug = base
+            i = 1
+            while NewsPost.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                i += 1
+                slug = f"{base}-{i}"
+            self.slug = slug
+
+        # Auto set published_at when publishing
+        if self.status == self.Status.PUBLISHED and self.published_at is None:
+            self.published_at = timezone.now()
+
+
+        super().save(*args, **kwargs)

@@ -4,7 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
-from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha
+from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet
+from catalog.views import OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha
+from catalog.views import  NewsPostViewset
 from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet
 def robots_txt(request):
     lines = [
@@ -21,6 +23,8 @@ router.register(r'maincategories', MainCategoryViewSet)
 router.register(r'categories', CategoryViewSet)
 router.register(r'subcategories', SubCategoryViewSet)
 router.register(r'products', ProductViewSet, basename='product')
+# Allow slashes in lookup field
+ProductViewSet.lookup_value_regex = r".+"
 router.register(r'homepage-banners', HomepageBannerViewSet)
 router.register(r'offers', OfferViewSet)
 router.register(r'contact', ContactEnquiryViewSet)
@@ -41,7 +45,8 @@ router.register(r'career-applications', CareerApplicationViewSet)
 router.register(r'global-locations', GlobalLocationViewSet)
 router.register(r'statistics', StatisticViewSet)
 router.register(r'service-statistics', ServiceStatisticViewSet)
-router.register(r'sitemap-data', SitemapDataViewSet, basename='sitemap-data')
+router.register(r'sitemap-data', SitemapDataViewSet, basename='sitemap-data'),
+router.register(r'newspost',NewsPostViewset,basename="newspost")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -54,3 +59,9 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ]
