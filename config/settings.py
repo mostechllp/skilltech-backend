@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'catalog',
     'import_export',
-    "debug_toolbar",
+    # "debug_toolbar",
 ]
 
 MIDDLEWARE = [
