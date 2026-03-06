@@ -455,6 +455,8 @@ class SEOPage(models.Model):
 
         ('contact', 'Contact'),
 
+        ('news', 'News & Media'),
+
     ]
 
     page = models.CharField(max_length=50, choices=PAGE_CHOICES, unique=True)
