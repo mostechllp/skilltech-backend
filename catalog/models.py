@@ -43,6 +43,12 @@ class Category(models.Model):
     active = models.BooleanField(default=True, db_index=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000, db_index=True)
 
+    # SEO Fields
+    meta_title = models.CharField(max_length=200, blank=True)
+    meta_description = models.TextField(blank=True)
+    meta_image = models.ImageField(upload_to='categories/seo/', blank=True, null=True, help_text="Recommended size: 2400x1260px (Social media sharing).")
+    meta_keywords = models.TextField(blank=True, help_text="Comma separated keywords")
+    canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL for this category page")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -176,6 +182,8 @@ class ProductSeo(models.Model):
     meta_title = models.CharField(max_length=200, blank=True)
     meta_description = models.TextField(blank=True)
     meta_image = models.ImageField(upload_to='products/seo/', blank=True, null=True, help_text="Recommended size: 2400x1260px (Social media sharing).")
+    meta_keywords = models.TextField(blank=True, help_text="Comma separated keywords")
+    canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL for this product page")
 
     def __str__(self):
         return f'SEO for {self.product.name}'
@@ -459,6 +467,7 @@ class SEOPage(models.Model):
 
     meta_keywords = models.TextField(blank=True, help_text="Comma separated keywords")
 
+    canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL for this page")
 
 
     def __str__(self):

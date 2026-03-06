@@ -72,7 +72,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 class ProductSeoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSeo
-        fields = ['meta_title', 'meta_description', 'meta_image']
+        fields = ['meta_title', 'meta_description', 'meta_image', 'meta_keywords', 'canonical_url']
 
 class SimilarProductSerializer(serializers.ModelSerializer):
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
