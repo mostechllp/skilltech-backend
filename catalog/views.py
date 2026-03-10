@@ -788,7 +788,7 @@ class ServiceStatisticViewSet(viewsets.ReadOnlyModelViewSet):
 class SitemapDataViewSet(viewsets.ViewSet):
     def list(self, request):
         products = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).select_related('subcategory__category').values(
-            'slug', 'updated_at', 'subcategory__slug', 'subcategory__category__slug'
+            'slug', 'updated_at', 'subcategory__slug', 'subcategory__category__slug','slug_path'
         )
         categories = Category.objects.filter(active=True).values('slug')
         subcategories = SubCategory.objects.filter(active=True, category__active=True).select_related('category').values('slug', 'category__slug')
