@@ -793,14 +793,12 @@ class SitemapDataViewSet(viewsets.ViewSet):
         categories = Category.objects.filter(active=True).values('slug')
         subcategories = SubCategory.objects.filter(active=True, category__active=True).select_related('category').values('slug', 'category__slug')
         blogs = BlogPost.objects.filter(active=True).values('slug', 'created_at')
-        careers = Career.objects.filter(active=True).values('slug', 'created_at')
 
         return Response({
             'products': list(products),
             'categories': list(categories),
             'subcategories': list(subcategories),
             'blogs': list(blogs),
-            'careers': list(careers)
         })
 
 def generate_captcha(request):
