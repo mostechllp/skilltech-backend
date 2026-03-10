@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
 from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet
-from catalog.views import OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha
+from catalog.views import OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha
 from catalog.views import  NewsPostViewset
 from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet
 def robots_txt(request):
@@ -40,7 +40,6 @@ router.register(r'seo', SEOPageViewSet)
 router.register(r'settings', SiteSettingsViewSet)
 router.register(r'services', ServiceViewSet)
 router.register(r'service-faqs', ServiceFAQViewSet)
-router.register(r'careers', CareerViewSet)
 router.register(r'career-applications', CareerApplicationViewSet)
 router.register(r'global-locations', GlobalLocationViewSet)
 router.register(r'statistics', StatisticViewSet)

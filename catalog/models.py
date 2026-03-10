@@ -554,34 +554,35 @@ class ServiceFAQ(models.Model):
 
 
 
-class Career(models.Model):
-    position = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True)
-    experience = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
-    description = models.TextField()
-    active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+# class Career(models.Model):
+#     position = models.CharField(max_length=100)
+#     slug = models.SlugField(unique=True, blank=True)
+#     experience = models.CharField(max_length=100)
+#     location = models.CharField(max_length=100)
+#     description = models.TextField()
+#     active = models.BooleanField(default=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.position)
-        super().save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#         if not self.slug:
+#             self.slug = slugify(self.position)
+#         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.position
+#     def __str__(self):
+#         return self.position
 
 class CareerApplication(models.Model):
-    career = models.ForeignKey(Career, related_name='applications', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
+    position = models.CharField(max_length=100)
+    location = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(max_length=20)
     cv = models.FileField(upload_to='career_cvs/')
     cover_letter = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.career.position}"
+        return f"{self.name} - {self.position}"
 
 
 

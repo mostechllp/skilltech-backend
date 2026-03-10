@@ -4,12 +4,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
-from .models import ServiceFAQ, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service
+from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service
 from .models import NewsCategory,NewsPost
 from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer
 from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
 from .serializers import  CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
-from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer
+from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer
 from .serializers import NewsPostSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -701,11 +701,6 @@ class ServiceFAQViewSet(viewsets.ReadOnlyModelViewSet):
 
     
 
-class CareerViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Career.objects.filter(active=True).order_by('-created_at')
-    serializer_class = CareerSerializer
-    lookup_field = 'slug'
-
 class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = CareerApplication.objects.all()
     serializer_class = CareerApplicationSerializer
@@ -723,7 +718,7 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
                     use_tls=settings.EMAIL_USE_TLS
                 )
                 
-                subject = f"New Career Application: {instance.career.position} - {instance.name}"
+                subject = f"New Career Application: {instance.position} - {instance.name}"
                 
                 # Construct absolute URL for CV
                 if instance.cv:
@@ -735,7 +730,7 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
                     'name': instance.name,
                     'email': instance.email,
                     'phone': instance.phone,
-                    'position': instance.career.position,
+                    'position': instance.position,
                     'cover_letter': instance.cover_letter,
                     'cv_url': cv_url,
                     'logo_url': settings.FRONTEND_URL + '/images/logo.png'

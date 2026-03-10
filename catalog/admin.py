@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, Career, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
+from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
 from .models import ProductSeo,Feature,MainCategory,NewsCategory,NewsPost
 from import_export import resources,fields
 from import_export.admin import ImportExportModelAdmin
@@ -25,17 +25,11 @@ class ServiceAdmin(AdminIPLogMixin, admin.ModelAdmin):
     search_fields = ('name', 'description')
     inlines = [InstallationTypeInline, TVSizeInline, AvailableTimeInline]
 
-@admin.register(Career)
-class CareerAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('position', 'location', 'experience', 'active', 'created_at')
-    list_filter = ('active', 'created_at')
-    search_fields = ('position', 'location', 'description')
-    prepopulated_fields = {'slug': ('position',)}
 
 @admin.register(CareerApplication)
 class CareerApplicationAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'career', 'created_at')
-    list_filter = ('career', 'created_at')
+    list_display = ('name', 'email', 'phone', 'position', 'created_at')
+    list_filter = ('position', 'created_at')
     search_fields = ('name', 'email', 'phone', 'cover_letter')
     readonly_fields = ('created_at',)
 
