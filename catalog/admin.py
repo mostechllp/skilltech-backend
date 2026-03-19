@@ -75,6 +75,15 @@ class SubCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
     list_editable = ('active',)
     list_filter = ('category', 'active')
     prepopulated_fields = {'slug': ('name',)}
+    fieldsets = (
+        (None, {
+            'fields': ('category', 'name', 'slug', 'image', 'active', 'order', 'multi_expand')
+        }),
+        ('SEO Settings', {
+            'fields': ('meta_title', 'meta_description', 'meta_image', 'meta_keywords', 'canonical_url'),
+            'classes': ('collapse',),
+        }),
+    )
 
 class ProductResource(resources.ModelResource):
     subcategory = fields.Field(

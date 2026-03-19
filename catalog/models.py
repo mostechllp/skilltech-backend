@@ -70,6 +70,13 @@ class SubCategory(models.Model):
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000, db_index=True)
     multi_expand=models.BooleanField(default=False)
 
+    # SEO Fields
+    meta_title = models.CharField(max_length=200, blank=True)
+    meta_description = models.TextField(blank=True)
+    meta_image = models.ImageField(upload_to='subcategories/seo/', blank=True, null=True, help_text="Recommended size: 2400x1260px (Social media sharing).")
+    meta_keywords = models.TextField(blank=True, help_text="Comma separated keywords")
+    canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL for this subcategory page")
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
