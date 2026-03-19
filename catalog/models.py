@@ -102,7 +102,7 @@ class Product(models.Model):
     tags = models.TextField(blank=True, help_text='Comma separated tags, e.g. Tag1, Tag2')
 
     # New fields
-    datasheet = models.FileField(upload_to='products/datasheets/', blank=True, null=True)
+    datasheet = models.FileField(upload_to='products/datasheets/',max_length=500, blank=True, null=True)
     show_in_home = models.BooleanField(default=False,db_index=True)
     similar_products = models.ManyToManyField('self', blank=True, related_name='similar_to')
     show_cbm_calculator = models.BooleanField(default=False)
