@@ -93,7 +93,7 @@ class Product(models.Model):
     
     main_image = models.ImageField(upload_to='products/main/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio). Transparent PNG preferred for listing consistency.")
     main_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
-    drawing_image = models.ImageField(upload_to='products/drawings/', blank=True, null=True, help_text="Recommended size: 1200x800px or similar (Landscape/Technical drawing).")
+    drawing_image = models.ImageField(upload_to='products/drawings/',max_length=500, blank=True, null=True, help_text="Recommended size: 1200x800px or similar (Landscape/Technical drawing).")
     drawing_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     
     video_url = models.URLField(blank=True, null=True, help_text='Installation Video URL')
