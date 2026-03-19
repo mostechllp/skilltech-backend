@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
+from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
 from .models import ProductSeo,Feature,MainCategory,NewsCategory,NewsPost
 from import_export import resources,fields
 from import_export.admin import ImportExportModelAdmin
@@ -46,6 +46,10 @@ class ProductImageInline(admin.StackedInline):
 
 class ProductFeatureInline(admin.StackedInline):
     model = ProductFeature
+
+class ProductBulletFeatureInline(admin.StackedInline):
+    model = ProductBulletFeature
+    extra = 1
 
 class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
@@ -119,7 +123,7 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     list_filter = ('subcategory', 'subcategory__category', 'active')
     search_fields = ('name', 'title', 'description')
     prepopulated_fields = {'slug': ('name',)}
-    inlines = [ProductFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
+    inlines = [ProductFeatureInline, ProductBulletFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "similar_products":

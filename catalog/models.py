@@ -157,6 +157,18 @@ class ProductFeature(models.Model):
     def __str__(self):
         return f'Features for {self.product.name}'
 
+class ProductBulletFeature(models.Model):
+    product = models.ForeignKey(Product, related_name='bullet_features', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, blank=True, null=True, help_text="Bold part of the feature (e.g. 360° Screen Rotation)")
+    text = models.TextField(help_text="Main description of the feature")
+    order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"Bullet feature for {self.product.name}"
+
 class ProductSpecification(models.Model):
     product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
     key = models.CharField(max_length=100)

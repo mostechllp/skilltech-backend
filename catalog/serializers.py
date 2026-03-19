@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductSpecification
+from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductBulletFeature, ProductSpecification
 from .models import  ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client
 from .models import  Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service
 from .models import  InstallationType, TVSize, AvailableTime, ServiceFAQ, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic,MainCategory
@@ -55,6 +55,11 @@ class ProductFeatureSerializer(serializers.ModelSerializer):
         model = ProductFeature
         fields = ['feature','value','icon']
 
+class ProductBulletFeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductBulletFeature
+        fields = ['id', 'title', 'text', 'order']
+
 class ProductSpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSpecification
@@ -96,6 +101,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     features = ProductFeatureSerializer(many=True, read_only=True)
+    bullet_features = ProductBulletFeatureSerializer(many=True, read_only=True)
     specifications = ProductSpecificationSerializer(many=True, read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     seo = ProductSeoSerializer(read_only=True)
