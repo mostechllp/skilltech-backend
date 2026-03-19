@@ -106,7 +106,7 @@ class Product(models.Model):
     show_in_home = models.BooleanField(default=False,db_index=True)
     similar_products = models.ManyToManyField('self', blank=True, related_name='similar_to')
     show_cbm_calculator = models.BooleanField(default=False)
-    show_economic=models.BooleanField(default=False)
+    show_economic=models.BooleanField(default=False)    
     
     # CBM Calculator Fields
     units_per_carton = models.IntegerField(blank=True, null=True, help_text='Units per Carton')
@@ -171,8 +171,8 @@ class ProductBulletFeature(models.Model):
 
 class ProductSpecification(models.Model):
     product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
-    key = models.CharField(max_length=100)
-    value = models.CharField(max_length=200)
+    key = models.CharField(max_length=200)
+    value = models.CharField(max_length=500)
 
     def __str__(self):
         return f'{self.key}: {self.value}'
