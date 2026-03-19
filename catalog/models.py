@@ -103,6 +103,9 @@ class Product(models.Model):
     drawing_image = models.ImageField(upload_to='products/drawings/',max_length=500, blank=True, null=True, help_text="Recommended size: 1200x800px or similar (Landscape/Technical drawing).")
     drawing_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     
+    box_3d_image = models.ImageField(upload_to='products/3dboxes/', max_length=500, blank=True, null=True, help_text="Recommended size: 1200x800px or similar.")
+    box_3d_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
+    
     video_url = models.URLField(blank=True, null=True, help_text='Installation Video URL')
     product_video_url = models.URLField(blank=True, null=True, help_text='Product Video URL')
     
