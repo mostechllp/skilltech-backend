@@ -91,7 +91,7 @@ class Product(models.Model):
     short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(help_text='Full product description')
     
-    main_image = models.ImageField(upload_to='products/main/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio). Transparent PNG preferred for listing consistency.")
+    main_image = models.ImageField(upload_to='products/main/',max_length=500, help_text="Recommended size: 1600x1600px (1:1 aspect ratio). Transparent PNG preferred for listing consistency.")
     main_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     drawing_image = models.ImageField(upload_to='products/drawings/',max_length=500, blank=True, null=True, help_text="Recommended size: 1200x800px or similar (Landscape/Technical drawing).")
     drawing_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
@@ -179,7 +179,7 @@ class ProductSpecification(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='products/gallery/', help_text="Recommended size: 1600x1600px (1:1 aspect ratio).")
+    image = models.ImageField(upload_to='products/gallery/',max_length=500, help_text="Recommended size: 1600x1600px (1:1 aspect ratio).")
     alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
     
