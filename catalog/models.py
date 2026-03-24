@@ -140,7 +140,7 @@ class Product(models.Model):
         return self.name
     
     class Meta:
-        ordering = ['name']
+        ordering = ['order']
         indexes = [
             # CRITICAL OPTIMIZATION
             # Used in: SubCategorySerializer.get_products_count

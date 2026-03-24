@@ -144,7 +144,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         return ProductListSerializer
 
     def get_queryset(self):
-        queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).order_by('name')
+        queryset = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).order_by('order')
         if self.action == "retrieve":
             queryset = queryset.select_related('subcategory','subcategory__category','seo').prefetch_related(
                 'images',
