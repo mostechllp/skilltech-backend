@@ -12,6 +12,9 @@ django.setup()
 
 from catalog.models import SubCategory, Product
 
+def normalize(s):
+    return "".join(s.split()).upper()
+
 def sync_and_format_all():
     subcategories = SubCategory.objects.all()
     print(f"Starting full synchronization and reformatting for {subcategories.count()} subcategories...")
@@ -28,7 +31,7 @@ def sync_and_format_all():
 
         # Construct live URL
         url = f"https://skilltechonline.com/{sc.category.slug}/{sc.slug}/"
-        print(f"\nFetching {sc.name}...")
+        print(f"\nFetching {sc.name} from {url}...")
         
         try:
             response = requests.get(url, headers=headers, timeout=15)
@@ -47,7 +50,12 @@ def sync_and_format_all():
             
             local_products = list(Product.objects.filter(subcategory=sc))
             
-            # 1. First Pass: Sync the 'order' field based on live position (using whole numbers temporarily)
+            # 1. Reset orders for this subcategory
+            for lp in local_products:
+                lp.order = Decimal('90.000')
+                lp.save()
+
+            # 2. First Pass: Sync based on live position
             sub_matched = 0
             for index, div in enumerate(product_divs):
                 h3 = div.find('h3')
@@ -58,27 +66,31 @@ def sync_and_format_all():
                 live_title = h3.get_text().strip().upper()
                 
                 matched_lp = None
-                for lp in local_products:
-                    # Priority 1: Match by SKU exactly
-                    if live_sku and lp.name.upper() == live_sku:
-                        matched_lp = lp
-                        break
-                    # Priority 2: Match if local product name is in the live title
-                    if lp.name.upper() in live_title:
-                        matched_lp = lp
-                        break
+                
+                # Priority 1: Match by SKU exactly (normalized)
+                if live_sku:
+                    norm_live_sku = normalize(live_sku)
+                    for lp in local_products:
+                        if normalize(lp.name) == norm_live_sku:
+                            matched_lp = lp
+                            break
+                
+                # Priority 2: Match if local product name is in the live title (normalized)
+                if not matched_lp:
+                    for lp in local_products:
+                        if normalize(lp.name) in normalize(live_title):
+                            matched_lp = lp
+                            break
                 
                 if matched_lp:
-                    # Use a high base to avoid conflicts before the reformat
                     matched_lp.order = Decimal(index + 1)
                     matched_lp.save()
                     sub_matched += 1
 
-            # 2. Second Pass: Reformat to 0.1, 0.2, 0.3...
-            # We re-query to ensure we have the newly saved 'order' values
+            # 3. Second Pass: Reformat to 0.100, 0.200, 0.300...
             ordered_products = Product.objects.filter(subcategory=sc).order_by('order', 'name')
             for i, p in enumerate(ordered_products):
-                new_val = Decimal(str(round((i + 1) * 0.1, 1)))
+                new_val = Decimal(str(round((i + 1) * 0.1, 3))).quantize(Decimal('0.000'))
                 p.order = new_val
                 p.save()
 
