@@ -158,6 +158,10 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         if subcategory_slug:
             queryset = queryset.filter(subcategory__slug=subcategory_slug)
             
+        arm = self.request.query_params.get('arm')
+        if arm:
+            queryset = queryset.filter(arm=arm)
+
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
              queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')

@@ -126,6 +126,14 @@ class Product(models.Model):
     gross_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Gross Weight per Carton in Kg')
     net_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Net Weight per Carton in Kg')
 
+    ARM_CHOICES = [
+        ('single', 'Single Arm'),
+        ('double', 'Double Arm'),
+        ('triple', 'Triple Arm'),
+        ('four', 'Four Arm'),
+    ]
+    arm = models.CharField(max_length=10, choices=ARM_CHOICES, blank=True, null=True, db_index=True)
+
     active = models.BooleanField(default=True,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
