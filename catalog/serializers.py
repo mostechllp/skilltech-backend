@@ -96,7 +96,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'main_image', 'main_image_alt', 
             'short_description', 
             'subcategory_slug', 'category_slug', 'category',
-            'show_in_home', 'active', 'order'
+            'show_in_home', 'active', 'order','show_economic'
         ]
 
 class ProductDetailSerializer(serializers.ModelSerializer):
