@@ -718,7 +718,7 @@ class NewsPost(models.Model):
 
     # Main content (simple version)
     content = models.TextField()  # later you can replace with RichTextField / EditorJS\
-    video_url=models.URLField()
+    video_url=models.URLField(blank=True,null=True)
 
     # Publishing
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT)
