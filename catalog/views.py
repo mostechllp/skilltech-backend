@@ -138,6 +138,14 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ['order']
     pagination_class = StandardResultsSetPagination
 
+    def paginate_queryset(self, queryset):
+        show_in_home = self.request.query_params.get('show_in_home')
+
+        if show_in_home and show_in_home.lower() == 'true':
+            return None  # 🚀 disable pagination
+
+        return super().paginate_queryset(queryset)
+
     def get_serializer_class(self):
         if self.action == "retrieve":
             return ProductDetailSerializer
@@ -154,6 +162,10 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             # LIST VIEW: Only fetch basic category info
             queryset = queryset.select_related('subcategory', 'subcategory__category')
+        
+        category_slug = self.request.query_params.get('category_slug')
+        if category_slug:
+            queryset = queryset.filter(subcategory__category__slug=category_slug)
         subcategory_slug = self.request.query_params.get('subcategory_slug')
         if subcategory_slug:
             queryset = queryset.filter(subcategory__slug=subcategory_slug)
