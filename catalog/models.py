@@ -131,8 +131,8 @@ class Product(models.Model):
         ('double', 'Double Arm'),
         ('triple', 'Triple Arm'),
         ('four', 'Quad Arm'),
-        ('dual','Dual Extension Arm'),
-        ('six', 'Full Motion Multi Arm'),
+        ('five','Five Arm'),
+        ('six', 'Six Arm'),
     ]
     arm = models.CharField(max_length=10, choices=ARM_CHOICES, blank=True, null=True, db_index=True)
 
