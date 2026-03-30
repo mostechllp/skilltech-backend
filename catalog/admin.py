@@ -65,8 +65,8 @@ class MainCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 @admin.register(Category)
 class CategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'slug', 'active', 'order')
-    list_editable = ('active','order')
+    list_display = ('name', 'slug', 'active', 'order','homepage_order')
+    list_editable = ('active','order','homepage_order',)
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(SubCategory)

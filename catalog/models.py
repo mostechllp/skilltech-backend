@@ -42,6 +42,7 @@ class Category(models.Model):
     flatten_in_menu = models.BooleanField(default=False, db_index=True)
     active = models.BooleanField(default=True, db_index=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000, db_index=True)
+    homepage_order=models.DecimalField(max_digits=5,decimal_places=3,default=10.000,db_index=True)
 
     # SEO Fields
     meta_title = models.CharField(max_length=200, blank=True)

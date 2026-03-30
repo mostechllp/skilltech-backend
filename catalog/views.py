@@ -107,11 +107,11 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         )
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
-            queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true')
+            queryset = queryset.filter(show_in_home=show_in_home.lower() == 'true').order_by('homepage_order')
         
         show_in_explore_home = self.request.query_params.get('show_in_explore_home')
         if show_in_explore_home is not None:
-            queryset = queryset.filter(show_in_explore_home=show_in_explore_home.lower() == 'true')
+            queryset = queryset.filter(show_in_explore_home=show_in_explore_home.lower() == 'true').order_by('homepage_order')
 
         show_in_footer = self.request.query_params.get('show_in_footer')
         if show_in_footer is not None:
