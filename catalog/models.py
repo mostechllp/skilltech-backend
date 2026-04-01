@@ -136,6 +136,7 @@ class Product(models.Model):
         ('six', 'Six Arm'),
     ]
     arm = models.CharField(max_length=10, choices=ARM_CHOICES, blank=True, null=True, db_index=True)
+    arm_fk=models.ForeignKey('Arm',models.SET_NULL,null=True,blank=True)
 
     active = models.BooleanField(default=True,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -159,6 +160,25 @@ class Product(models.Model):
             # Why: This lets the DB count active products for a subcategory instantly.
             models.Index(fields=['subcategory', 'active']),
         ]
+
+class Arm(models.Model):
+    name=models.CharField(max_length=50,null=True,blank=True,unique=True)
+    order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
+    active=models.BooleanField(default=True)
+    show_in_articulating=models.BooleanField(default=True)
+    show_in_ergonomic=models.BooleanField(default=True)
+    slug=models.SlugField(unique=True,blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.name
 
 class Feature(models.Model):
     title=models.CharField(max_length=100)

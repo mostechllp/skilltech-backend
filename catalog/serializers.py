@@ -3,7 +3,7 @@ from .models import Category, Feature, ProductSeo, SubCategory, Product, Product
 from .models import  ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client
 from .models import  Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service
 from .models import  InstallationType, TVSize, AvailableTime, ServiceFAQ, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic,MainCategory
-from .models import NewsCategory,NewsPost
+from .models import NewsCategory,NewsPost,Arm
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallationType
@@ -756,4 +756,9 @@ class ServiceStatisticSerializer(serializers.ModelSerializer):
 class NewsPostSerializer(serializers.ModelSerializer):
     class Meta:
         model=NewsPost
+        fields="__all__"
+
+class ArmSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Arm
         fields="__all__"

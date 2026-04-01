@@ -5,12 +5,12 @@ logger = logging.getLogger(__name__)
 
 from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
 from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service
-from .models import NewsCategory,NewsPost
+from .models import NewsCategory,NewsPost,Arm
 from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer
 from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
 from .serializers import  CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
 from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer
-from .serializers import NewsPostSerializer
+from .serializers import NewsPostSerializer,ArmSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q, Prefetch
@@ -195,9 +195,9 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
              
         return queryset
     
-    @action(detail=True, methods=['post'])
+    @action(detail=False, methods=['post'], url_path=r'(?P<slug>[^/.]+)/enquire')
     def enquire(self, request, slug=None):
-        product = self.get_object()
+        product = get_object_or_404(Product, slug=slug)
         serializer = ProductEnquirySerializer(data=request.data)
         if serializer.is_valid():
             instance = serializer.save(product=product)
@@ -911,3 +911,8 @@ class NewsPostViewset(viewsets.ReadOnlyModelViewSet):
     queryset=NewsPost.objects.filter(status="published")
     serializer_class=NewsPostSerializer
     pagination_class = NewsPagination
+
+class ArmsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset=Arm.objects.filter(active=True)
+    serializer_class=ArmSerializer
+    

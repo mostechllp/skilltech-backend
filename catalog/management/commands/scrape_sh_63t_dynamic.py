@@ -264,61 +264,61 @@ def scrape_any_product(url):
     return True
 
 def main():
-    # sitemap_path = 'D:\\Projects\\Skilltech\\sitemap (1).xml'
+    sitemap_path = 'D:\\Projects\\Skilltech\\sitemap (1).xml'
     
-    # if not os.path.exists(sitemap_path):
-    #     print(f"Sitemap not found at {sitemap_path}")
-    #     return
+    if not os.path.exists(sitemap_path):
+        print(f"Sitemap not found at {sitemap_path}")
+        return
 
-    # tree = ET.parse(sitemap_path)
-    # root = tree.getroot()
+    tree = ET.parse(sitemap_path)
+    root = tree.getroot()
     
-    # # Standard sitemap namespace
-    # namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+    # Standard sitemap namespace
+    namespace = {'ns': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
     
-    # urls = []
-    # for url_tag in root.findall('ns:url', namespace):
-    #     loc = url_tag.find('ns:loc', namespace).text
-    #     if loc:
-    #         parsed = urlparse(loc)
-    #         path_parts = [p for p in parsed.path.split('/') if p]
+    urls = []
+    for url_tag in root.findall('ns:url', namespace):
+        loc = url_tag.find('ns:loc', namespace).text
+        if loc:
+            parsed = urlparse(loc)
+            path_parts = [p for p in parsed.path.split('/') if p]
             
-    #         # Heuristic for product URL: 
-    #         # 1. More than 2 segments (e.g. /cat/subcat/prod/)
-    #         # 2. Doesn't contain 'cat/' or 'about/' or 'contact/' etc.
-    #         if len(path_parts) >= 3:
-    #             # Basic exclusions
-    #             if path_parts[0] in ['cat', 'about', 'contact', 'support', 'gallery', 'tv-installation']:
-    #                 continue
-    #             urls.append(loc)
-    #         # Special case for some categories that might be deep but not products? 
-    #         # Actually most 3+ segment URLs in this sitemap ARE products.
+            # Heuristic for product URL: 
+            # 1. More than 2 segments (e.g. /cat/subcat/prod/)
+            # 2. Doesn't contain 'cat/' or 'about/' or 'contact/' etc.
+            if len(path_parts) >= 3:
+                # Basic exclusions
+                if path_parts[0] in ['cat', 'about', 'contact', 'support', 'gallery', 'tv-installation']:
+                    continue
+                urls.append(loc)
+            # Special case for some categories that might be deep but not products? 
+            # Actually most 3+ segment URLs in this sitemap ARE products.
     
-    # print(f"Found {len(urls)} potential product URLs.")
+    print(f"Found {len(urls)} potential product URLs.")
     
-    # count = 0
-    # total = len(urls)
-    # for i, url in enumerate(urls):
-    #     print(f"[{i+1}/{total}] ", end="")
-    #     success = scrape_any_product(url)
-    #     if success:
-    #         count += 1
+    count = 0
+    total = len(urls)
+    for i, url in enumerate(urls):
+        print(f"[{i+1}/{total}] ", end="")
+        success = scrape_any_product(url)
+        if success:
+            count += 1
         
-    #     # Polite delay
-    #     time.sleep(0.5)
+        # Polite delay
+        time.sleep(0.5)
         
-    # print(f"Finished. Successfully processed {count} products.")
+    print(f"Finished. Successfully processed {count} products.")
     
-    urls = [
-    "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac01/",
-    "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac02/",
-    "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac03/",
-    "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac04/",
-]
+#     urls = [
+#     "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac01/",
+#     "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac02/",
+#     "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac03/",
+#     "https://skilltechonline.com/ac-brackets/ac-bracket/sh-ac04/",
+# ]
 
-    # Loop through URLs and call function
-    for url in urls:
-        scrape_any_product(url)
+#     # Loop through URLs and call function
+#     for url in urls:
+#         scrape_any_product(url)
 
 if __name__ == "__main__":
     main()

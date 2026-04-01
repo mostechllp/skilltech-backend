@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
-from .models import ProductSeo,Feature,MainCategory,NewsCategory,NewsPost
+from .models import ProductSeo,Feature,MainCategory,NewsCategory,NewsPost,Arm
 from import_export import resources,fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
@@ -57,6 +57,11 @@ class ProductSpecificationInline(admin.TabularInline):
 
 class ProductSeoInline(admin.StackedInline):
     model = ProductSeo
+
+@admin.register(Arm)
+class ArmAdmin(AdminIPLogMixin, admin.ModelAdmin):
+    list_display=('name','order','slug','active')
+    list_editable = ('order',)
 
 @admin.register(MainCategory)
 class MainCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
