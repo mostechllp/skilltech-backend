@@ -6,6 +6,8 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
 from import_export.results import RowResult,Error
 from catalog.mixins import AdminIPLogMixin
+from django import forms
+from .forms import ProductAdminForm
 
 class InstallationTypeInline(admin.TabularInline):
     model = InstallationType
@@ -72,12 +74,14 @@ class MainCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
 class CategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
     list_display = ('name', 'slug', 'active', 'order','homepage_order')
     list_editable = ('active','order','homepage_order',)
+    search_fields=('name',)
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'category', 'slug', 'active')
-    list_editable = ('active',)
+    list_display = ('name', 'category', 'slug','order', 'active')
+    list_editable = ('active','order')
+    search_fields=('name',)
     list_filter = ('category', 'active')
     prepopulated_fields = {'slug': ('name',)}
     fieldsets = (
@@ -132,6 +136,38 @@ class ProductResource(resources.ModelResource):
 @admin.register(Product)
 class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     resource_class = ProductResource
+    form = ProductAdminForm
+    # def save_model(self, request, obj, form, change):
+    #     category = form.cleaned_data.get("category")
+
+    #     if category and obj.subcategory:
+    #         if obj.subcategory.category != category:
+    #             # optional: reset or validate
+    #             pass
+
+    #     super().save_model(request, obj, form, change)
+    fields = [
+        # 🔥 Priority fields (top)
+        "category","subcategory","arm_fk","name","title",
+        # Basic content
+        "slug","slug_path","short_description","description",
+        # Images
+        "main_image","main_image_alt","drawing_image","drawing_image_alt","box_3d_image","box_3d_image_alt","video_url","product_video_url",
+
+        "tags",
+        # Files
+        "datasheet",
+        # Flags
+        "show_in_home","show_cbm_calculator","show_economic","active",
+        # Relations
+        "similar_products",
+        # CBM Calculator
+        "units_per_carton","carton_length_cm","carton_width_cm","carton_height_cm","gross_weight_per_carton_kg","net_weight_per_carton_kg",
+        # Meta
+        "order","created_at","updated_at",
+    ]
+
+    readonly_fields = ["created_at", "updated_at"]
     list_display = ('name', 'title', 'subcategory','order', 'slug', 'active')
     list_editable = ('active','order')
     list_filter = ('subcategory', 'subcategory__category', 'active')
@@ -341,4 +377,6 @@ class NewsCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(NewsPost)
 class NewsPostAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    pass
+    list_display = ('title', 'category','status','published_at','order')
+    list_editable = ('order',)
+    search_fields=('title',)

@@ -127,16 +127,16 @@ class Product(models.Model):
     gross_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Gross Weight per Carton in Kg')
     net_weight_per_carton_kg = models.FloatField(blank=True, null=True, help_text='Net Weight per Carton in Kg')
 
-    ARM_CHOICES = [
-        ('single', 'Single Arm'),
-        ('double', 'Double Arm'),
-        ('triple', 'Triple Arm'),
-        ('four', 'Quad Arm'),
-        ('five','Five Arm'),
-        ('six', 'Six Arm'),
-    ]
-    arm = models.CharField(max_length=10, choices=ARM_CHOICES, blank=True, null=True, db_index=True)
-    arm_fk=models.ForeignKey('Arm',models.SET_NULL,null=True,blank=True)
+    # ARM_CHOICES = [
+    #     ('single', 'Single Arm'),
+    #     ('double', 'Double Arm'),
+    #     ('triple', 'Triple Arm'),
+    #     ('four', 'Quad Arm'),
+    #     ('five','Five Arm'),
+    #     ('six', 'Six Arm'),
+    # ]
+    # arm = models.CharField(max_length=10, choices=ARM_CHOICES, blank=True, null=True, db_index=True)
+    arm_fk=models.ForeignKey('Arm',models.SET_NULL,null=True,blank=True,verbose_name="arm")
 
     active = models.BooleanField(default=True,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -192,7 +192,7 @@ class Feature(models.Model):
 class ProductFeature(models.Model):
     product = models.ForeignKey(Product, related_name='features', on_delete=models.CASCADE)
     feature=models.ForeignKey(Feature,related_name='product_features',on_delete=models.SET_NULL,blank=True,null=True)
-    value=models.CharField(max_length=255) 
+    value=models.CharField(max_length=255,blank=True,null=True) 
     icon=models.ImageField(upload_to='products/features/',blank=True,null=True,help_text="Icon for the feature. Recommended size: 400x400px (1:1 aspect ratio).")
 
     def __str__(self):
@@ -748,10 +748,10 @@ class NewsPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Control latest updates ordering (optional)
-    order = models.PositiveIntegerField(default=0)
+    order = models.DecimalField(max_digits=5,decimal_places=3,default=10.000,db_index=True)
 
     class Meta:
-        ordering = ["-published_at", "-created_at"]
+        ordering = ["order"]
 
     def __str__(self):
         return self.title

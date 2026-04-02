@@ -915,4 +915,8 @@ class NewsPostViewset(viewsets.ReadOnlyModelViewSet):
 class ArmsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset=Arm.objects.filter(active=True)
     serializer_class=ArmSerializer
-    
+
+def ajax_get_subcategories(request):
+    category_id = request.GET.get('category_id')
+    subcategories = SubCategory.objects.filter(category_id=category_id).order_by('name')
+    return JsonResponse(list(subcategories.values('id', 'name')), safe=False)
