@@ -539,6 +539,7 @@ class SiteSettings(models.Model):
     instagram = models.URLField(blank=True, null=True)
     youtube = models.URLField(blank=True, null=True)
     x = models.URLField(blank=True, null=True, verbose_name="X (Twitter)")
+    whatsapp_channel=models.CharField(max_length=100,blank=True,null=True)
     whatsapp = models.CharField(max_length=20, blank=True, null=True)
     service_whatsapp = models.CharField(max_length=20, blank=True, null=True, help_text="WhatsApp number for service page")
     
@@ -607,27 +608,18 @@ class ServiceFAQ(models.Model):
 
 
 
-# class Career(models.Model):
-#     position = models.CharField(max_length=100)
-#     slug = models.SlugField(unique=True, blank=True)
-#     experience = models.CharField(max_length=100)
-#     location = models.CharField(max_length=100)
-#     description = models.TextField()
-#     active = models.BooleanField(default=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
+class CareerPosition(models.Model):
+    name = models.CharField(max_length=100)
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-#     def save(self, *args, **kwargs):
-#         if not self.slug:
-#             self.slug = slugify(self.position)
-#         super().save(*args, **kwargs)
-
-#     def __str__(self):
-#         return self.position
+    def __str__(self):
+        return self.name
 
 class CareerApplication(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
-    position = models.CharField(max_length=100)
+    position = models.CharField(max_length=100,blank=True,null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(max_length=20)
     cv = models.FileField(upload_to='career_cvs/')

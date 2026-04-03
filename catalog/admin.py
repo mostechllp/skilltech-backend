@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic
+from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition
+
+@admin.register(CareerPosition)
+class CareerPositionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'active', 'created_at')
+    list_filter = ('active',)
+    search_fields = ('name',)
 from .models import ProductSeo,Feature,MainCategory,NewsCategory,NewsPost,Arm
 from import_export import resources,fields
 from import_export.admin import ImportExportModelAdmin

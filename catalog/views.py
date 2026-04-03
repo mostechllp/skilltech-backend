@@ -4,12 +4,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
-from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service
+from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, CareerPosition
 from .models import NewsCategory,NewsPost,Arm
 from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer
 from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
 from .serializers import  CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
-from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer
+from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer, CareerPositionSerializer
 from .serializers import NewsPostSerializer,ArmSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -30,6 +30,10 @@ from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from django.db.models import Count,Q,Prefetch
 from django.db import connection,reset_queries
+
+class CareerPositionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = CareerPosition.objects.filter(active=True).order_by('name')
+    serializer_class = CareerPositionSerializer
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 32

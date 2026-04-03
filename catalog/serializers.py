@@ -2,8 +2,14 @@ from rest_framework import serializers
 from .models import Category, Feature, ProductSeo, SubCategory, Product, ProductFeature, ProductBulletFeature, ProductSpecification
 from .models import  ProductImage, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client
 from .models import  Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project,SEOPage, SiteSettings, Service
-from .models import  InstallationType, TVSize, AvailableTime, ServiceFAQ, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic,MainCategory
+from .models import  InstallationType, TVSize, AvailableTime, ServiceFAQ, CareerApplication, GlobalLocation, ServiceStatistic,HomeStatistic,MainCategory, CareerPosition
 from .models import NewsCategory,NewsPost,Arm
+
+class CareerPositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CareerPosition
+        fields = '__all__'
+
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallationType
