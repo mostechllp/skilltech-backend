@@ -94,7 +94,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, help_text='Model Name, e.g., SH 380R',db_index=True)
     title = models.CharField(max_length=255, help_text='Full Title, e.g., 360 Rotate Wall Mount...',db_index=True)
     slug = models.SlugField(unique=True, blank=True)
-    slug_path = models.CharField(max_length=500)
+    slug_path = models.CharField(max_length=500,blank=True,null=True,unique=True)
     
     short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(help_text='Full product description')

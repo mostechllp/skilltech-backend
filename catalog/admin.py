@@ -175,6 +175,19 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductFeatureInline, ProductBulletFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
 
+    def save_model(self, request, obj, form, change):
+        # Generate slug_path only if it's empty
+        if not obj.slug_path:
+            category_slug = obj.subcategory.category.slug if obj.subcategory else ""
+            subcategory_slug = obj.subcategory.slug if obj.subcategory else ""
+            product_slug = obj.slug
+
+            # Build slug_path safely
+            parts = [category_slug, subcategory_slug, product_slug]
+            obj.slug_path = "/".join([p for p in parts if p])
+
+        super().save_model(request, obj, form, change)
+
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "similar_products":
             if request.resolver_match and request.resolver_match.kwargs.get('object_id'):

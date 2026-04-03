@@ -5,7 +5,7 @@ class ProductAdminForm(forms.ModelForm):
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
         required=False,
-        label="Select Category to filter subcategories"
+        label="Select Category"
     )
 
     class Meta:
