@@ -90,10 +90,11 @@ class MainCategoryViewSet(viewsets.ReadOnlyModelViewSet):
 
         response = super().list(request, *args, **kwargs)
 
-        print("Total Queries:", len(connection.queries))
+        # print("Total Queries:", len(connection.queries))
 
         for q in connection.queries:
-            print(q["sql"])
+            pass
+            # print(q["sql"])
 
         return response
 
@@ -176,7 +177,12 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             
         arm = self.request.query_params.get('arm')
         if arm:
-            queryset = queryset.filter(arm=arm)
+            try:
+                arm_fk=Arm.objects.get(slug=arm)
+                queryset = queryset.filter(arm_fk=arm_fk)
+            except Arm.DoesNotExist:
+                queryset = queryset.none()  # or just skip filtering
+
 
         show_in_home = self.request.query_params.get('show_in_home')
         if show_in_home is not None:
