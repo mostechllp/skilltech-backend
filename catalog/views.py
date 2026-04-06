@@ -120,7 +120,7 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
 
         show_in_footer = self.request.query_params.get('show_in_footer')
         if show_in_footer is not None:
-            queryset = queryset.filter(show_in_footer=show_in_footer.lower() == 'true').order_by("order", "name")
+            queryset = queryset.filter(show_in_footer=show_in_footer.lower() == 'true').order_by("order")
             
         return queryset
 
