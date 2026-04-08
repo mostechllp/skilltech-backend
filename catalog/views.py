@@ -192,8 +192,8 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         if search_query:
             queryset = queryset.filter(
                 Q(name__icontains=search_query) | 
-                Q(description__icontains=search_query) |
-                Q(title__icontains=search_query)
+                Q(title__icontains=search_query) |
+                Q(tags__icontains=search_query)
             )
 
         limit = self.request.query_params.get('limit')
