@@ -89,6 +89,34 @@ class SimilarProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'name', 'title', 'slug','slug_path', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
 
+class CategorySerializer2(serializers.ModelSerializer):    
+    class Meta:
+        model = Category
+        fields = '__all__'
+class SubCategorySerializer(serializers.ModelSerializer):
+    category_slug = serializers.CharField(source='category.slug', read_only=True)
+    products_count = serializers.IntegerField(read_only=True)
+    category=CategorySerializer2()
+    
+    class Meta:
+        model = SubCategory
+        fields = '__all__'
+    
+   
+
+class CategorySerializer(serializers.ModelSerializer):
+    subcategories = SubCategorySerializer(many=True, read_only=True,source='active_subcategories')
+    
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+class MainCategorySerializer(serializers.ModelSerializer):
+    categories = CategorySerializer(many=True)
+
+    class Meta:
+        model = MainCategory
+        fields = ["id", "name", "slug", "order", "categories"]
 class ProductListSerializer(serializers.ModelSerializer):
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
     category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
@@ -112,34 +140,13 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
     seo = ProductSeoSerializer(read_only=True)
     similar_products = SimilarProductSerializer(many=True, read_only=True)
+    subcategory = SubCategorySerializer()
 
     class Meta:
         model = Product
         fields = '__all__'
 
-class SubCategorySerializer(serializers.ModelSerializer):
-    category_slug = serializers.CharField(source='category.slug', read_only=True)
-    products_count = serializers.IntegerField(read_only=True)
-    
-    class Meta:
-        model = SubCategory
-        fields = '__all__'
-    
-   
 
-class CategorySerializer(serializers.ModelSerializer):
-    subcategories = SubCategorySerializer(many=True, read_only=True,source='active_subcategories')
-    
-    class Meta:
-        model = Category
-        fields = '__all__'
-
-class MainCategorySerializer(serializers.ModelSerializer):
-    categories = CategorySerializer(many=True)
-
-    class Meta:
-        model = MainCategory
-        fields = ["id", "name", "slug", "order", "categories"]
 class HomepageBannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = HomepageBanner
