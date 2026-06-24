@@ -603,7 +603,9 @@ class AvailableTime(models.Model):
 
 class ServiceFAQ(models.Model):
     question = models.CharField(max_length=255)
+    question_ar = models.CharField(max_length=255, blank=True, null=True)
     answer = models.TextField()
+    answer_ar = models.TextField(blank=True, null=True)
     order = models.IntegerField(default=0, db_index=True)
     active = models.BooleanField(default=True)
 

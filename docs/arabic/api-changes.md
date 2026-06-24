@@ -222,5 +222,31 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 9. Service FAQs Endpoint (`/api/service-faqs/`)
+
+### Affected Serializer
+- `ServiceFAQSerializer`
+
+### Changes
+- Includes:
+  - `question_ar` (type: `string`, nullable: `true`)
+  - `answer_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "question": "What is the warranty period?",
+    "question_ar": "ما هي فترة الضمان؟",
+    "answer": "We offer a 2-year warranty on all installations.",
+    "answer_ar": "نحن نقدم ضمان لمدة عامين على جميع عمليات التركيب.",
+    "order": 1
+  }
+]
+```
 ```
 

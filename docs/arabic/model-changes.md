@@ -47,5 +47,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0005_project_location_ar_project_subtitle_ar_and_more.py`
   - Applied: Yes
 
+### 5. ServiceFAQ Model
+- **Model Name**: `ServiceFAQ`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `question_ar` (`CharField`, `max_length=255`, `null=True`, `blank=True`): Stores the Arabic translation of the FAQ question.
+  - `answer_ar` (`TextField`, `null=True`, `blank=True`): Stores the Arabic translation of the FAQ answer.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0006_servicefaq_answer_ar_servicefaq_question_ar.py`
+  - Applied: Yes
+
 
 

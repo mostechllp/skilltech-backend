@@ -328,7 +328,8 @@ class SiteSettingsAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(ServiceFAQ)
 class ServiceFAQAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('question', 'active')
+    list_display = ('question', 'question_ar', 'active')
+    search_fields = ('question', 'question_ar', 'answer', 'answer_ar')
 
 @admin.register(HomeStatistic)
 class HomeStatisticAdmin(AdminIPLogMixin, admin.ModelAdmin):

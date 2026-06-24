@@ -28,7 +28,7 @@ class AvailableTimeSerializer(serializers.ModelSerializer):
 class ServiceFAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceFAQ
-        fields = ['id', 'question', 'answer', 'order']
+        fields = ['id', 'question', 'question_ar', 'answer', 'answer_ar', 'order']
 
 class ServiceSerializer(serializers.ModelSerializer):
     installation_types = InstallationTypeSerializer(many=True, read_only=True)
