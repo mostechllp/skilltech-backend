@@ -157,5 +157,39 @@ This document tracks all changes made to the API response schemas to include the
     "show_economic": false
   }
 ]
+
+---
+
+## 7. Offers Endpoint (`/api/offers/`)
+
+### Affected Serializer
+- `OfferSerializer`
+
+### Changes
+- Automatically includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+  - `subtitle_ar` (type: `string`, nullable: `true`)
+  - `button_text_ar` (type: `string`, nullable: `true`)
+  - `button_link_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "title": "Special Deal",
+    "title_ar": "صفقة خاصة",
+    "subtitle": "Limited Time Only",
+    "subtitle_ar": "لفترة محدودة فقط",
+    "image": "/media/offers/deal.png",
+    "button_text": "Explore",
+    "button_text_ar": "استكشف",
+    "button_link": "/offers/special",
+    "button_link_ar": "/ar/offers/special",
+    "active": true,
+    "order": 1
+  }
+]
+```
 ```
 

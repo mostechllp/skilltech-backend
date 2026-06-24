@@ -255,10 +255,14 @@ class HomepageBanner(models.Model):
 
 class Offer(models.Model):
     title = models.CharField(max_length=100)
+    title_ar = models.CharField(max_length=100, blank=True, null=True)
     subtitle = models.CharField(max_length=100, blank=True, help_text='e.g. New Arrival, Trending, Hot Pick')
+    subtitle_ar = models.CharField(max_length=100, blank=True, null=True, help_text='e.g. New Arrival, Trending, Hot Pick')
     image = models.ImageField(upload_to='offers/', help_text="Size depends on position. Big: 1200x1200px, Small: 800x600px, Wide: 1600x600px.")
     button_text = models.CharField(max_length=50, default='Explore')
+    button_text_ar = models.CharField(max_length=50, blank=True, null=True)
     button_link = models.CharField(max_length=200, default='/')
+    button_link_ar = models.CharField(max_length=200, blank=True, null=True)
     active = models.BooleanField(default=True)
     order = models.IntegerField(default=0, db_index=True)
 

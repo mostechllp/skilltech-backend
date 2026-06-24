@@ -208,9 +208,17 @@ class HomepageBannerAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Offer)
 class OfferAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'subtitle', 'active', 'order')
+    list_display = ('title', 'title_ar', 'subtitle', 'subtitle_ar', 'active', 'order')
     list_editable = ('active', 'order')
-    fields=('subtitle','title','image','button_text','button_link','active','order')
+    search_fields = ('title', 'title_ar', 'subtitle', 'subtitle_ar')
+    fields = (
+        'title', 'title_ar',
+        'subtitle', 'subtitle_ar',
+        'image',
+        'button_text', 'button_text_ar',
+        'button_link', 'button_link_ar',
+        'active', 'order'
+    )
 
 @admin.register(ProductEnquiry)
 class ProductEnquiryAdmin(AdminIPLogMixin, admin.ModelAdmin):
