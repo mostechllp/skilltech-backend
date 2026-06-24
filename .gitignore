@@ -151,3 +151,4 @@ __pycache__
 **/media/**
 venv
 .qodo
+config/local_settings.py
