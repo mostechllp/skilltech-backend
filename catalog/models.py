@@ -649,7 +649,9 @@ class CareerApplication(models.Model):
 
 class GlobalLocation(models.Model):
     country = models.CharField(max_length=100)
+    country_ar = models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField()
+    address_ar = models.TextField(blank=True, null=True)
     email = models.EmailField()
     map_iframe = models.TextField(help_text='Paste the full iframe code from Google Maps (Share -> Embed a map)')
     map_link = models.URLField(help_text='Google Maps Link (for Get Directions button)')

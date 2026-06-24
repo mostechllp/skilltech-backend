@@ -80,5 +80,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0008_blogpost_author_ar_blogpost_content_ar_and_more.py`
   - Applied: Yes
 
+### 8. GlobalLocation Model
+- **Model Name**: `GlobalLocation`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `country_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the country name.
+  - `address_ar` (`TextField`, `null=True`, `blank=True`): Stores the Arabic translation of the location address.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0009_globallocation_address_ar_globallocation_country_ar.py`
+  - Applied: Yes
+
 
 

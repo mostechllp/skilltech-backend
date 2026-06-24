@@ -322,5 +322,35 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 12. Global Locations Endpoint (`/api/global-locations/`)
+
+### Affected Serializer
+- `GlobalLocationSerializer`
+
+### Changes
+- Includes:
+  - `country_ar` (type: `string`, nullable: `true`)
+  - `address_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "country": "United Arab Emirates",
+    "country_ar": "الإمارات العربية المتحدة",
+    "address": "Office 402, Business Bay, Dubai, UAE",
+    "address_ar": "مكتب 402، الخليج التجاري، دبي، الإمارات العربية المتحدة",
+    "email": "info@skilltech.ae",
+    "map_iframe": "<iframe>...</iframe>",
+    "map_link": "https://maps.google.com/...",
+    "active": true,
+    "order": 1
+  }
+]
+```
 ```
 

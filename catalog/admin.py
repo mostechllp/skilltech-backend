@@ -43,10 +43,10 @@ class CareerApplicationAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(GlobalLocation)
 class GlobalLocationAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('country', 'email', 'active', 'order')
+    list_display = ('country', 'country_ar', 'email', 'active', 'order')
     list_editable = ('active', 'order')
-    search_fields = ('country', 'address')
-    fields = ('country', 'address', 'email', 'map_iframe', 'map_link', 'active', 'order')
+    search_fields = ('country', 'country_ar', 'address', 'address_ar')
+    fields = ('country', 'country_ar', 'address', 'address_ar', 'email', 'map_iframe', 'map_link', 'active', 'order')
 
 class ProductImageInline(admin.StackedInline):
     model = ProductImage
