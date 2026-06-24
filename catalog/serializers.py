@@ -352,6 +352,11 @@ class PageBannerSerializer(serializers.ModelSerializer):
 
 
 class BlogPostSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if not data.get('image_ar'):
+            data['image_ar'] = data.get('image')
+        return data
 
 
 

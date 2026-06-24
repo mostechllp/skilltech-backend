@@ -67,5 +67,18 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0007_newspost_content_ar_newspost_title_ar.py`
   - Applied: Yes
 
+### 7. BlogPost Model
+- **Model Name**: `BlogPost`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `title_ar` (`CharField`, `max_length=200`, `null=True`, `blank=True`): Stores the Arabic translation of the blog post title.
+  - `image_ar` (`ImageField`, `null=True`, `blank=True`): Stores the Arabic translation/localized image of the blog post. If empty, fallback to original image.
+  - `content_ar` (`TextField`, `null=True`, `blank=True`): Stores the Arabic translation of the blog post main content.
+  - `short_description_ar` (`TextField`, `null=True`, `blank=True`): Stores the Arabic translation of the short description.
+  - `author_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the author name.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0008_blogpost_author_ar_blogpost_content_ar_and_more.py`
+  - Applied: Yes
+
 
 

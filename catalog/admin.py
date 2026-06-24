@@ -285,10 +285,20 @@ class ProjectAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'created_at', 'active')
+    list_display = ('title', 'title_ar', 'created_at', 'active')
     list_filter = ('active', 'created_at')
-    search_fields = ('title', 'content')
+    search_fields = ('title', 'title_ar', 'content', 'content_ar', 'author', 'author_ar')
     prepopulated_fields = {'slug': ('title',)}
+    fields = (
+        'title', 'title_ar',
+        'slug',
+        'image', 'image_ar',
+        'short_description', 'short_description_ar',
+        'content', 'content_ar',
+        'tags',
+        'author', 'author_ar',
+        'active'
+    )
     
 @admin.register(SEOPage)
     

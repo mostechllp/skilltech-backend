@@ -284,5 +284,43 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 11. Blog Posts Endpoint (`/api/blogs/`)
+
+### Affected Serializer
+- `BlogPostSerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+  - `image_ar` (type: `string`, nullable: `true`, fallback: `image`)
+  - `content_ar` (type: `string`, nullable: `true`)
+  - `short_description_ar` (type: `string`, nullable: `true`)
+  - `author_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "title": "Why You Need a Professional TV Mount",
+    "title_ar": "لماذا تحتاج إلى حامل تلفزيون احترافي",
+    "slug": "why-you-need-a-professional-tv-mount",
+    "image": "/media/blog/mount1.png",
+    "image_ar": "/media/blog/mount1.png",
+    "content": "Choosing the right wall type and mounting is critical for safety...",
+    "content_ar": "يعد اختيار نوع الجدار والتركيب المناسبين أمرًا بالغ الأهمية للسلامة...",
+    "short_description": "A guide to selecting the best TV mount.",
+    "short_description_ar": "دليل لاختيار أفضل حامل تلفزيون.",
+    "tags": ["Tech", "News"],
+    "author": "Admin",
+    "author_ar": "المدير",
+    "created_at": "2026-06-24T10:00:00Z",
+    "active": true
+  }
+]
+```
 ```
 

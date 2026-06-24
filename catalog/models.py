@@ -446,12 +446,17 @@ class PageBanner(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
+    title_ar = models.CharField(max_length=200, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='blog/', help_text="Recommended size: 1600x1000px (Landscape).")
+    image_ar = models.ImageField(upload_to='blog/', blank=True, null=True, help_text="Recommended size: 1600x1000px (Landscape).")
     content = models.TextField()
+    content_ar = models.TextField(blank=True, null=True)
     short_description = models.TextField(blank=True, help_text="Summary displayed on the list page")
+    short_description_ar = models.TextField(blank=True, null=True, help_text="Summary displayed on the list page")
     tags = models.TextField(blank=True, help_text="Comma separated tags, e.g. Tech, News, Update")
     author = models.CharField(max_length=100, default="Admin")
+    author_ar = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 
