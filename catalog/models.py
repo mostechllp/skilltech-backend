@@ -469,10 +469,13 @@ class BlogPost(models.Model):
 class Project(models.Model):
 
     title = models.CharField(max_length=100)
+    title_ar = models.CharField(max_length=100, blank=True, null=True)
 
     subtitle = models.CharField(max_length=100, blank=True)
+    subtitle_ar = models.CharField(max_length=100, blank=True, null=True)
 
     location = models.CharField(max_length=100, blank=True)
+    location_ar = models.CharField(max_length=100, blank=True, null=True)
 
     image = models.ImageField(upload_to='projects/', help_text="Recommended size: 1200x800px (Landscape).")
 

@@ -191,5 +191,36 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 8. Projects Endpoint (`/api/projects/`)
+
+### Affected Serializer
+- `ProjectSerializer`
+
+### Changes
+- Automatically includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+  - `subtitle_ar` (type: `string`, nullable: `true`)
+  - `location_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "title": "Smart Office Setup",
+    "title_ar": "إعداد المكتب الذكي",
+    "subtitle": "Interactive workspace integration",
+    "subtitle_ar": "تكامل مساحة العمل التفاعلية",
+    "location": "Dubai, UAE",
+    "location_ar": "دبي، الإمارات العربية المتحدة",
+    "image": "/media/projects/office.png",
+    "order": 1,
+    "active": true
+  }
+]
+```
 ```
 

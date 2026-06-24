@@ -272,7 +272,14 @@ class PageBannerAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display=('title','subtitle','location','image','order','active')
+    list_display=('title', 'title_ar', 'subtitle', 'subtitle_ar', 'location', 'location_ar', 'image', 'order', 'active')
+    search_fields=('title', 'title_ar', 'subtitle', 'subtitle_ar', 'location', 'location_ar')
+    fields = (
+        'title', 'title_ar',
+        'subtitle', 'subtitle_ar',
+        'location', 'location_ar',
+        'image', 'order', 'active'
+    )
 
     
 

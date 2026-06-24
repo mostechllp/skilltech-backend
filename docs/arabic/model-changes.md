@@ -36,5 +36,16 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0004_offer_button_link_ar_offer_button_text_ar_and_more.py`
   - Applied: Yes
 
+### 4. Project Model
+- **Model Name**: `Project`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `title_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the project title.
+  - `subtitle_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the project subtitle.
+  - `location_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the project location.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0005_project_location_ar_project_subtitle_ar_and_more.py`
+  - Applied: Yes
+
 
 
