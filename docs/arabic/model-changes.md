@@ -90,5 +90,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0009_globallocation_address_ar_globallocation_country_ar.py`
   - Applied: Yes
 
+### 9. SiteSettings Model
+- **Model Name**: `SiteSettings`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `address_heading_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the address section heading.
+  - `address_ar` (`TextField`, `null=True`, `blank=True`): Stores the Arabic translation of the address.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0010_sitesettings_address_ar_and_more.py`
+  - Applied: Yes
+
 
 

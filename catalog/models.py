@@ -558,7 +558,9 @@ class SiteSettings(models.Model):
     service_whatsapp = models.CharField(max_length=20, blank=True, null=True, help_text="WhatsApp number for service page")
     
     address_heading = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
+    address_heading_ar = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
     address = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")
+    address_ar = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")
     google_map_link = models.URLField(blank=True, null=True, help_text="Google Maps Location URL")
 
     demo = models.BooleanField(default=False, help_text="If checked, adds 'noindex' to meta tags")
