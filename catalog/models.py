@@ -66,6 +66,7 @@ class Category(models.Model):
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+    name_ar = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio).")
     active = models.BooleanField(default=True, db_index=True)

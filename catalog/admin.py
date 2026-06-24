@@ -85,14 +85,14 @@ class CategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'category', 'slug','order', 'active')
+    list_display = ('name', 'name_ar', 'category', 'slug','order', 'active')
     list_editable = ('active','order')
-    search_fields=('name',)
+    search_fields=('name', 'name_ar')
     list_filter = ('category', 'active')
     prepopulated_fields = {'slug': ('name',)}
     fieldsets = (
         (None, {
-            'fields': ('category', 'name', 'slug', 'image', 'active', 'order', 'multi_expand')
+            'fields': ('category', 'name', 'name_ar', 'slug', 'image', 'active', 'order', 'multi_expand')
         }),
         ('SEO Settings', {
             'fields': ('meta_title', 'meta_description', 'meta_image', 'meta_keywords', 'canonical_url'),

@@ -86,4 +86,76 @@ This document tracks all changes made to the API response schemas to include the
     "show_economic": false
   }
 ]
----------- Completed ----------------
+
+---
+
+## 5. Subcategories Endpoint (`/api/subcategories/`)
+
+### Affected Serializer
+- `SubCategorySerializer`
+
+### Changes
+- Automatically includes `name_ar` (type: `string`, nullable: `true`) inside the subcategory payload.
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "category_slug": "wall-mounts",
+    "products_count": 5,
+    "category": {
+      "id": 1,
+      "name": "Wall Mounts",
+      "name_ar": "حوامل جدارية",
+      "slug": "wall-mounts"
+    },
+    "name": "Fixed TV Mounts",
+    "name_ar": "حوامل التلفزيون الثابتة",
+    "slug": "fixed-mounts",
+    "image": "/media/subcategories/fixed_mounts.png",
+    "active": true,
+    "order": "1.000",
+    "multi_expand": false,
+    "meta_title": "Fixed TV Mounts",
+    "meta_description": "Slim profile fixed brackets.",
+    "meta_keywords": "fixed mounts"
+  }
+]
+```
+
+---
+
+## 6. Product List Endpoint (`/api/products/`)
+
+### Affected Serializer
+- `ProductListSerializer`
+
+### Changes
+- Added a root-level field `subcategory_name_ar` mapping to the subcategory's Arabic name (`subcategory.name_ar`).
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "name": "Tilt TV Wall Mount",
+    "title": "Tilt TV Wall Mount",
+    "slug": "tilt-tv-wall-mount",
+    "slug_path": "wall-mounts/tilt/tilt-tv-wall-mount",
+    "main_image": "/media/products/tilt_mount.png",
+    "main_image_alt": "Tilt TV Mount",
+    "short_description": "Tilting bracket.",
+    "subcategory_slug": "tilt-mounts",
+    "category_slug": "wall-mounts",
+    "category": "Wall Mounts",
+    "category_ar": "حوامل جدارية",
+    "subcategory_name_ar": "حوامل التلفزيون المائلة",
+    "show_in_home": true,
+    "active": true,
+    "order": "1.000",
+    "show_economic": false
+  }
+]
+```
+

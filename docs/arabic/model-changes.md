@@ -15,3 +15,13 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0002_category_name_ar.py`
   - Applied: Yes
 
+### 2. SubCategory Model
+- **Model Name**: `SubCategory`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `name_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the subcategory name.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0003_subcategory_name_ar.py`
+  - Applied: Yes
+
+

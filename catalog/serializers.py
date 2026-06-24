@@ -122,6 +122,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
     category = serializers.CharField(source='subcategory.category.name', read_only=True)
     category_ar = serializers.CharField(source='subcategory.category.name_ar', read_only=True)
+    subcategory_name_ar = serializers.CharField(source='subcategory.name_ar', read_only=True)
     
     class Meta:
         model = Product
@@ -130,7 +131,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'id', 'name', 'title', 'slug', 'slug_path',
             'main_image', 'main_image_alt', 
             'short_description', 
-            'subcategory_slug', 'category_slug', 'category', 'category_ar',
+            'subcategory_slug', 'category_slug', 'category', 'category_ar', 'subcategory_name_ar',
             'show_in_home', 'active', 'order','show_economic'
         ]
 
