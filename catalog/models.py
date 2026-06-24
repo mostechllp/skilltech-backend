@@ -33,6 +33,7 @@ class Category(models.Model):
         db_index=True
     )
     name = models.CharField(max_length=100)
+    name_ar = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='categories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio). Transparent PNG preferred.")
     show_in_home=models.BooleanField(default=False, db_index=True)
