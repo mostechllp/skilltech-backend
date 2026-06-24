@@ -248,5 +248,41 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 10. News Posts Endpoint (`/api/news-posts/`)
+
+### Affected Serializer
+- `NewsPostSerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+  - `content_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "category": {
+      "id": 1,
+      "name": "General News"
+    },
+    "title": "New Installation Methods Launched",
+    "title_ar": "إطلاق طرق تركيب جديدة",
+    "slug": "new-installation-methods-launched",
+    "cover_image": "/media/news/news1.png",
+    "content": "We have introduced state of the art wall mounting techniques.",
+    "content_ar": "لقد أدخلنا أحدث تقنيات التركيب على الجدران.",
+    "video_url": null,
+    "status": "published",
+    "published_at": "2026-06-24T12:00:00Z",
+    "created_at": "2026-06-24T10:00:00Z",
+    "order": 1
+  }
+]
+```
 ```
 

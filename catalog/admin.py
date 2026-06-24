@@ -412,6 +412,6 @@ class NewsCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(NewsPost)
 class NewsPostAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'category','status','published_at','order')
+    list_display = ('title', 'title_ar', 'category', 'status', 'published_at', 'order')
     list_editable = ('order',)
-    search_fields=('title',)
+    search_fields = ('title', 'title_ar', 'content', 'content_ar')

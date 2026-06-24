@@ -735,6 +735,7 @@ class NewsPost(models.Model):
     )
 
     title = models.CharField(max_length=255)
+    title_ar = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=300, unique=True, blank=True)
 
     # For cards
@@ -742,6 +743,7 @@ class NewsPost(models.Model):
 
     # Main content (simple version)
     content = models.TextField()  # later you can replace with RichTextField / EditorJS\
+    content_ar = models.TextField(blank=True, null=True)
     video_url=models.URLField(blank=True,null=True)
 
     # Publishing

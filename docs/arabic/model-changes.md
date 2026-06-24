@@ -57,5 +57,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0006_servicefaq_answer_ar_servicefaq_question_ar.py`
   - Applied: Yes
 
+### 6. NewsPost Model
+- **Model Name**: `NewsPost`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `title_ar` (`CharField`, `max_length=255`, `null=True`, `blank=True`): Stores the Arabic translation of the news post title.
+  - `content_ar` (`TextField`, `null=True`, `blank=True`): Stores the Arabic translation of the news post main content.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0007_newspost_content_ar_newspost_title_ar.py`
+  - Applied: Yes
+
 
 
