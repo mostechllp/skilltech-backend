@@ -185,6 +185,7 @@ class Arm(models.Model):
 
 class Feature(models.Model):
     title=models.CharField(max_length=100)
+    title_ar=models.CharField(max_length=100, null=True, blank=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
     class Meta:
         ordering = ['order']

@@ -357,8 +357,9 @@ class ServiceStatisticAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Feature)
 class FeatureAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'order')
+    list_display = ('title', 'title_ar', 'order')
     list_editable = ('order',)
+    search_fields = ('title', 'title_ar')
 
 
 

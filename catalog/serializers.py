@@ -53,7 +53,7 @@ class GlobalLocationSerializer(serializers.ModelSerializer):
 class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model=Feature
-        fields=['id','title','order']
+        fields=['id','title','title_ar','order']
 
 class ProductFeatureSerializer(serializers.ModelSerializer):
     feature=FeatureSerializer(read_only=True)

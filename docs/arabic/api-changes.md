@@ -459,5 +459,28 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 17. Features Endpoint (`/api/features/` or embedded in product lists)
+
+### Affected Serializer
+- `FeatureSerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "title": "Max Load Capacity",
+    "title_ar": "أقصى سعة تحميل",
+    "order": "1.000"
+  }
+]
+```
 ```
 
