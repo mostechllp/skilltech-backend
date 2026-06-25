@@ -673,7 +673,9 @@ class GlobalLocation(models.Model):
 
 class HomeStatistic(models.Model):
     value = models.IntegerField(help_text="Numeric value for the counter (e.g. 100 for 100K)")
+    value_ar = models.CharField(max_length=50, blank=True, null=True, help_text="Optional Arabic value override")
     label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
+    label_ar = models.CharField(max_length=100, blank=True, null=True, help_text="Arabic label below the number")
     suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
     icon = models.ImageField(upload_to='statistics/', blank=True, null=True, help_text="Optional icon")
     order = models.IntegerField(default=0, db_index=True)

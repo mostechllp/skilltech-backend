@@ -345,9 +345,9 @@ class ServiceFAQAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(HomeStatistic)
 class HomeStatisticAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('label', 'value', 'suffix', 'active', 'order')
+    list_display = ('label', 'label_ar', 'value', 'value_ar', 'suffix', 'active', 'order')
     list_editable = ('active', 'order')
-    search_fields = ('label', 'value')
+    search_fields = ('label', 'label_ar', 'value', 'value_ar')
 
 @admin.register(ServiceStatistic)
 class ServiceStatisticAdmin(AdminIPLogMixin, admin.ModelAdmin):

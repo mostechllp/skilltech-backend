@@ -145,5 +145,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0015_gallery_title_ar.py`
   - Applied: Yes
 
+### 15. HomeStatistic Model
+- **Model Name**: `HomeStatistic`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `value_ar` (`CharField`, `max_length=50`, `null=True`, `blank=True`): Arabic translation or override for the value.
+  - `label_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Arabic translation of the statistic label.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0016_homestatistic_label_ar_homestatistic_value_ar.py`
+  - Applied: Yes
+
 
 
