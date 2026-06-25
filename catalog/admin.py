@@ -75,8 +75,9 @@ class ArmAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(MainCategory)
 class MainCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'slug', 'active', 'order')
-    list_editable = ('active','order')
+    list_display = ('name', 'name_ar', 'slug', 'active', 'order')
+    list_editable = ('active', 'order')
+    search_fields = ('name', 'name_ar')
     prepopulated_fields = {'slug': ('name',)}
 @admin.register(Category)
 class CategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):

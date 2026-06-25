@@ -537,5 +537,30 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 20. Main Categories Endpoint (`/api/main-categories/` or nested in product paths)
+
+### Affected Serializer
+- `MainCategorySerializer`
+
+### Changes
+- Includes:
+  - `name_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "name": "TV Mounts",
+    "name_ar": "حوامل التلفزيون",
+    "slug": "tv-mounts",
+    "order": "1.000",
+    "categories": []
+  }
+]
+```
 ```
 

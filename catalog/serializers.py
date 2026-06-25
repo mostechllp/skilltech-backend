@@ -116,7 +116,7 @@ class MainCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MainCategory
-        fields = ["id", "name", "slug", "order", "categories"]
+        fields = ["id", "name", "name_ar", "slug", "order", "categories"]
 class ProductListSerializer(serializers.ModelSerializer):
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
     category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)

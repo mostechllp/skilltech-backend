@@ -9,6 +9,7 @@ from django.utils import timezone
 
 class MainCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    name_ar = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000, db_index=True)
     active = models.BooleanField(default=True, db_index=True)

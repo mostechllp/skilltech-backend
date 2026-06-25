@@ -155,5 +155,14 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0016_homestatistic_label_ar_homestatistic_value_ar.py`
   - Applied: Yes
 
+### 16. MainCategory Model
+- **Model Name**: `MainCategory`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `name_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Arabic translation of the main category name.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0017_maincategory_name_ar.py`
+  - Applied: Yes
+
 
 
