@@ -100,5 +100,14 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0010_sitesettings_address_ar_and_more.py`
   - Applied: Yes
 
+### 10. Arm Model
+- **Model Name**: `Arm`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `name_ar` (`CharField`, `max_length=50`, `null=True`, `blank=True`): Stores the Arabic translation of the arm name.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0011_arm_name_ar.py`
+  - Applied: Yes
+
 
 

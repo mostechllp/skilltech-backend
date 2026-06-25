@@ -380,5 +380,32 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 14. Arms Endpoint (`/api/arms/`)
+
+### Affected Serializer
+- `ArmSerializer`
+
+### Changes
+- Includes:
+  - `name_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "name": "Single Arm",
+    "name_ar": "ذراع واحد",
+    "order": "1.000",
+    "active": true,
+    "show_in_articulating": true,
+    "show_in_ergonomic": true,
+    "slug": "single-arm"
+  }
+]
+```
 ```
 

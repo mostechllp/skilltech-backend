@@ -68,8 +68,10 @@ class ProductSeoInline(admin.StackedInline):
 
 @admin.register(Arm)
 class ArmAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display=('name','order','slug','active')
+    list_display = ('name', 'name_ar', 'order', 'slug', 'active')
     list_editable = ('order',)
+    search_fields = ('name', 'name_ar')
+    prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(MainCategory)
 class MainCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):

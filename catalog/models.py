@@ -165,6 +165,7 @@ class Product(models.Model):
 
 class Arm(models.Model):
     name=models.CharField(max_length=50,null=True,blank=True,unique=True)
+    name_ar=models.CharField(max_length=50,null=True,blank=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
     active=models.BooleanField(default=True)
     show_in_articulating=models.BooleanField(default=True)
