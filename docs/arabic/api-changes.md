@@ -591,5 +591,58 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 22. Services Endpoint (`/api/services/`)
+
+### Affected Serializer
+- `ServiceSerializer`
+- `InstallationTypeSerializer`
+- `TVSizeSerializer`
+- `AvailableTimeSerializer`
+
+### Changes
+- Includes:
+  - `name_ar` (type: `string`, nullable: `true`)
+  - `description_ar` (type: `string`, nullable: `true`)
+  - Nested fields in `installation_types`: `name_ar` (type: `string`, nullable: `true`)
+  - Nested fields in `tv_sizes`: `size_ar` (type: `string`, nullable: `true`)
+  - Nested fields in `available_times`: `time_slot_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "name": "TV Mounting Service",
+    "name_ar": "خدمة تركيب التلفزيون",
+    "description": "Professional TV wall mounting.",
+    "description_ar": "تركيب التلفزيون على الحائط بشكل احترافي.",
+    "active": true,
+    "installation_types": [
+      {
+        "id": 1,
+        "name": "Drywall Installation",
+        "name_ar": "التركيب على الجدران الجافة"
+      }
+    ],
+    "tv_sizes": [
+      {
+        "id": 1,
+        "size": "55-65 inches",
+        "size_ar": "٥٥-٦٥ بوصة"
+      }
+    ],
+    "available_times": [
+      {
+        "id": 1,
+        "time_slot": "9:00 AM - 12:00 PM",
+        "time_slot_ar": "٩:٠٠ صباحًا - ١٢:٠٠ مساءً"
+      }
+    ]
+  }
+]
+```
 ```
 

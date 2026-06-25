@@ -587,7 +587,9 @@ class SiteSettings(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=100)
+    name_ar = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True)
+    description_ar = models.TextField(blank=True, null=True)
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -596,6 +598,7 @@ class Service(models.Model):
 class InstallationType(models.Model):
     service = models.ForeignKey(Service, related_name='installation_types', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+    name_ar = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -603,6 +606,7 @@ class InstallationType(models.Model):
 class TVSize(models.Model):
     service = models.ForeignKey(Service, related_name='tv_sizes', on_delete=models.CASCADE)
     size = models.CharField(max_length=50)
+    size_ar = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return self.size
@@ -610,6 +614,7 @@ class TVSize(models.Model):
 class AvailableTime(models.Model):
     service = models.ForeignKey(Service, related_name='available_times', on_delete=models.CASCADE)
     time_slot = models.CharField(max_length=100)
+    time_slot_ar = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.time_slot

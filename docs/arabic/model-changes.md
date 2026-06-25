@@ -174,5 +174,22 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0018_servicestatistic_label_ar_and_more.py`
   - Applied: Yes
 
+### 18. Service & Booking Configuration Models
+- **Model Names**: `Service`, `InstallationType`, `TVSize`, `AvailableTime`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `Service`:
+    - `name_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Arabic service name.
+    - `description_ar` (`TextField`, `null=True`, `blank=True`): Arabic service description.
+  - `InstallationType`:
+    - `name_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Arabic installation type name.
+  - `TVSize`:
+    - `size_ar` (`CharField`, `max_length=50`, `null=True`, `blank=True`): Arabic TV size label.
+  - `AvailableTime`:
+    - `time_slot_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Arabic available time slot.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0019_service_description_ar_service_name_ar_and_more.py`
+  - Applied: Yes
+
 
 

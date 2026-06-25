@@ -13,17 +13,17 @@ class CareerPositionSerializer(serializers.ModelSerializer):
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallationType
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'name_ar']
 
 class TVSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TVSize
-        fields = ['id', 'size']
+        fields = ['id', 'size', 'size_ar']
 
 class AvailableTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AvailableTime
-        fields = ['id', 'time_slot']
+        fields = ['id', 'time_slot', 'time_slot_ar']
 
 class ServiceFAQSerializer(serializers.ModelSerializer):
     class Meta:

@@ -17,20 +17,23 @@ from .forms import ProductAdminForm
 
 class InstallationTypeInline(admin.TabularInline):
     model = InstallationType
+    fields = ('name', 'name_ar')
     extra = 1
 
 class TVSizeInline(admin.TabularInline):
     model = TVSize
+    fields = ('size', 'size_ar')
     extra = 1
 
 class AvailableTimeInline(admin.TabularInline):
     model = AvailableTime
+    fields = ('time_slot', 'time_slot_ar')
     extra = 1
 
 @admin.register(Service)
 class ServiceAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'active')
-    search_fields = ('name', 'description')
+    list_display = ('name', 'name_ar', 'active')
+    search_fields = ('name', 'name_ar', 'description', 'description_ar')
     inlines = [InstallationTypeInline, TVSizeInline, AvailableTimeInline]
 
 
