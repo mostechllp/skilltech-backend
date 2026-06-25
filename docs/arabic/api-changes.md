@@ -433,5 +433,31 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 16. Certificates Endpoint (`/api/certificates/`)
+
+### Affected Serializer
+- `CertificateSerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "title": "ISO 9001 Certification",
+    "title_ar": "شهادة الأيزو 9001",
+    "thumbnail": "/media/certificates/thumbnails/iso.png",
+    "file": "/media/certificates/files/iso.pdf",
+    "order": 1,
+    "active": true
+  }
+]
+```
 ```
 

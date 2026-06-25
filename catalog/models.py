@@ -370,6 +370,7 @@ class Certificate(models.Model):
 
 
     title = models.CharField(max_length=100)
+    title_ar = models.CharField(max_length=100, null=True, blank=True)
 
 
 
