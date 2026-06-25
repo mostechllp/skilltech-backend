@@ -249,6 +249,7 @@ class ProductSeo(models.Model):
 class HomepageBanner(models.Model):
     link = models.CharField(max_length=200, default='/')
     image = models.ImageField(upload_to='banners/', help_text="Recommended size: 2000x2000px (1:1 aspect ratio) for square desktop rendering. Ensure focal point is centered.")
+    image_ar = models.ImageField(upload_to='banners/', blank=True, null=True, help_text="Arabic banner image. If null or empty, the default Image field is used.")
     image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     active = models.BooleanField(default=True)
     order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000)

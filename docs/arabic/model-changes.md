@@ -191,5 +191,14 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0019_service_description_ar_service_name_ar_and_more.py`
   - Applied: Yes
 
+### 19. HomepageBanner Model
+- **Model Name**: `HomepageBanner`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `image_ar` (`ImageField`, `null=True`, `blank=True`): Arabic banner image.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0020_homepagebanner_image_ar.py`
+  - Applied: Yes
+
 
 

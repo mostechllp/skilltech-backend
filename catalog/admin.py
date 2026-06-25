@@ -208,9 +208,9 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
 
 @admin.register(HomepageBanner)
 class HomepageBannerAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('link','active', 'order')
+    list_display = ('link', 'active', 'order')
     list_editable = ('active', 'order')
-    fields = ('link', 'image', 'image_alt','active', 'order')
+    fields = ('link', 'image', 'image_ar', 'image_alt', 'active', 'order')
 
 @admin.register(Offer)
 class OfferAdmin(AdminIPLogMixin, admin.ModelAdmin):

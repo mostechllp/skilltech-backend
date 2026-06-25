@@ -644,5 +644,33 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 23. Homepage Banners Endpoint (`/api/homepage-banners/`)
+
+### Affected Serializer
+- `HomepageBannerSerializer`
+
+### Changes
+- Includes:
+  - `image_ar` (type: `string`, nullable: `true`)
+  - Auto-fallback logic: if `image_ar` is not uploaded, the serializer returns the original English `image` in `image_ar`.
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "link": "/products",
+    "image": "/media/banners/banner.png",
+    "image_ar": "/media/banners/banner.png",
+    "image_alt": "Mounting Solutions banner",
+    "active": true,
+    "order": "1.000"
+  }
+]
+```
+```
 ```
 
