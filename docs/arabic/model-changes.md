@@ -164,5 +164,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0017_maincategory_name_ar.py`
   - Applied: Yes
 
+### 17. ServiceStatistic Model
+- **Model Name**: `ServiceStatistic`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `value_ar` (`CharField`, `max_length=50`, `null=True`, `blank=True`): Arabic translation or override for the value.
+  - `label_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Arabic translation of the statistic label.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0018_servicestatistic_label_ar_and_more.py`
+  - Applied: Yes
+
 
 

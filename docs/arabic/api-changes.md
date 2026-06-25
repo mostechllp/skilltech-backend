@@ -562,5 +562,34 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 21. Service Statistics Endpoint (`/api/service-statistics/`)
+
+### Affected Serializer
+- `ServiceStatisticSerializer`
+
+### Changes
+- Includes:
+  - `value_ar` (type: `string`, nullable: `true`)
+  - `label_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "value": 500,
+    "value_ar": "٥٠٠",
+    "label": "Services Completed",
+    "label_ar": "الخدمات المكتملة",
+    "suffix": "+",
+    "icon": "/media/service_statistics/services.png",
+    "order": 1,
+    "active": true
+  }
+]
+```
 ```
 
