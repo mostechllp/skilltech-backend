@@ -262,9 +262,9 @@ class CertificateAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Gallery)
 class GalleryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'category', 'created_at')
+    list_display = ('title', 'title_ar', 'category', 'created_at')
     list_filter = ('category',)
-    search_fields = ('title', 'category__name')
+    search_fields = ('title', 'title_ar', 'category__name')
 
 @admin.register(PageBanner)
 class PageBannerAdmin(AdminIPLogMixin, admin.ModelAdmin):

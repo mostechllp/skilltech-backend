@@ -423,6 +423,7 @@ class Gallery(models.Model):
     category = models.ForeignKey(Category, related_name='gallery_images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='gallery/', help_text="Recommended size: 1600x1200px (Landscape).")
     title = models.CharField(max_length=100, blank=True)
+    title_ar = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

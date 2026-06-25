@@ -482,5 +482,31 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 18. Gallery Endpoint (`/api/gallery/` or embedded in category lists)
+
+### Affected Serializer
+- `GallerySerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "category": 2,
+    "category_slug": "tv-mounts",
+    "image": "/media/gallery/photo.png",
+    "title": "Living Room Installation",
+    "title_ar": "تركيب غرفة المعيشة",
+    "created_at": "2026-06-25T12:00:00Z"
+  }
+]
+```
 ```
 

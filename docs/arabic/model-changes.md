@@ -136,5 +136,14 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0014_feature_title_ar.py`
   - Applied: Yes
 
+### 14. Gallery Model
+- **Model Name**: `Gallery`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `title_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the gallery image title.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0015_gallery_title_ar.py`
+  - Applied: Yes
+
 
 
