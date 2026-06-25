@@ -250,9 +250,9 @@ class ClientAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Catalogue)
 class CatalogueAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'active', 'order')
+    list_display = ('title', 'title_ar', 'active', 'order')
     list_editable = ('active', 'order')
-    search_fields = ('title',)
+    search_fields = ('title', 'title_ar')
 
 @admin.register(Certificate)
 class CertificateAdmin(AdminIPLogMixin, admin.ModelAdmin):

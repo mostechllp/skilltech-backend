@@ -109,5 +109,14 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0011_arm_name_ar.py`
   - Applied: Yes
 
+### 11. Catalogue Model
+- **Model Name**: `Catalogue`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `title_ar` (`CharField`, `max_length=100`, `null=True`, `blank=True`): Stores the Arabic translation of the catalogue title.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0012_catalogue_title_ar.py`
+  - Applied: Yes
+
 
 

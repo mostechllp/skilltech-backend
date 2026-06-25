@@ -407,5 +407,31 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 15. Catalogues Endpoint (`/api/catalogues/`)
+
+### Affected Serializer
+- `CatalogueSerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+
+### Example Response
+```json
+[
+  {
+    "id": 1,
+    "title": "Main Product Catalogue",
+    "title_ar": "كتالوج المنتجات الرئيسي",
+    "thumbnail": "/media/catalogues/thumbnails/cover.png",
+    "file": "/media/catalogues/files/catalogue.pdf",
+    "order": 1,
+    "active": true
+  }
+]
+```
 ```
 

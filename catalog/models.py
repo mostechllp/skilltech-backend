@@ -341,6 +341,7 @@ class Client(models.Model):
 class Catalogue(models.Model):
 
     title = models.CharField(max_length=100)
+    title_ar = models.CharField(max_length=100, null=True, blank=True)
 
     thumbnail = models.ImageField(upload_to='catalogues/thumbnails/', help_text="Recommended size: 600x800px (Portrait/Cover).")
 
