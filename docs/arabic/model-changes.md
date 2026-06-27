@@ -200,5 +200,17 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0020_homepagebanner_image_ar.py`
   - Applied: Yes
 
+### 20. Product Model
+- **Model Name**: `Product`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `title_ar` (`CharField`, `max_length=255`, `null=True`, `blank=True`): Arabic full title.
+  - `short_description_ar` (`CharField`, `max_length=255`, `null=True`, `blank=True`): Arabic short description.
+  - `description_ar` (`TextField`, `null=True`, `blank=True`): Arabic full description.
+  - `tags_ar` (`TextField`, `null=True`, `blank=True`): Arabic tags.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0021_product_description_ar_product_short_description_ar_and_more.py`
+  - Applied: Yes
+
 
 

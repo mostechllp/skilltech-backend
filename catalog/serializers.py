@@ -87,7 +87,7 @@ class SimilarProductSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Product
-        fields = ['id', 'name', 'title', 'slug','slug_path', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
+        fields = ['id', 'name', 'title', 'title_ar', 'slug', 'slug_path', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
 
 class CategorySerializer2(serializers.ModelSerializer):    
     class Meta:
@@ -128,9 +128,9 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = Product
         # Explicitly listing fields is safer and faster than '__all__'
         fields = [
-            'id', 'name', 'title', 'slug', 'slug_path',
+            'id', 'name', 'title', 'title_ar', 'slug', 'slug_path',
             'main_image', 'main_image_alt', 
-            'short_description', 
+            'short_description', 'short_description_ar',
             'subcategory_slug', 'category_slug', 'category', 'category_ar', 'subcategory_name_ar',
             'show_in_home', 'active', 'order','show_economic'
         ]

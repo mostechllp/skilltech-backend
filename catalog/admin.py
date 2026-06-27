@@ -160,13 +160,13 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     #     super().save_model(request, obj, form, change)
     fields = [
         # 🔥 Priority fields (top)
-        "category","subcategory","arm_fk","name","title",
+        "category","subcategory","arm_fk","name","title", "title_ar",
         # Basic content
-        "slug","slug_path","short_description","description",
+        "slug","slug_path","short_description","short_description_ar","description","description_ar",
         # Images
         "main_image","main_image_alt","drawing_image","drawing_image_alt","box_3d_image","box_3d_image_alt","video_url","product_video_url",
 
-        "tags",
+        "tags","tags_ar",
         # Files
         "datasheet",
         # Flags
@@ -183,7 +183,7 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     list_display = ('name', 'title', 'subcategory','order', 'slug', 'active')
     list_editable = ('active','order')
     list_filter = ('subcategory', 'subcategory__category', 'active')
-    search_fields = ('name', 'title', 'description')
+    search_fields = ('name', 'title', 'title_ar', 'description', 'description_ar')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductFeatureInline, ProductBulletFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
 

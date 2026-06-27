@@ -671,6 +671,40 @@ This document tracks all changes made to the API response schemas to include the
   }
 ]
 ```
+
+---
+
+## 24. Products Endpoints (`/api/products/`, `/api/products/<slug>/`)
+
+### Affected Serializer
+- `ProductListSerializer`
+- `ProductDetailSerializer`
+- `SimilarProductSerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+  - `short_description_ar` (type: `string`, nullable: `true`)
+  - `description_ar` (type: `string`, nullable: `true`) (detail endpoint only)
+  - `tags_ar` (type: `string`, nullable: `true`) (detail endpoint only)
+
+### Example Response
+```json
+{
+  "id": 1,
+  "name": "SH 380R",
+  "title": "360 Rotate Wall Mount",
+  "title_ar": "حامل حائط يدور ٣٦٠ درجة",
+  "slug": "sh-380r",
+  "short_description": "Flexible rotation wall mount",
+  "short_description_ar": "حامل حائط مرن الدوران",
+  "description": "Premium 360 rotation flat screen tv mount",
+  "description_ar": "حامل تلفزيون شاشة مسطحة بدوران ٣٦٠ درجة ممتاز",
+  "tags": "Mount, 360",
+  "tags_ar": "حامل, ٣٦٠"
+}
+```
+```
 ```
 ```
 

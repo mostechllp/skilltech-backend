@@ -96,11 +96,14 @@ class Product(models.Model):
     subcategory = models.ForeignKey(SubCategory, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, help_text='Model Name, e.g., SH 380R',db_index=True)
     title = models.CharField(max_length=255, help_text='Full Title, e.g., 360 Rotate Wall Mount...',db_index=True)
+    title_ar = models.CharField(max_length=255, blank=True, null=True, help_text='Arabic Full Title', db_index=True)
     slug = models.SlugField(unique=True, blank=True)
     slug_path = models.CharField(max_length=500,blank=True,null=True,unique=True)
     
     short_description = models.CharField(max_length=255, blank=True, null=True)
+    short_description_ar = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(help_text='Full product description')
+    description_ar = models.TextField(blank=True, null=True, help_text='Arabic Full product description')
     
     main_image = models.ImageField(upload_to='products/main/',max_length=500, help_text="Recommended size: 1600x1600px (1:1 aspect ratio). Transparent PNG preferred for listing consistency.")
     main_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
@@ -114,6 +117,7 @@ class Product(models.Model):
     product_video_url = models.URLField(blank=True, null=True, help_text='Product Video URL')
     
     tags = models.TextField(blank=True, help_text='Comma separated tags, e.g. Tag1, Tag2')
+    tags_ar = models.TextField(blank=True, null=True, help_text='Arabic comma separated tags')
 
     # New fields
     datasheet = models.FileField(upload_to='products/datasheets/',max_length=500, blank=True, null=True)
