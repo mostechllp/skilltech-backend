@@ -210,7 +210,9 @@ class ProductFeature(models.Model):
 class ProductBulletFeature(models.Model):
     product = models.ForeignKey(Product, related_name='bullet_features', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=True, null=True, help_text="Bold part of the feature (e.g. 360° Screen Rotation)")
+    title_ar = models.CharField(max_length=255, blank=True, null=True, help_text="Arabic bold part of the feature")
     text = models.TextField(help_text="Main description of the feature")
+    text_ar = models.TextField(blank=True, null=True, help_text="Arabic main description of the feature")
     order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000)
 
     class Meta:

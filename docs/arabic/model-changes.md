@@ -212,5 +212,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0021_product_description_ar_product_short_description_ar_and_more.py`
   - Applied: Yes
 
+### 21. ProductBulletFeature Model
+- **Model Name**: `ProductBulletFeature`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `title_ar` (`CharField`, `max_length=255`, `null=True`, `blank=True`): Arabic bold part of the feature.
+  - `text_ar` (`TextField`, `null=True`, `blank=True`): Arabic main description of the feature.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0022_productbulletfeature_text_ar_and_more.py`
+  - Applied: Yes
+
 
 

@@ -704,6 +704,34 @@ This document tracks all changes made to the API response schemas to include the
   "tags_ar": "حامل, ٣٦٠"
 }
 ```
+
+---
+
+## 25. Product Bullet Features Endpoint (nested under product detail `/api/products/<slug>/`)
+
+### Affected Serializer
+- `ProductBulletFeatureSerializer`
+
+### Changes
+- Includes:
+  - `title_ar` (type: `string`, nullable: `true`)
+  - `text_ar` (type: `string`, nullable: `true`)
+
+### Example Response snippet
+```json
+{
+  "bullet_features": [
+    {
+      "id": 1,
+      "title": "VESA Compatible",
+      "title_ar": "متوافق مع فيسا",
+      "text": "Supports up to 400x400mm",
+      "text_ar": "يدعم حتى ٤٠٠×٤٠٠ مم",
+      "order": "1.000"
+    }
+  ]
+}
+```
 ```
 ```
 ```

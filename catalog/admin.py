@@ -60,6 +60,7 @@ class ProductFeatureInline(admin.StackedInline):
 
 class ProductBulletFeatureInline(admin.StackedInline):
     model = ProductBulletFeature
+    fields = ('title', 'title_ar', 'text', 'text_ar', 'order')
     extra = 1
 
 class ProductSpecificationInline(admin.TabularInline):
