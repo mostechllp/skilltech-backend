@@ -65,6 +65,7 @@ class ProductBulletFeatureInline(admin.StackedInline):
 
 class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
+    fields = ('key', 'key_ar', 'value', 'value_ar')
     extra = 1
 
 class ProductSeoInline(admin.StackedInline):

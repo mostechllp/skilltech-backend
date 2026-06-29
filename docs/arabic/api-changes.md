@@ -732,6 +732,33 @@ This document tracks all changes made to the API response schemas to include the
   ]
 }
 ```
+
+---
+
+## 26. Product Specifications Endpoint (nested under product detail `/api/products/<slug>/`)
+
+### Affected Serializer
+- `ProductSpecificationSerializer`
+
+### Changes
+- Includes:
+  - `key_ar` (type: `string`, nullable: `true`)
+  - `value_ar` (type: `string`, nullable: `true`)
+
+### Example Response snippet
+```json
+{
+  "specifications": [
+    {
+      "key": "Material",
+      "key_ar": "المادة",
+      "value": "Solid Steel",
+      "value_ar": "فولاذ صلب"
+    }
+  ]
+}
+```
+```
 ```
 ```
 ```

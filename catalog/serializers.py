@@ -64,12 +64,12 @@ class ProductFeatureSerializer(serializers.ModelSerializer):
 class ProductBulletFeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductBulletFeature
-        fields = ['id', 'title', 'text', 'order']
+        fields = ['id', 'title', 'title_ar', 'text', 'text_ar', 'order']
 
 class ProductSpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSpecification
-        fields = ['key', 'value']
+        fields = ['key', 'key_ar', 'value', 'value_ar']
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:

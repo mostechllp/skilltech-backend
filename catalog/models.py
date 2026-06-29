@@ -224,7 +224,9 @@ class ProductBulletFeature(models.Model):
 class ProductSpecification(models.Model):
     product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
     key = models.CharField(max_length=200)
+    key_ar = models.CharField(max_length=200, blank=True, null=True, help_text="Arabic key")
     value = models.CharField(max_length=500)
+    value_ar = models.CharField(max_length=500, blank=True, null=True, help_text="Arabic value")
 
     def __str__(self):
         return f'{self.key}: {self.value}'

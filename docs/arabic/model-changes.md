@@ -222,5 +222,15 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0022_productbulletfeature_text_ar_and_more.py`
   - Applied: Yes
 
+### 22. ProductSpecification Model
+- **Model Name**: `ProductSpecification`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `key_ar` (`CharField`, `max_length=200`, `null=True`, `blank=True`): Arabic key name.
+  - `value_ar` (`CharField`, `max_length=500`, `null=True`, `blank=True`): Arabic value description.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0023_productspecification_key_ar_and_more.py`
+  - Applied: Yes
+
 
 
