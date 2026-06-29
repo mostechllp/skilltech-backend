@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skilltechdb',
-        'USER': 'skilltechuser',
+        'NAME': 'skilltechardb',
+        'USER': 'skilltecharuser',
         'PASSWORD': 's3k@illt3e@cHd4Bv',
         'HOST': 'localhost',     # or server IP
         'PORT': '3306',
