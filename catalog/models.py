@@ -811,3 +811,35 @@ class NewsPost(models.Model):
 
 
         super().save(*args, **kwargs)
+
+
+class BranchLocation(models.Model):
+    ICON_CHOICES = [
+        ('store', 'Store / Showroom'),
+        ('building', 'Corporate Office'),
+        ('warehouse', 'Warehouse'),
+        ('map-marker-alt', 'Other Location'),
+    ]
+
+    title = models.CharField(max_length=120, help_text="e.g. Showroom")
+    title_ar = models.CharField(max_length=120, blank=True, null=True, help_text="Arabic title")
+    icon = models.CharField(max_length=30, choices=ICON_CHOICES, default='store')
+    
+    address = models.TextField(help_text="Line breaks will be preserved on the frontend")
+    address_ar = models.TextField(blank=True, null=True, help_text="Arabic address")
+    
+    tel1 = models.CharField(max_length=50, blank=True, null=True, help_text="Primary telephone / mobile")
+    tel2 = models.CharField(max_length=50, blank=True, null=True, help_text="Secondary telephone / mobile")
+    email = models.EmailField(blank=True, null=True)
+    
+    working_hours = models.TextField(blank=True, null=True, help_text="e.g. Monday to Saturday 09.00am to 10.00 pm | Sunday: Holiday")
+    working_hours_ar = models.TextField(blank=True, null=True, help_text="Arabic working hours")
+    
+    active = models.BooleanField(default=True, db_index=True)
+    order = models.IntegerField(default=0, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title

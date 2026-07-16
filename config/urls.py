@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
 from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, CareerPositionViewSet
-from catalog.views import OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha
+from catalog.views import OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha, BranchLocationViewSet
 from catalog.views import  NewsPostViewset
 from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet,ArmsViewSet
 def robots_txt(request):
@@ -42,6 +42,7 @@ router.register(r'services', ServiceViewSet)
 router.register(r'service-faqs', ServiceFAQViewSet)
 router.register(r'career-applications', CareerApplicationViewSet)
 router.register(r'global-locations', GlobalLocationViewSet)
+router.register(r'branch-locations', BranchLocationViewSet)
 router.register(r'statistics', StatisticViewSet)
 router.register(r'service-statistics', ServiceStatisticViewSet)
 router.register(r'career-positions', CareerPositionViewSet)

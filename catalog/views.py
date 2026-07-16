@@ -4,12 +4,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
-from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, CareerPosition
+from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, CareerPosition, BranchLocation
 from .models import NewsCategory,NewsPost,Arm
 from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer
 from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
 from .serializers import  CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
-from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer, CareerPositionSerializer
+from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer, CareerPositionSerializer, BranchLocationSerializer
 from .serializers import NewsPostSerializer,ArmSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -802,6 +802,11 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
 class GlobalLocationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = GlobalLocation.objects.filter(active=True).order_by('order')
     serializer_class = GlobalLocationSerializer
+
+class BranchLocationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = BranchLocation.objects.filter(active=True).order_by('order')
+    serializer_class = BranchLocationSerializer
+
 
 class StatisticViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = HomeStatistic.objects.filter(active=True).order_by('order')

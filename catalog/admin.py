@@ -4,7 +4,7 @@ import datetime
 from django.utils import timezone
 from django.http import HttpResponse
 from django.urls import path
-from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition
+from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition, BranchLocation
 
 @admin.register(CareerPosition)
 class CareerPositionAdmin(admin.ModelAdmin):
@@ -55,6 +55,14 @@ class GlobalLocationAdmin(AdminIPLogMixin, admin.ModelAdmin):
     list_editable = ('active', 'order')
     search_fields = ('country', 'country_ar', 'address', 'address_ar')
     fields = ('country', 'country_ar', 'address', 'address_ar', 'email', 'map_iframe', 'map_link', 'active', 'order')
+
+@admin.register(BranchLocation)
+class BranchLocationAdmin(AdminIPLogMixin, admin.ModelAdmin):
+    list_display = ('title', 'title_ar', 'icon', 'active', 'order')
+    list_editable = ('active', 'order')
+    search_fields = ('title', 'title_ar', 'address', 'address_ar')
+    fields = ('title', 'title_ar', 'icon', 'address', 'address_ar', 'tel1', 'tel2', 'email', 'working_hours', 'working_hours_ar', 'active', 'order')
+
 
 class ProductImageInline(admin.StackedInline):
     model = ProductImage
