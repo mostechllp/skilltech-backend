@@ -1,0 +1,93 @@
+{% extends "admin/change_list.html" %}
+
+{% block result_list %}
+    <div class="card card-outline card-primary mb-3">
+        <div class="card-header">
+            <h3 class="card-title text-primary font-weight-bold" style="font-size: 1.1rem; margin-bottom: 0;">
+                <i class="fas fa-file-csv mr-1 text-success"></i> Export Bookings to CSV
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="form-inline">
+                <!-- Select date range -->
+                <div class="form-group mr-4 mb-2">
+                    <label for="range_type" class="mr-2 font-weight-bold text-secondary">Date Range:</label>
+                    <select id="range_type" class="form-control form-control-sm" style="min-width: 150px;">
+                        <option value="this_month">This Month</option>
+                        <option value="last_month">Last Month</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+
+                <!-- Filter by field -->
+                <div class="form-group mr-4 mb-2">
+                    <label for="filter_by" class="mr-2 font-weight-bold text-secondary">Filter By:</label>
+                    <select id="filter_by" class="form-control form-control-sm" style="min-width: 180px;">
+                        <option value="created_date">Created Date</option>
+                        <option value="scheduled_date">Scheduled Booking Date</option>
+                    </select>
+                </div>
+
+                <!-- Custom Dates -->
+                <div id="custom-date-fields" class="form-group mr-4 mb-2" style="display: none; gap: 8px; align-items: center;">
+                    <label for="from_date" class="mr-1 font-weight-bold text-secondary">From:</label>
+                    <input type="date" id="from_date" class="form-control form-control-sm">
+                    <label for="to_date" class="mx-1 font-weight-bold text-secondary">To:</label>
+                    <input type="date" id="to_date" class="form-control form-control-sm">
+                </div>
+
+                <button type="button" id="btn-export-csv" class="btn btn-sm btn-primary mb-2 px-3">
+                    <i class="fas fa-download mr-1"></i> Download CSV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var rangeSelect = document.getElementById("range_type");
+            var customFields = document.getElementById("custom-date-fields");
+            var fromDate = document.getElementById("from_date");
+            var toDate = document.getElementById("to_date");
+            var exportBtn = document.getElementById("btn-export-csv");
+
+            function toggleCustomFields() {
+                if (rangeSelect.value === "custom") {
+                    customFields.style.setProperty("display", "inline-flex", "important");
+                } else {
+                    customFields.style.setProperty("display", "none", "important");
+                }
+            }
+
+            rangeSelect.addEventListener("change", toggleCustomFields);
+            toggleCustomFields(); // Initial execution
+
+            exportBtn.addEventListener("click", function() {
+                var rangeType = rangeSelect.value;
+                var filterBy = document.getElementById("filter_by").value;
+                var fromVal = fromDate.value;
+                var toVal = toDate.value;
+
+                if (rangeType === "custom" && (!fromVal || !toVal)) {
+                    alert("Please select both From and To dates.");
+                    return;
+                }
+
+                // Construct query parameters
+                var params = new URLSearchParams();
+                params.append("range_type", rangeType);
+                params.append("filter_by", filterBy);
+                if (rangeType === "custom") {
+                    params.append("from_date", fromVal);
+                    params.append("to_date", toVal);
+                }
+
+                // Trigger file download
+                var downloadUrl = "export-csv/?" + params.toString();
+                window.location.href = downloadUrl;
+            });
+        });
+    </script>
+
+    {{ block.super }}
+{% endblock %}

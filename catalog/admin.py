@@ -1,4 +1,9 @@
 from django.contrib import admin
+import csv
+import datetime
+from django.utils import timezone
+from django.http import HttpResponse
+from django.urls import path
 from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition
 
 @admin.register(CareerPosition)
@@ -247,6 +252,68 @@ class ServiceBookingAdmin(AdminIPLogMixin, admin.ModelAdmin):
     list_filter = ('installation_type', 'date', 'created_at')
     search_fields = ('name', 'email', 'phone')
     readonly_fields = ('created_at',)
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('export-csv/', self.admin_site.admin_view(self.export_csv_view), name='servicebooking_export_csv'),
+        ]
+        return custom_urls + urls
+
+    def export_csv_view(self, request):
+        range_type = request.GET.get('range_type', 'this_month')
+        filter_by = request.GET.get('filter_by', 'created_date')
+        from_date_str = request.GET.get('from_date')
+        to_date_str = request.GET.get('to_date')
+
+        today = timezone.localtime(timezone.now()).date()
+
+        try:
+            if range_type == 'this_month':
+                start_date = today.replace(day=1)
+                # Next month's 1st day minus 1 day
+                next_month = today.replace(day=28) + datetime.timedelta(days=4)
+                end_date = next_month.replace(day=1) - datetime.timedelta(days=1)
+            elif range_type == 'last_month':
+                first_day_this_month = today.replace(day=1)
+                end_date = first_day_this_month - datetime.timedelta(days=1)
+                start_date = end_date.replace(day=1)
+            elif range_type == 'custom':
+                if not from_date_str or not to_date_str:
+                    return HttpResponse("Please provide both From and To dates for custom range.", status=400)
+                start_date = datetime.datetime.strptime(from_date_str, '%Y-%m-%d').date()
+                end_date = datetime.datetime.strptime(to_date_str, '%Y-%m-%d').date()
+            else:
+                return HttpResponse("Invalid range type.", status=400)
+        except Exception as e:
+            return HttpResponse(f"Error parsing dates: {e}", status=400)
+
+        # Apply filtering
+        if filter_by == 'scheduled_date':
+            queryset = ServiceBooking.objects.filter(date__range=(start_date, end_date)).order_by('-date')
+        else:
+            queryset = ServiceBooking.objects.filter(created_at__date__range=(start_date, end_date)).order_by('-created_at')
+
+        # Generate CSV
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="service_bookings_{start_date}_to_{end_date}.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Name', 'Email', 'Phone', 'Installation Type', 'Booking Date', 'Booking Time', 'Created At'])
+
+        for booking in queryset:
+            created_at_local = timezone.localtime(booking.created_at)
+            writer.writerow([
+                booking.name,
+                booking.email,
+                booking.phone,
+                booking.installation_type,
+                booking.date.strftime('%Y-%m-%d') if booking.date else '',
+                booking.time,
+                created_at_local.strftime('%Y-%m-%d %H:%M:%S')
+            ])
+
+        return response
 
 @admin.register(Client)
 class ClientAdmin(AdminIPLogMixin, admin.ModelAdmin):
