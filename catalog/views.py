@@ -31,6 +31,14 @@ from django.http import FileResponse
 from django.db.models import Count,Q,Prefetch
 from django.db import connection,reset_queries
 
+def get_whatsapp_links(phone_number, text_content):
+    import urllib.parse
+    cleaned_phone = "".join(filter(str.isdigit, str(phone_number or "")))
+    encoded_text = urllib.parse.quote(text_content)
+    chat_url = f"https://wa.me/{cleaned_phone}?text={encoded_text}" if cleaned_phone else None
+    share_url = f"https://api.whatsapp.com/send?text={encoded_text}"
+    return chat_url, share_url
+
 class CareerPositionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = CareerPosition.objects.filter(active=True).order_by('name')
     serializer_class = CareerPositionSerializer
@@ -226,13 +234,25 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                     
                     subject = f"Product Enquiry: {product.name} - from {instance.name}"
                     
+                    whatsapp_text = (
+                        f"*New Product Enquiry*\n"
+                        f"*Product:* {product.name}\n"
+                        f"*Name:* {instance.name}\n"
+                        f"*Email:* {instance.email}\n"
+                        f"*Phone:* {instance.phone}\n"
+                        f"*Message:* {instance.message}"
+                    )
+                    chat_url, share_url = get_whatsapp_links(instance.phone, whatsapp_text)
+
                     context = {
                         'name': instance.name,
                         'email': instance.email,
                         'phone': instance.phone,
                         'message': instance.message,
                         'product_name': product.name,
-                        'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                        'logo_url': settings.FRONTEND_URL + '/images/logo.png',
+                        'whatsapp_chat_url': chat_url,
+                        'whatsapp_share_url': share_url,
                     }
                     
                     html_message = render_to_string('emails/product_enquiry.html', context)
@@ -293,6 +313,18 @@ class ContactEnquiryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                 if instance.subject:
                     subject += f": {instance.subject}"
                 
+                whatsapp_text = (
+                    f"*New Contact Enquiry*\n"
+                    f"*Name:* {instance.name}\n"
+                    f"*Company:* {instance.company or 'N/A'}\n"
+                    f"*Email:* {instance.email}\n"
+                    f"*Phone:* {instance.phone}\n"
+                    f"*Subject:* {instance.subject or 'N/A'}\n"
+                    f"*Message:* {instance.comments or 'N/A'}\n"
+                    f"*Address:* {instance.address or 'N/A'}"
+                )
+                chat_url, share_url = get_whatsapp_links(instance.phone, whatsapp_text)
+
                 context = {
                     'name': instance.name,
                     'company': instance.company,
@@ -301,7 +333,9 @@ class ContactEnquiryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                     'subject': instance.subject,
                     'message': instance.comments,
                     'address': instance.address,
-                    'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                    'logo_url': settings.FRONTEND_URL + '/images/logo.png',
+                    'whatsapp_chat_url': chat_url,
+                    'whatsapp_share_url': share_url,
                 }
                 
                 html_message = render_to_string('emails/contact_enquiry.html', context)
@@ -376,6 +410,20 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                 
                 subject = f"New Service Booking: {instance.installation_type} - {instance.name}"
                 
+                bracket_str = "Yes" if instance.bracket else "No"
+                whatsapp_text = (
+                    f"*New Service Booking*\n"
+                    f"*Installation Type:* {instance.installation_type}\n"
+                    f"*TV Size:* {instance.tv_size}\n"
+                    f"*Bracket Required:* {bracket_str}\n"
+                    f"*Name:* {instance.name}\n"
+                    f"*Email:* {instance.email}\n"
+                    f"*Phone:* {instance.phone}\n"
+                    f"*Requested Date:* {instance.date}\n"
+                    f"*Requested Time:* {instance.time}"
+                )
+                chat_url, share_url = get_whatsapp_links(instance.phone, whatsapp_text)
+
                 context = {
                     'name': instance.name,
                     'email': instance.email,
@@ -385,7 +433,9 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                     'bracket': instance.bracket,
                     'date': instance.date,
                     'time': instance.time,
-                    'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                    'logo_url': settings.FRONTEND_URL + '/images/logo.png',
+                    'whatsapp_chat_url': chat_url,
+                    'whatsapp_share_url': share_url,
                 }
                 
                 html_message = render_to_string('emails/service_booking.html', context)
@@ -752,6 +802,17 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
                 else:
                     cv_url = '#'
 
+                whatsapp_text = (
+                    f"*New Career Application*\n"
+                    f"*Position:* {instance.position or 'N/A'}\n"
+                    f"*Name:* {instance.name}\n"
+                    f"*Email:* {instance.email}\n"
+                    f"*Phone:* {instance.phone}\n"
+                    f"*Cover Letter:* {instance.cover_letter or 'N/A'}\n"
+                    f"*CV Link:* {cv_url}"
+                )
+                chat_url, share_url = get_whatsapp_links(instance.phone, whatsapp_text)
+
                 context = {
                     'name': instance.name,
                     'email': instance.email,
@@ -759,7 +820,9 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
                     'position': instance.position,
                     'cover_letter': instance.cover_letter,
                     'cv_url': cv_url,
-                    'logo_url': settings.FRONTEND_URL + '/images/logo.png'
+                    'logo_url': settings.FRONTEND_URL + '/images/logo.png',
+                    'whatsapp_chat_url': chat_url,
+                    'whatsapp_share_url': share_url,
                 }
                 
                 html_message = render_to_string('emails/career_application.html', context)
