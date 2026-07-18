@@ -13,6 +13,8 @@ ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://skillfe.9pc.in",
+    "https://skilltechonline.com",
+    "https://www.skilltechonline.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -124,9 +126,9 @@ REST_FRAMEWORK = {
 }
 
 JAZZMIN_SETTINGS = {
-    "site_title": "SkillTeck Admin",
-    "site_header": "SkillTeck",
-    "welcome_sign": "Welcome to SkillTeck Backend",
+    "site_title": "SkillTech Admin",
+    "site_header": "SkillTech",
+    "welcome_sign": "Welcome to SkillTech Backend",
     "search_model": ["catalog.Product", "catalog.Category"],
     "show_ui_builder": True,
 }
@@ -134,8 +136,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-FRONTEND_URL = 'https://skillfe.9pc.in'
-MEDIA_BASE_URL = 'https://skillbe.9pc.in'
+FRONTEND_URL = 'https://skilltechonline.com'
+MEDIA_BASE_URL = 'https://app.skilltechonline.com'
 
 # Session Settings
 SESSION_COOKIE_SAMESITE = 'Lax'
