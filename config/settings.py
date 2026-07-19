@@ -13,6 +13,8 @@ ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://skillfe.9pc.in",
+    "https://skilltechonline.com",
+    "https://www.skilltechonline.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -134,8 +136,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-FRONTEND_URL = 'https://skillfe.9pc.in'
-MEDIA_BASE_URL = 'https://skillbe.9pc.in'
+FRONTEND_URL = 'https://skilltechonline.com'
+MEDIA_BASE_URL = 'https://app.skilltechonline.com'
 
 # Session Settings
 SESSION_COOKIE_SAMESITE = 'Lax'
