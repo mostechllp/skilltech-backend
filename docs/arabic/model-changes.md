@@ -232,5 +232,14 @@ also need to find out the apis used and update the database changes there.
   - Migration file: `catalog/migrations/0023_productspecification_key_ar_and_more.py`
   - Applied: Yes
 
+### 23. ServiceBooking Model
+- **Model Name**: `ServiceBooking`
+- **File**: `catalog/models.py`
+- **Fields Added**:
+  - `reference_number` (`CharField`, `max_length=50`, `unique=True`, `blank=True`, `null=True`): Consecutive booking reference number, auto-populated with prefix 'STB-' and next sequence number on save.
+- **Migration Details**:
+  - Migration file: `catalog/migrations/0025_servicebooking_reference_number.py`
+  - Applied: Yes
+
 
 

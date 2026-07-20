@@ -7,12 +7,15 @@ This document tracks all changes made to the API response schemas to include the
 ## 1. Category Endpoint (`/api/categories/`)
 
 ### Affected Serializer
+
 - `CategorySerializer` and `CategorySerializer2`
 
 ### Changes
+
 - Automatically includes `name_ar` (type: `string`, nullable: `true`) inside the category payload.
 
 ### Example Response
+
 ```json
 [
   {
@@ -39,9 +42,11 @@ This document tracks all changes made to the API response schemas to include the
 ## 2. Main Categories Endpoint (`/api/maincategories/`)
 
 ### Affected Serializer
+
 - `MainCategorySerializer` -> `CategorySerializer`
 
 ### Changes
+
 - The nested category objects now include `name_ar`.
 
 ---
@@ -49,9 +54,11 @@ This document tracks all changes made to the API response schemas to include the
 ## 3. Subcategories Endpoint (`/api/subcategories/`)
 
 ### Affected Serializer
+
 - `SubCategorySerializer` -> `CategorySerializer2`
 
 ### Changes
+
 - The nested category object now includes `name_ar`.
 
 ---
@@ -59,12 +66,15 @@ This document tracks all changes made to the API response schemas to include the
 ## 4. Product List Endpoint (`/api/products/`)
 
 ### Affected Serializer
+
 - `ProductListSerializer`
 
 ### Changes
+
 - Added a root-level field `category_ar` mapping to the category's Arabic name (`subcategory.category.name_ar`).
 
 ### Example Response
+
 ```json
 [
   {
@@ -129,12 +139,15 @@ This document tracks all changes made to the API response schemas to include the
 ## 6. Product List Endpoint (`/api/products/`)
 
 ### Affected Serializer
+
 - `ProductListSerializer`
 
 ### Changes
+
 - Added a root-level field `subcategory_name_ar` mapping to the subcategory's Arabic name (`subcategory.name_ar`).
 
 ### Example Response
+
 ```json
 [
   {
@@ -197,15 +210,18 @@ This document tracks all changes made to the API response schemas to include the
 ## 8. Projects Endpoint (`/api/projects/`)
 
 ### Affected Serializer
+
 - `ProjectSerializer`
 
 ### Changes
+
 - Automatically includes:
   - `title_ar` (type: `string`, nullable: `true`)
   - `subtitle_ar` (type: `string`, nullable: `true`)
   - `location_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -228,14 +244,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 9. Service FAQs Endpoint (`/api/service-faqs/`)
 
 ### Affected Serializer
+
 - `ServiceFAQSerializer`
 
 ### Changes
+
 - Includes:
   - `question_ar` (type: `string`, nullable: `true`)
   - `answer_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -254,14 +273,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 10. News Posts Endpoint (`/api/news-posts/`)
 
 ### Affected Serializer
+
 - `NewsPostSerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
   - `content_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -290,9 +312,11 @@ This document tracks all changes made to the API response schemas to include the
 ## 11. Blog Posts Endpoint (`/api/blogs/`)
 
 ### Affected Serializer
+
 - `BlogPostSerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
   - `image_ar` (type: `string`, nullable: `true`, fallback: `image`)
@@ -301,6 +325,7 @@ This document tracks all changes made to the API response schemas to include the
   - `author_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -328,14 +353,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 12. Global Locations Endpoint (`/api/global-locations/`)
 
 ### Affected Serializer
+
 - `GlobalLocationSerializer`
 
 ### Changes
+
 - Includes:
   - `country_ar` (type: `string`, nullable: `true`)
   - `address_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -358,14 +386,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 13. Site Settings Endpoint (`/api/settings/`)
 
 ### Affected Serializer
+
 - `SiteSettingsSerializer`
 
 ### Changes
+
 - Includes:
   - `address_heading_ar` (type: `string`, nullable: `true`)
   - `address_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -386,13 +417,16 @@ This document tracks all changes made to the API response schemas to include the
 ## 14. Arms Endpoint (`/api/arms/`)
 
 ### Affected Serializer
+
 - `ArmSerializer`
 
 ### Changes
+
 - Includes:
   - `name_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -413,13 +447,16 @@ This document tracks all changes made to the API response schemas to include the
 ## 15. Catalogues Endpoint (`/api/catalogues/`)
 
 ### Affected Serializer
+
 - `CatalogueSerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -439,13 +476,16 @@ This document tracks all changes made to the API response schemas to include the
 ## 16. Certificates Endpoint (`/api/certificates/`)
 
 ### Affected Serializer
+
 - `CertificateSerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -465,13 +505,16 @@ This document tracks all changes made to the API response schemas to include the
 ## 17. Features Endpoint (`/api/features/` or embedded in product lists)
 
 ### Affected Serializer
+
 - `FeatureSerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -488,13 +531,16 @@ This document tracks all changes made to the API response schemas to include the
 ## 18. Gallery Endpoint (`/api/gallery/` or embedded in category lists)
 
 ### Affected Serializer
+
 - `GallerySerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -514,14 +560,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 19. Statistics Endpoint (`/api/statistics/`)
 
 ### Affected Serializer
+
 - `StatisticSerializer`
 
 ### Changes
+
 - Includes:
   - `value_ar` (type: `string`, nullable: `true`)
   - `label_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -543,13 +592,16 @@ This document tracks all changes made to the API response schemas to include the
 ## 20. Main Categories Endpoint (`/api/main-categories/` or nested in product paths)
 
 ### Affected Serializer
+
 - `MainCategorySerializer`
 
 ### Changes
+
 - Includes:
   - `name_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -568,14 +620,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 21. Service Statistics Endpoint (`/api/service-statistics/`)
 
 ### Affected Serializer
+
 - `ServiceStatisticSerializer`
 
 ### Changes
+
 - Includes:
   - `value_ar` (type: `string`, nullable: `true`)
   - `label_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -597,12 +652,14 @@ This document tracks all changes made to the API response schemas to include the
 ## 22. Services Endpoint (`/api/services/`)
 
 ### Affected Serializer
+
 - `ServiceSerializer`
 - `InstallationTypeSerializer`
 - `TVSizeSerializer`
 - `AvailableTimeSerializer`
 
 ### Changes
+
 - Includes:
   - `name_ar` (type: `string`, nullable: `true`)
   - `description_ar` (type: `string`, nullable: `true`)
@@ -611,6 +668,7 @@ This document tracks all changes made to the API response schemas to include the
   - Nested fields in `available_times`: `time_slot_ar` (type: `string`, nullable: `true`)
 
 ### Example Response
+
 ```json
 [
   {
@@ -650,14 +708,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 23. Homepage Banners Endpoint (`/api/homepage-banners/`)
 
 ### Affected Serializer
+
 - `HomepageBannerSerializer`
 
 ### Changes
+
 - Includes:
   - `image_ar` (type: `string`, nullable: `true`)
   - Auto-fallback logic: if `image_ar` is not uploaded, the serializer returns the original English `image` in `image_ar`.
 
 ### Example Response
+
 ```json
 [
   {
@@ -677,11 +738,13 @@ This document tracks all changes made to the API response schemas to include the
 ## 24. Products Endpoints (`/api/products/`, `/api/products/<slug>/`)
 
 ### Affected Serializer
+
 - `ProductListSerializer`
 - `ProductDetailSerializer`
 - `SimilarProductSerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
   - `short_description_ar` (type: `string`, nullable: `true`)
@@ -689,6 +752,7 @@ This document tracks all changes made to the API response schemas to include the
   - `tags_ar` (type: `string`, nullable: `true`) (detail endpoint only)
 
 ### Example Response
+
 ```json
 {
   "id": 1,
@@ -710,14 +774,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 25. Product Bullet Features Endpoint (nested under product detail `/api/products/<slug>/`)
 
 ### Affected Serializer
+
 - `ProductBulletFeatureSerializer`
 
 ### Changes
+
 - Includes:
   - `title_ar` (type: `string`, nullable: `true`)
   - `text_ar` (type: `string`, nullable: `true`)
 
 ### Example Response snippet
+
 ```json
 {
   "bullet_features": [
@@ -738,14 +805,17 @@ This document tracks all changes made to the API response schemas to include the
 ## 26. Product Specifications Endpoint (nested under product detail `/api/products/<slug>/`)
 
 ### Affected Serializer
+
 - `ProductSpecificationSerializer`
 
 ### Changes
+
 - Includes:
   - `key_ar` (type: `string`, nullable: `true`)
   - `value_ar` (type: `string`, nullable: `true`)
 
 ### Example Response snippet
+
 ```json
 {
   "specifications": [
@@ -758,8 +828,34 @@ This document tracks all changes made to the API response schemas to include the
   ]
 }
 ```
-```
-```
-```
-```
 
+---
+
+## 27. Service Booking Endpoint (`/api/service-booking/`)
+
+### Affected Serializer
+
+- `ServiceBookingSerializer`
+
+### Changes
+
+- Includes `reference_number` (type: `string`, read-only: `true`) inside the response payload upon creating a service booking.
+- Triggers background email notifications containing the reference number to both the administrator and the customer.
+
+### Example Response
+
+```json
+{
+  "id": 13,
+  "reference_number": "STB-10011",
+  "name": "API Test User",
+  "email": "apitest@example.com",
+  "phone": "123456789",
+  "installation_type": "Wall Mount",
+  "tv_size": "55",
+  "bracket": true,
+  "date": "2026-07-25",
+  "time": "Morning",
+  "created_at": "2026-07-20T11:03:13.328682Z"
+}
+```

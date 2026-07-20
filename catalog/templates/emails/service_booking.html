@@ -85,6 +85,7 @@
             <p>You have received a new service booking request.</p>
             
             <div class="booking-details">
+                <strong>Booking Reference:</strong> {{ reference_number }}<br>
                 <strong>Installation Type:</strong> {{ installation_type }}<br>
                 <strong>TV Size:</strong> {{ tv_size }}<br>
                 <strong>Bracket Required:</strong> {% if bracket %}Yes{% else %}No{% endif %}

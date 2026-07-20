@@ -408,11 +408,11 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                     use_tls=settings.EMAIL_USE_TLS
                 )
                 
-                subject = f"New Service Booking: {instance.installation_type} - {instance.name}"
+                subject = f"New Service Booking [{instance.reference_number}]: {instance.installation_type} - {instance.name}"
                 
                 bracket_str = "Yes" if instance.bracket else "No"
                 whatsapp_text = (
-                    f"*New Service Booking*\n"
+                    f"*New Service Booking [{instance.reference_number}]*\n"
                     f"*Installation Type:* {instance.installation_type}\n"
                     f"*TV Size:* {instance.tv_size}\n"
                     f"*Bracket Required:* {bracket_str}\n"
@@ -425,6 +425,7 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                 chat_url, share_url = get_whatsapp_links(instance.phone, whatsapp_text)
 
                 context = {
+                    'reference_number': instance.reference_number,
                     'name': instance.name,
                     'email': instance.email,
                     'phone': instance.phone,
@@ -455,6 +456,21 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                 )
                 msg.attach_alternative(html_message, "text/html")
                 msg.send(fail_silently=False)
+
+                # Send confirmation email to customer
+                customer_subject = f"Service Booking Confirmation [{instance.reference_number}] - Skill Tech"
+                customer_html_message = render_to_string('emails/service_booking_acknowledgement.html', context)
+                customer_plain_message = strip_tags(customer_html_message)
+
+                customer_msg = EmailMultiAlternatives(
+                    customer_subject,
+                    customer_plain_message,
+                    site_settings.email_host_user, # From email
+                    [instance.email], # To customer
+                    connection=connection
+                )
+                customer_msg.attach_alternative(customer_html_message, "text/html")
+                customer_msg.send(fail_silently=False)
                 
         except Exception as e:
             logger.error(f"Error sending service booking email: {e}")

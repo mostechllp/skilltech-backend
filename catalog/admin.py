@@ -256,10 +256,10 @@ class ContactEnquiryAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(ServiceBooking)
 class ServiceBookingAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'installation_type', 'date', 'time', 'created_at')
+    list_display = ('reference_number', 'name', 'email', 'phone', 'installation_type', 'date', 'time', 'created_at')
     list_filter = ('installation_type', 'date', 'created_at')
-    search_fields = ('name', 'email', 'phone')
-    readonly_fields = ('created_at',)
+    search_fields = ('reference_number', 'name', 'email', 'phone')
+    readonly_fields = ('reference_number', 'created_at',)
 
     def get_urls(self):
         urls = super().get_urls()
@@ -307,11 +307,12 @@ class ServiceBookingAdmin(AdminIPLogMixin, admin.ModelAdmin):
         response['Content-Disposition'] = f'attachment; filename="service_bookings_{start_date}_to_{end_date}.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Name', 'Email', 'Phone', 'Installation Type', 'Booking Date', 'Booking Time', 'Created At'])
+        writer.writerow(['Reference Number', 'Name', 'Email', 'Phone', 'Installation Type', 'Booking Date', 'Booking Time', 'Created At'])
 
         for booking in queryset:
             created_at_local = timezone.localtime(booking.created_at)
             writer.writerow([
+                booking.reference_number,
                 booking.name,
                 booking.email,
                 booking.phone,

@@ -312,6 +312,7 @@ class ContactEnquiry(models.Model):
         return f'Contact from {self.name} - {self.company}'
 
 class ServiceBooking(models.Model):
+    reference_number = models.CharField(max_length=50, unique=True, blank=True, null=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
@@ -321,6 +322,23 @@ class ServiceBooking(models.Model):
     date = models.DateField()
     time = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.reference_number:
+            latest = ServiceBooking.objects.all().order_by('-id').first()
+            if latest and latest.reference_number:
+                try:
+                    parts = latest.reference_number.split('-')
+                    if len(parts) == 2 and parts[1].isdigit():
+                        next_num = int(parts[1]) + 1
+                        self.reference_number = f"STB-{next_num}"
+                    else:
+                        self.reference_number = f"STB-{latest.id + 10001}"
+                except Exception:
+                    self.reference_number = f"STB-10001"
+            else:
+                self.reference_number = "STB-10001"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Service Booking from {self.name} on {self.date}'

@@ -180,6 +180,7 @@ class ServiceBookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceBooking
         fields = '__all__'
+        read_only_fields = ['reference_number']
 
 class ClientSerializer(serializers.ModelSerializer):
 
