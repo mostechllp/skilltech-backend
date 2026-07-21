@@ -2,94 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank You for Contacting Skill Tech</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .header {
-            background-color: #1a1a1a;
-            padding: 20px;
-            text-align: center;
-        }
-        .header img {
-            max-width: 150px;
-            height: auto;
-        }
-        .content {
-            padding: 30px;
-        }
-        .h2 {
-            color: #d10069; /* SkillTech Pink */
-            margin-top: 0;
-        }
-        .field {
-            margin-bottom: 15px;
-        }
-        .label {
-            font-weight: bold;
-            color: #555555;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .value {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #eeeeee;
-        }
-        .footer {
-            background-color: #f4f4f4;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #777777;
-        }
-    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <img src="{{logo_url}}" alt="SkillTech Logo" style="color: #ffffff; font-size: 20px; font-weight: bold;">
-        </div>
-        <div class="content">
-            <h2 class="h2">Thank You for Contacting Us</h2>
-            <p>Dear {{ name }},</p>
-            <p>Thank you for reaching out to Skill Tech. We have received your message and will get back to you as soon as possible.</p>
-            
-            <p>Here is a copy of your message:</p>
+<body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333333; margin: 0; padding: 20px;">
+    <p>Dear {{ name }},</p>
+    <p>Thank you for reaching out to Skill Tech. We have received your message and will get back to you as soon as possible.</p>
 
-            {% if subject %}
-            <div class="field">
-                <span class="label">Subject:</span>
-                <div class="value">{{ subject }}</div>
-            </div>
-            {% endif %}
+    {% if subject or message %}
+    <p><strong>Your Submitted Message Details:</strong></p>
+    {% if subject %}<p><strong>Subject:</strong> {{ subject }}</p>{% endif %}
+    {% if message %}<p style="white-space: pre-wrap; background-color: #f9f9f9; padding: 10px; border-radius: 4px;">{{ message }}</p>{% endif %}
+    {% endif %}
 
-            <div class="field">
-                <span class="label">Message:</span>
-                <div class="value" style="white-space: pre-wrap;">{{ message }}</div>
-            </div>
-            
-            <p>Best regards,<br>The Skill Tech Team</p>
-        </div>
-        <div class="footer">
-            <p>&copy; {% now "Y" %} Skill Tech. All rights reserved.</p>
-        </div>
-    </div>
+    <p>Best regards,<br>Skill Tech Team</p>
 </body>
 </html>

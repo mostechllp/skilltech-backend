@@ -2,121 +2,23 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Service Booking Confirmation - Skill Tech</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .header {
-            background-color: #1a1a1a;
-            padding: 20px;
-            text-align: center;
-        }
-        .header img {
-            max-width: 150px;
-            height: auto;
-        }
-        .content {
-            padding: 30px;
-        }
-        .h2 {
-            color: #d10069; /* SkillTech Pink */
-            margin-top: 0;
-        }
-        .booking-details {
-            background-color: #e8f4fd;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-            border-left: 5px solid #007bff;
-        }
-        .field {
-            margin-bottom: 15px;
-            display: table;
-            width: 100%;
-        }
-        .label {
-            font-weight: bold;
-            color: #555555;
-            display: table-cell;
-            width: 140px;
-            vertical-align: top;
-            padding-top: 10px;
-            padding-right: 10px;
-        }
-        .value {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #eeeeee;
-            display: table-cell;
-            vertical-align: top;
-        }
-        .footer {
-            background-color: #f4f4f4;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #777777;
-        }
-    </style>
+    <title>Service Booking Confirmation</title>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <img src="{{ logo_url }}" alt="SkillTech Logo" style="color: #ffffff; font-size: 20px; font-weight: bold;">
-        </div>
-        <div class="content">
-            <h2 class="h2">Booking Confirmation</h2>
-            <p>Dear {{ name }},</p>
-            <p>Thank you for choosing Skill Tech. We have received your service booking request. Our team will review the details and contact you shortly to confirm the appointment.</p>
-            
-            <div class="booking-details">
-                <strong>Booking Reference:</strong> {{ reference_number }}<br>
-                <strong>Installation Type:</strong> {{ installation_type }}<br>
-                <strong>TV Size:</strong> {{ tv_size }}<br>
-                <strong>Bracket Required:</strong> {% if bracket %}Yes{% else %}No{% endif %}
-            </div>
+<body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333333; margin: 0; padding: 20px;">
+    <p>Dear {{ name }},</p>
+    <p>Thank you for choosing Skill Tech. We have received your service booking request. Our team will review the details and contact you shortly to confirm the appointment.</p>
 
-            <p><strong>Your Contact & Schedule Details:</strong></p>
+    <p>
+        <strong>Booking Reference:</strong> {{ reference_number }}<br>
+        <strong>Installation Type:</strong> {{ installation_type }}<br>
+        <strong>TV Size:</strong> {{ tv_size }}<br>
+        <strong>Bracket Required:</strong> {% if bracket %}Yes{% else %}No{% endif %}<br>
+        <strong>Phone:</strong> {{ phone }}<br>
+        <strong>Requested Date:</strong> {{ date }}<br>
+        <strong>Requested Time:</strong> {{ time }}
+    </p>
 
-            <div class="field">
-                <span class="label">Phone:</span>
-                <div class="value">{{ phone }}</div>
-            </div>
-            
-            <div class="field">
-                <span class="label">Requested Date:</span>
-                <div class="value">{{ date }}</div>
-            </div>
-
-            <div class="field">
-                <span class="label">Requested Time:</span>
-                <div class="value">{{ time }}</div>
-            </div>
-
-            <p>If you need to make any changes or have questions, please feel free to reply directly to this email or reach out to us on WhatsApp.</p>
-            
-            <p>Best regards,<br>The Skill Tech Team</p>
-        </div>
-        <div class="footer">
-            <p>&copy; {% now "Y" %} Skill Tech. All rights reserved.</p>
-            <p>This email was sent automatically regarding your service booking request.</p>
-        </div>
-    </div>
+    <p>If you need to make any changes or have questions, please feel free to reply directly to this email or reach out to us on WhatsApp.</p>
+    <p>Best regards,<br>Skill Tech Team</p>
 </body>
 </html>
