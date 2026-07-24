@@ -316,6 +316,7 @@ class ServiceBooking(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
+    location = models.CharField(max_length=255, blank=True, null=True)
     installation_type = models.CharField(max_length=100)
     tv_size = models.CharField(max_length=50)
     bracket = models.BooleanField(default=False)
