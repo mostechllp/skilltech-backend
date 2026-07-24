@@ -334,11 +334,11 @@ class ServiceBooking(models.Model):
                         next_num = int(parts[1]) + 1
                         self.reference_number = f"STB-{next_num}"
                     else:
-                        self.reference_number = f"STB-{latest.id + 10001}"
+                        self.reference_number = f"STB-{latest.id + 10003}"
                 except Exception:
-                    self.reference_number = f"STB-10001"
+                    self.reference_number = f"STB-10003"
             else:
-                self.reference_number = "STB-10001"
+                self.reference_number = "STB-10003"
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -2,23 +2,65 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Service Booking Confirmation</title>
+    <title>Booking Request Received</title>
 </head>
-<body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333333; margin: 0; padding: 20px;">
-    <p>Dear {{ name }},</p>
-    <p>Thank you for choosing Skill Tech. We have received your service booking request. Our team will review the details and contact you shortly to confirm the appointment.</p>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; color: #333333; margin: 0; padding: 0; background-color: #f7f9fa;">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f7f9fa; padding: 30px 15px;">
+        <tr>
+            <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0" width="600" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); overflow: hidden; border: 1px solid #e1e4e6;">
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <h1 style="color: #333333; margin: 0 0 20px 0; font-size: 24px; font-weight: 600;">Booking Request Received</h1>
+                            <p style="margin-top: 0; font-size: 16px; font-weight: 500; color: #1a73e8;">Dear {{ name }},</p>
+                            <p style="margin-top: 0; font-size: 16px; font-weight: 500;">Thank you for choosing Skill Tech</p>
+                            <p style="color: #555555; margin-bottom: 25px;">Your TV installation booking request has been successfully submitted. Our team has received your request and will review the details shortly.</p>
 
-    <p>
-        <strong>Booking Reference:</strong> {{ reference_number }}<br>
-        <strong>Installation Type:</strong> {{ installation_type }}<br>
-        <strong>TV Size:</strong> {{ tv_size }}<br>
-        <strong>Bracket Required:</strong> {% if bracket %}Yes{% else %}No{% endif %}<br>
-        <strong>Phone:</strong> {{ phone }}<br>
-        <strong>Requested Date:</strong> {{ date }}<br>
-        <strong>Requested Time:</strong> {{ time }}
-    </p>
+                            <!-- Booking Reference Section -->
+                            <div style="background-color: #f0f4f9; border-radius: 6px; padding: 20px; text-align: center; margin-bottom: 25px; border-left: 4px solid #1a73e8;">
+                                <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #666666; font-weight: 600; display: block; margin-bottom: 5px;">Booking Reference</span>
+                                <strong style="font-size: 24px; color: #1a73e8; font-family: monospace, monospace;">{{ reference_number }}</strong>
+                            </div>
+                            
+                            <p style="color: #666666; font-size: 14px; margin-bottom: 30px;">Please save your Booking Reference Number for future communication.</p>
 
-    <p>If you need to make any changes or have questions, please feel free to reply directly to this email or reach out to us on WhatsApp.</p>
-    <p>Best regards,<br>Skill Tech Team</p>
+                            <hr style="border: none; border-top: 1px solid #e1e4e6; margin: 25px 0;">
+
+                            <!-- What Happens Next -->
+                            <h3 style="color: #333333; font-size: 16px; margin-top: 0; margin-bottom: 15px;">What Happens Next?</h3>
+                            <ul style="padding-left: 20px; margin: 0 0 30px 0; color: #555555;">
+                                <li style="margin-bottom: 10px;">Our installation team will review your booking request.</li>
+                                <li style="margin-bottom: 10px;">We will contact you to confirm your preferred installation date and time.</li>
+                                <li style="margin-bottom: 0;">Once confirmed, our technicians will arrive at the scheduled appointment to complete the installation.</li>
+                            </ul>
+
+                            <hr style="border: none; border-top: 1px solid #e1e4e6; margin: 25px 0;">
+
+                            <!-- Need Assistance -->
+                            <h3 style="color: #333333; font-size: 16px; margin-top: 0; margin-bottom: 15px;">Need Assistance?</h3>
+                            <p style="color: #555555; margin-bottom: 15px;">If you have any questions or would like to update your booking, please contact our Customer Support Team.</p>
+                            <p style="margin: 0 0 10px 0; color: #333333;">
+                                <span style="font-size: 16px; margin-right: 5px;">📞</span> <strong>Phone:</strong> <a href="tel:+97142347770" style="color: #1a73e8; text-decoration: none;">+971 4 234 7770</a>
+                            </p>
+                            <p style="margin: 0 0 20px 0; color: #333333;">
+                                <span style="font-size: 16px; margin-right: 5px;">📧</span> <strong>Email:</strong> <a href="mailto:support@skilltechonline.com" style="color: #1a73e8; text-decoration: none;">support@skilltechonline.com</a>
+                            </p>
+                            <p style="color: #666666; font-size: 14px; background-color: #fff9e6; border-radius: 4px; padding: 10px 15px; border-left: 4px solid #ffc107; margin-bottom: 0;">
+                                When contacting us, please quote your Booking Reference Number <strong>({{ reference_number }})</strong> for faster assistance.
+                            </p>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f7f9fa; padding: 25px 30px; text-align: center; border-top: 1px solid #e1e4e6; color: #666666; font-size: 14px;">
+                            <p style="margin: 0 0 10px 0; font-weight: 500; color: #333333;">Thank you for choosing Skill Tech.</p>
+                            <p style="margin: 0; line-height: 1.5; font-size: 13px;">We appreciate your trust and look forward to providing you with a professional installation service.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
