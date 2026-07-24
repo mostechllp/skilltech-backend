@@ -5,20 +5,31 @@
     <title>New Product Enquiry</title>
 </head>
 <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333333; margin: 0; padding: 20px;">
-    <p>You have received a new product enquiry:</p>
-
+    <h2 style="color: #333333; margin-bottom: 20px;">New Product Enquiry Received</h2>
+    
+    <p>Dear Admin,</p>
+    
+    <p>A customer has submitted a new product enquiry. Below are the details:</p>
+    
+    <h3 style="color: #333333; border-bottom: 1px solid #eeeeee; padding-bottom: 5px; margin-top: 25px;">Enquiry Details</h3>
     <p>
+        <strong>Enquiry Reference:</strong> {{ reference_number }}<br>
         <strong>Product:</strong> {{ product_name }}<br>
-        <strong>Name:</strong> {{ name }}<br>
-        <strong>Email:</strong> <a href="mailto:{{ email }}">{{ email }}</a><br>
-        <strong>Phone:</strong> <a href="tel:{{ phone }}">{{ phone }}</a>
+        <strong>Quantity:</strong> {{ quantity|default:"N/A" }}<br>
+        <strong>Requirements:</strong><br>
+        <span style="display: block; white-space: pre-wrap; background-color: #f9f9f9; padding: 10px; border-radius: 4px; margin-top: 5px;">{{ message }}</span>
     </p>
-
-    <p><strong>Message:</strong></p>
-    <p style="white-space: pre-wrap; background-color: #f9f9f9; padding: 10px; border-radius: 4px;">{{ message }}</p>
-
+    
+    <h3 style="color: #333333; border-bottom: 1px solid #eeeeee; padding-bottom: 5px; margin-top: 25px;">Customer Details</h3>
+    <p>
+        <strong>Name:</strong> {{ name }}<br>
+        <strong>Phone Number:</strong> {{ phone }}<br>
+        <strong>Email Address:</strong> <a href="mailto:{{ email }}">{{ email }}</a>
+    </p>
+    
     {% if whatsapp_chat_url or whatsapp_share_url %}
-    <p style="margin-top: 20px;">
+    <h3 style="color: #333333; border-bottom: 1px solid #eeeeee; padding-bottom: 5px; margin-top: 25px;">Action Links</h3>
+    <p style="margin-top: 15px;">
         {% if whatsapp_chat_url %}
         <a href="{{ whatsapp_chat_url }}" target="_blank" style="display: inline-block; background-color: #25D366; color: #ffffff; padding: 8px 14px; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold; margin-right: 8px;">
             💬 Chat on WhatsApp

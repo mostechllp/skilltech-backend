@@ -243,10 +243,10 @@ class OfferAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(ProductEnquiry)
 class ProductEnquiryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'product', 'created_at')
+    list_display = ('reference_number', 'name', 'email', 'phone', 'product', 'created_at')
     list_filter = ('product', 'created_at')
-    search_fields = ('name', 'email', 'message')
-    readonly_fields = ('created_at',)
+    search_fields = ('reference_number', 'name', 'email', 'message')
+    readonly_fields = ('reference_number', 'created_at',)
 
 @admin.register(ContactEnquiry)
 class ContactEnquiryAdmin(AdminIPLogMixin, admin.ModelAdmin):

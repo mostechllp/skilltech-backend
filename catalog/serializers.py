@@ -169,7 +169,7 @@ class ProductEnquirySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductEnquiry
         fields = '__all__'
-        read_only_fields = ['product']
+        read_only_fields = ['product', 'reference_number']
 
 class ContactEnquirySerializer(serializers.ModelSerializer):
     class Meta:

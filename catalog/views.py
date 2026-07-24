@@ -232,10 +232,11 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                         use_tls=settings.EMAIL_USE_TLS
                     )
                     
-                    subject = f"Product Enquiry: {product.name} - from {instance.name}"
+                    subject = f"Product Enquiry [{instance.reference_number}]: {product.name} - from {instance.name}"
                     
                     whatsapp_text = (
                         f"*New Product Enquiry*\n"
+                        f"*Reference:* {instance.reference_number}\n"
                         f"*Product:* {product.name}\n"
                         f"*Name:* {instance.name}\n"
                         f"*Email:* {instance.email}\n"
@@ -245,11 +246,13 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                     chat_url, share_url = get_whatsapp_links(instance.phone, whatsapp_text)
 
                     context = {
+                        'reference_number': instance.reference_number,
                         'name': instance.name,
                         'email': instance.email,
                         'phone': instance.phone,
                         'message': instance.message,
                         'product_name': product.name,
+                        'quantity': request.data.get('quantity'),
                         'logo_url': settings.FRONTEND_URL + '/images/logo.png',
                         'whatsapp_chat_url': chat_url,
                         'whatsapp_share_url': share_url,
@@ -272,11 +275,34 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                     )
                     msg.attach_alternative(html_message, "text/html")
                     msg.send(fail_silently=False)
+
+                    # Send email confirmation to the customer
+                    try:
+                        customer_context = {
+                            'reference_number': instance.reference_number,
+                        }
+                        customer_html_message = render_to_string('emails/customer_product_enquiry.html', customer_context)
+                        customer_plain_message = strip_tags(customer_html_message)
+                        
+                        customer_msg = EmailMultiAlternatives(
+                            "Product Enquiry Received",
+                            customer_plain_message,
+                            site_settings.email_host_user, # From email
+                            [instance.email], # To customer email
+                            connection=connection
+                        )
+                        customer_msg.attach_alternative(customer_html_message, "text/html")
+                        customer_msg.send(fail_silently=False)
+                    except Exception as cust_err:
+                        logger.error(f"Error sending product enquiry customer confirmation email: {cust_err}")
                     
             except Exception as e:
                 logger.error(f"Error sending product enquiry email: {e}")
 
-            return Response({'status': 'Enquiry submitted successfully'}, status=status.HTTP_201_CREATED)
+            return Response({
+                'status': 'Enquiry submitted successfully',
+                'reference_number': instance.reference_number
+            }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class HomepageBannerViewSet(viewsets.ReadOnlyModelViewSet):

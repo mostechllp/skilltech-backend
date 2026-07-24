@@ -285,12 +285,30 @@ class Offer(models.Model):
         return self.title
 
 class ProductEnquiry(models.Model):
+    reference_number = models.CharField(max_length=50, unique=True, blank=True, null=True)
     product = models.ForeignKey(Product, related_name='enquiries', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.reference_number:
+            latest = ProductEnquiry.objects.all().order_by('-id').first()
+            if latest and latest.reference_number:
+                try:
+                    parts = latest.reference_number.split('-')
+                    if len(parts) == 2 and parts[1].isdigit():
+                        next_num = int(parts[1]) + 1
+                        self.reference_number = f"STE-{next_num}"
+                    else:
+                        self.reference_number = f"STE-{latest.id + 10001}"
+                except Exception:
+                    self.reference_number = f"STE-10001"
+            else:
+                self.reference_number = "STE-10001"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Enquiry from {self.name} for {self.product.name}'
