@@ -445,6 +445,7 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                     f"*Name:* {instance.name}\n"
                     f"*Email:* {instance.email}\n"
                     f"*Phone:* {instance.phone}\n"
+                    f"*Location:* {instance.location}\n"
                     f"*Requested Date:* {instance.date}\n"
                     f"*Requested Time:* {instance.time}"
                 )
@@ -455,6 +456,7 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
                     'name': instance.name,
                     'email': instance.email,
                     'phone': instance.phone,
+                    'location': instance.location,
                     'installation_type': instance.installation_type,
                     'tv_size': instance.tv_size,
                     'bracket': instance.bracket,
