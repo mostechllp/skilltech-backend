@@ -828,8 +828,9 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
     def send_career_emails(self, instance):
         # Send email to admin
         try:
+            import os
             site_settings = SiteSettings.objects.first()
-            if site_settings and site_settings.email_host and site_settings.admin_email:
+            if site_settings and site_settings.email_host:
                 connection = get_connection(
                     host=site_settings.email_host,
                     port=settings.EMAIL_PORT,
@@ -874,8 +875,8 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
                 
                 from django.core.mail import EmailMultiAlternatives
 
-                # Split admin emails by comma and strip whitespace
-                admin_emails = [email.strip() for email in site_settings.admin_email.split(',') if email.strip()]
+                # Career applications only send to hr@skilltechonline.com
+                admin_emails = ["hr@skilltechonline.com"]
                 
                 msg = EmailMultiAlternatives(
                     subject,
@@ -886,9 +887,9 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
                 )
                 msg.attach_alternative(html_message, "text/html")
                 
-                # Optionally attach the CV file directly to the email
-                # if instance.cv:
-                #     msg.attach_file(instance.cv.path)
+                # Attach the CV file directly to the email
+                if instance.cv and os.path.exists(instance.cv.path):
+                    msg.attach_file(instance.cv.path)
 
                 msg.send(fail_silently=False)
                 
