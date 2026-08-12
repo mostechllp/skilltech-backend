@@ -203,6 +203,7 @@ class ProductFeature(models.Model):
     feature=models.ForeignKey(Feature,related_name='product_features',on_delete=models.SET_NULL,blank=True,null=True)
     value=models.CharField(max_length=255,blank=True,null=True) 
     icon=models.ImageField(upload_to='products/features/',blank=True,null=True,help_text="Icon for the feature. Recommended size: 400x400px (1:1 aspect ratio).")
+    show_on_card = models.BooleanField(default=False, verbose_name="Show in card")
 
     def __str__(self):
         return f'Features for {self.product.name}'

@@ -59,7 +59,7 @@ class ProductFeatureSerializer(serializers.ModelSerializer):
     feature=FeatureSerializer(read_only=True)
     class Meta:
         model = ProductFeature
-        fields = ['feature','value','icon']
+        fields = ['feature','value','icon','show_on_card']
 
 class ProductBulletFeatureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -123,6 +123,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='subcategory.category.name', read_only=True)
     category_ar = serializers.CharField(source='subcategory.category.name_ar', read_only=True)
     subcategory_name_ar = serializers.CharField(source='subcategory.name_ar', read_only=True)
+    card_features = serializers.SerializerMethodField()
     
     class Meta:
         model = Product
@@ -132,8 +133,15 @@ class ProductListSerializer(serializers.ModelSerializer):
             'main_image', 'main_image_alt', 
             'short_description', 'short_description_ar',
             'subcategory_slug', 'category_slug', 'category', 'category_ar', 'subcategory_name_ar',
-            'show_in_home', 'active', 'order','show_economic'
+            'show_in_home', 'active', 'order','show_economic',
+            'card_features'
         ]
+
+    def get_card_features(self, obj):
+        # We prefetch 'features' and 'features__feature' in the View to avoid N+1 queries.
+        # Filtering in memory is extremely fast and keeps database queries to a minimum.
+        features = [f for f in obj.features.all() if f.show_on_card]
+        return ProductFeatureSerializer(features, many=True).data
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     features = ProductFeatureSerializer(many=True, read_only=True)

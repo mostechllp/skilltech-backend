@@ -173,8 +173,10 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                 'similar_products',
                 Prefetch('features',queryset=ProductFeature.objects.select_related('feature')))
         else:
-            # LIST VIEW: Only fetch basic category info
-            queryset = queryset.select_related('subcategory', 'subcategory__category')
+            # LIST VIEW: Fetch category info and card features
+            queryset = queryset.select_related('subcategory', 'subcategory__category').prefetch_related(
+                Prefetch('features', queryset=ProductFeature.objects.select_related('feature'))
+            )
         
         category_slug = self.request.query_params.get('category_slug')
         if category_slug:

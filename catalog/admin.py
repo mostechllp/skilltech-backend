@@ -70,6 +70,8 @@ class ProductImageInline(admin.StackedInline):
 
 class ProductFeatureInline(admin.StackedInline):
     model = ProductFeature
+    fields = ('feature', 'value', 'icon', 'show_on_card')
+    extra = 1
 
 class ProductBulletFeatureInline(admin.StackedInline):
     model = ProductBulletFeature
