@@ -7,7 +7,7 @@ from rest_framework.routers import DefaultRouter
 from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, CareerPositionViewSet
 from catalog.views import OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha, BranchLocationViewSet
 from catalog.views import  NewsPostViewset
-from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet,ArmsViewSet
+from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet,ArmsViewSet, product_datasheet_redirect
 def robots_txt(request):
     lines = [
         "User-agent: *",
@@ -56,7 +56,8 @@ urlpatterns = [
     path('api/validate-captcha/', validate_captcha, name='validate_captcha'),
     path('api/', include(router.urls)),
     path('robots.txt', robots_txt),
-    path('api/catalogue/<int:pk>/download-thumbnail/',CatalogueThumbnailDownloadView.as_view(),name="catalogue-thumbnail-download")
+    path('api/catalogue/<int:pk>/download-thumbnail/',CatalogueThumbnailDownloadView.as_view(),name="catalogue-thumbnail-download"),
+    path('datasheet/<str:slug>/', product_datasheet_redirect, name='product-datasheet-redirect'),
 ]
 
 if settings.DEBUG:

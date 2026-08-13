@@ -26,7 +26,7 @@ from PIL import Image, ImageDraw, ImageFont
 from django.views.decorators.csrf import csrf_exempt
 import threading
 from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.http import FileResponse
 from django.db.models import Count,Q,Prefetch
 from django.db import connection,reset_queries
@@ -1045,3 +1045,22 @@ def ajax_get_subcategories(request):
     category_id = request.GET.get('category_id')
     subcategories = SubCategory.objects.filter(category_id=category_id).order_by('name')
     return JsonResponse(list(subcategories.values('id', 'name')), safe=False)
+
+
+def product_datasheet_redirect(request, slug):
+    product = Product.objects.filter(slug=slug, active=True).first()
+    if not product:
+        return HttpResponse("Product not found.", status=404)
+
+    if product.datasheet:
+        # Redirect to the absolute URL of the datasheet
+        datasheet_url = request.build_absolute_uri(product.datasheet.url)
+        return redirect(datasheet_url)
+
+    # Fallback: Redirect to the product detail page on frontend
+    frontend_url = getattr(settings, 'FRONTEND_URL', 'https://skilltechonline.com').rstrip('/')
+    if product.slug_path:
+        fallback_url = f"{frontend_url}/products/{product.slug_path}"
+    else:
+        fallback_url = f"{frontend_url}/"
+    return redirect(fallback_url)
