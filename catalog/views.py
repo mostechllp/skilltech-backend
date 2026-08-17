@@ -39,7 +39,23 @@ def get_whatsapp_links(phone_number, text_content):
     share_url = f"https://api.whatsapp.com/send?text={encoded_text}"
     return chat_url, share_url
 
-class CareerPositionViewSet(viewsets.ReadOnlyModelViewSet):
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
+# Cache all read-only API requests for 2 days.
+# Signals in signals.py will clear the cache instantly when any changes are made in the admin panel.
+CACHE_TIMEOUT = 60 * 60 * 24 * 2
+
+class CachedReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
+    @method_decorator(cache_page(CACHE_TIMEOUT))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @method_decorator(cache_page(CACHE_TIMEOUT))
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+class CareerPositionViewSet(CachedReadOnlyModelViewSet):
     queryset = CareerPosition.objects.filter(active=True).order_by('name')
     serializer_class = CareerPositionSerializer
 
@@ -52,7 +68,7 @@ class NewsPagination(PageNumberPagination):
     page_size = 30
     page_size_query_param = "page_size"
     max_page_size = 50
-class MainCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+class MainCategoryViewSet(CachedReadOnlyModelViewSet):
     queryset = MainCategory.objects.none()   # ✅ just to satisfy router
     serializer_class = MainCategorySerializer
     lookup_field = "slug"
@@ -61,6 +77,7 @@ class MainCategoryViewSet(viewsets.ReadOnlyModelViewSet):
         # Subcategories with product counts
         subcategories_qs = (
             SubCategory.objects.filter(active=True)
+            .select_related("category")
             .annotate(products_count=Count("products", filter=Q(products__active=True)))
             .order_by("order", "name")
         )
@@ -106,13 +123,13 @@ class MainCategoryViewSet(viewsets.ReadOnlyModelViewSet):
 
         return response
 
-class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+class CategoryViewSet(CachedReadOnlyModelViewSet):
     queryset = Category.objects.filter(active=True).order_by('order')
     serializer_class = CategorySerializer
     lookup_field = 'slug'
 
     def get_queryset(self):
-        subcategories_qs = SubCategory.objects.filter(active=True).annotate(
+        subcategories_qs = SubCategory.objects.filter(active=True).select_related('category').annotate(
             products_count=Count('products', filter=Q(products__active=True))
         ).order_by('order')
         queryset = Category.objects.filter(active=True).order_by('order').prefetch_related(
@@ -132,13 +149,13 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
             
         return queryset
 
-class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+class SubCategoryViewSet(CachedReadOnlyModelViewSet):
     queryset = SubCategory.objects.filter(active=True, category__active=True).order_by('order')
     serializer_class = SubCategorySerializer
     lookup_field = 'slug'
     
     def get_queryset(self):
-        queryset = SubCategory.objects.filter(active=True, category__active=True).annotate(
+        queryset = SubCategory.objects.filter(active=True, category__active=True).select_related('category').annotate(
             products_count=Count('products',filter=Q(products__active=True))
         ).order_by('order')
         category_slug = self.request.query_params.get('category_slug')
@@ -146,7 +163,7 @@ class SubCategoryViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(category__slug=category_slug)
         return queryset
 
-class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+class ProductViewSet(CachedReadOnlyModelViewSet):
     lookup_field = 'slug_path'
     ordering_fields = ['order']
     pagination_class = StandardResultsSetPagination
@@ -170,7 +187,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.select_related('subcategory','subcategory__category','seo').prefetch_related(
                 'images',
                 'specifications',
-                'similar_products',
+                Prefetch('similar_products', queryset=Product.objects.select_related('subcategory', 'subcategory__category')),
                 Prefetch('features',queryset=ProductFeature.objects.select_related('feature')))
         else:
             # LIST VIEW: Fetch category info and card features
@@ -307,11 +324,11 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class HomepageBannerViewSet(viewsets.ReadOnlyModelViewSet):
+class HomepageBannerViewSet(CachedReadOnlyModelViewSet):
     queryset = HomepageBanner.objects.filter(active=True).order_by('order')
     serializer_class = HomepageBannerSerializer
 
-class OfferViewSet(viewsets.ReadOnlyModelViewSet):
+class OfferViewSet(CachedReadOnlyModelViewSet):
     queryset = Offer.objects.filter(active=True).order_by('order')
     serializer_class = OfferSerializer
 
@@ -514,7 +531,7 @@ class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             daemon=True
         ).start()
 
-class ClientViewSet(viewsets.ReadOnlyModelViewSet):
+class ClientViewSet(CachedReadOnlyModelViewSet):
 
     queryset = Client.objects.filter(active=True).order_by('order')
 
@@ -522,7 +539,7 @@ class ClientViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
-class CatalogueViewSet(viewsets.ReadOnlyModelViewSet):
+class CatalogueViewSet(CachedReadOnlyModelViewSet):
 
     queryset = Catalogue.objects.filter(active=True).order_by('order')
 
@@ -530,7 +547,7 @@ class CatalogueViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
-class CertificateViewSet(viewsets.ReadOnlyModelViewSet):
+class CertificateViewSet(CachedReadOnlyModelViewSet):
 
 
 
@@ -546,7 +563,7 @@ class CertificateViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
-class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
+class GalleryViewSet(CachedReadOnlyModelViewSet):
 
 
 
@@ -634,7 +651,7 @@ class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
-class PageBannerViewSet(viewsets.ReadOnlyModelViewSet):
+class PageBannerViewSet(CachedReadOnlyModelViewSet):
 
 
 
@@ -714,7 +731,7 @@ class PageBannerViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
-class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
+class BlogPostViewSet(CachedReadOnlyModelViewSet):
 
 
 
@@ -764,16 +781,16 @@ class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
 
     lookup_field = 'slug'
 
-class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+class ProjectViewSet(CachedReadOnlyModelViewSet):
     queryset = Project.objects.filter(active=True).order_by('order')
     serializer_class = ProjectSerializer
 
-class SEOPageViewSet(viewsets.ReadOnlyModelViewSet):
+class SEOPageViewSet(CachedReadOnlyModelViewSet):
     queryset = SEOPage.objects.all()
     serializer_class = SEOPageSerializer
     lookup_field = 'page'
 
-class SiteSettingsViewSet(viewsets.ReadOnlyModelViewSet):
+class SiteSettingsViewSet(CachedReadOnlyModelViewSet):
     queryset = SiteSettings.objects.all()
     serializer_class = SiteSettingsSerializer
 
@@ -813,11 +830,11 @@ class SiteSettingsViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
-class ServiceViewSet(viewsets.ReadOnlyModelViewSet):
+class ServiceViewSet(CachedReadOnlyModelViewSet):
     queryset = Service.objects.filter(active=True)
     serializer_class = ServiceSerializer
 
-class ServiceFAQViewSet(viewsets.ReadOnlyModelViewSet):
+class ServiceFAQViewSet(CachedReadOnlyModelViewSet):
     queryset = ServiceFAQ.objects.filter(active=True).order_by('order')
     serializer_class = ServiceFAQSerializer
 
@@ -909,24 +926,25 @@ class CareerApplicationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
 
 
 
-class GlobalLocationViewSet(viewsets.ReadOnlyModelViewSet):
+class GlobalLocationViewSet(CachedReadOnlyModelViewSet):
     queryset = GlobalLocation.objects.filter(active=True).order_by('order')
     serializer_class = GlobalLocationSerializer
 
-class BranchLocationViewSet(viewsets.ReadOnlyModelViewSet):
+class BranchLocationViewSet(CachedReadOnlyModelViewSet):
     queryset = BranchLocation.objects.filter(active=True).order_by('order')
     serializer_class = BranchLocationSerializer
 
 
-class StatisticViewSet(viewsets.ReadOnlyModelViewSet):
+class StatisticViewSet(CachedReadOnlyModelViewSet):
     queryset = HomeStatistic.objects.filter(active=True).order_by('order')
     serializer_class = StatisticSerializer
 
-class ServiceStatisticViewSet(viewsets.ReadOnlyModelViewSet):
+class ServiceStatisticViewSet(CachedReadOnlyModelViewSet):
     queryset = ServiceStatistic.objects.filter(active=True).order_by('order')
     serializer_class = ServiceStatisticSerializer
 
 class SitemapDataViewSet(viewsets.ViewSet):
+    @method_decorator(cache_page(CACHE_TIMEOUT))
     def list(self, request):
         products = Product.objects.filter(active=True, subcategory__active=True, subcategory__category__active=True).select_related('subcategory__category').values(
             'slug', 'updated_at', 'subcategory__slug', 'subcategory__category__slug','slug_path'
@@ -1032,12 +1050,12 @@ class CatalogueThumbnailDownloadView(APIView):
         )
         return response
 
-class NewsPostViewset(viewsets.ReadOnlyModelViewSet):
+class NewsPostViewset(CachedReadOnlyModelViewSet):
     queryset=NewsPost.objects.filter(status="published")
     serializer_class=NewsPostSerializer
     pagination_class = NewsPagination
 
-class ArmsViewSet(viewsets.ReadOnlyModelViewSet):
+class ArmsViewSet(CachedReadOnlyModelViewSet):
     queryset=Arm.objects.filter(active=True)
     serializer_class=ArmSerializer
 

@@ -5,8 +5,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-me-in-production'
 
-# DEBUG = True
-DEBUG = False
+# Detect if running on local development machine
+IS_LOCAL = 'ashik' in str(BASE_DIR) or os.path.exists(os.path.join(BASE_DIR, '.local'))
+
+DEBUG = IS_LOCAL
 
 ALLOWED_HOSTS = ['*']
 
@@ -78,16 +80,30 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skilltechardb',
-        'USER': 'skilltecharuser',
-        'PASSWORD': 's3k@illt3e@cHd4Bv',
-        'HOST': 'localhost',     # or server IP
-        'PORT': '3306',
+if IS_LOCAL:
+    # Local Development Database Configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'skilltechdb',
+            'USER': 'skilltechuser',
+            'PASSWORD': 's3k@illt3e@cHd4Bv',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    # Production Server Database Configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'skilltechardb',
+            'USER': 'skilltecharuser',
+            'PASSWORD': 's3k@illt3e@cHd4Bv',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -183,6 +199,24 @@ LOGGING = {
         },
     },
 }
+
+# Caching Configuration
+# By default, we use LocMemCache which is fast, thread-safe, and requires no external dependency.
+# In a multi-worker production environment, configure RedisCache (requires redis package) or DatabaseCache.
+if IS_LOCAL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'skilltech-local-cache',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379/1',
+        }
+    }
 
 try:
     from .local_settings import *
