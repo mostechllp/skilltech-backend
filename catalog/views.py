@@ -1043,11 +1043,27 @@ class CatalogueThumbnailDownloadView(APIView):
         catalogue=get_object_or_404(Catalogue,pk=pk)
         if not catalogue.file:
             return Response({"message":"File not found."},status=status.HTTP_404_NOT_FOUND)
-        response=FileResponse(
-            catalogue.file.open(),
-            as_attachment=True,
-            filename=catalogue.file.name.split('/')[-1],
-        )
+        
+        filename = catalogue.file.name.split('/')[-1]
+        
+        # Fallback to standard Django FileResponse for local development/debugging
+        if settings.DEBUG:
+            response = FileResponse(
+                catalogue.file.open(),
+                as_attachment=True,
+                filename=filename,
+            )
+            return response
+            
+        # In production, offload the file transfer to Nginx via X-Accel-Redirect
+        import mimetypes
+        content_type, encoding = mimetypes.guess_type(catalogue.file.name)
+        if not content_type:
+            content_type = 'application/octet-stream'
+            
+        response = HttpResponse(content_type=content_type)
+        response['X-Accel-Redirect'] = f'/protected_media/{catalogue.file.name}'
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
 
 class NewsPostViewset(CachedReadOnlyModelViewSet):
