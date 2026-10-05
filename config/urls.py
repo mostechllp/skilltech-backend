@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
 from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, CareerPositionViewSet
-from catalog.views import OfferViewSet, ContactEnquiryViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha, BranchLocationViewSet
+from catalog.views import OfferViewSet, ContactEnquiryViewSet, QuoteRequestViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha, BranchLocationViewSet
 from catalog.views import  NewsPostViewset
 from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet,ArmsViewSet, product_datasheet_redirect
 def robots_txt(request):
@@ -28,6 +28,7 @@ ProductViewSet.lookup_value_regex = r".+"
 router.register(r'homepage-banners', HomepageBannerViewSet)
 router.register(r'offers', OfferViewSet)
 router.register(r'contact', ContactEnquiryViewSet)
+router.register(r'quote-request', QuoteRequestViewSet)
 router.register(r'service-booking', ServiceBookingViewSet)
 router.register(r'clients', ClientViewSet)
 router.register(r'catalogues', CatalogueViewSet)

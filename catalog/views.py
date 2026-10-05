@@ -3,11 +3,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking
+from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, QuoteRequest, ServiceBooking
 from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, CareerPosition, BranchLocation
 from .models import NewsCategory,NewsPost,Arm
 from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer
-from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
+from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, QuoteRequestSerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
 from .serializers import  CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
 from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer, CareerPositionSerializer, BranchLocationSerializer
 from .serializers import NewsPostSerializer,ArmSerializer
@@ -435,6 +435,115 @@ class ContactEnquiryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             daemon=True
         ).start()
             # pass
+
+class QuoteRequestViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    queryset = QuoteRequest.objects.all()
+    serializer_class = QuoteRequestSerializer
+
+    def send_quote_emails(self, instance):
+        logger.info("Attempting to send quote request email...")
+        try:
+            site_settings = SiteSettings.objects.first()
+            if site_settings and site_settings.email_host and site_settings.admin_email:
+                connection = get_connection(
+                    host=site_settings.email_host,
+                    port=settings.EMAIL_PORT,
+                    username=site_settings.email_host_user,
+                    password=site_settings.email_host_password,
+                    use_tls=settings.EMAIL_USE_TLS
+                )
+
+                subject = f"New Quote Request from {instance.full_name} ({instance.reference_number})"
+
+                whatsapp_text = (
+                    f"*New Quote Request ({instance.reference_number})*\n"
+                    f"*Name:* {instance.full_name}\n"
+                    f"*Company:* {instance.company or 'N/A'}\n"
+                    f"*Email:* {instance.email}\n"
+                    f"*Phone:* {instance.phone}\n"
+                    f"*Requirements:* {instance.requirements or 'N/A'}\n"
+                    f"*Attachment:* {'Yes' if instance.attachment else 'No'}"
+                )
+                chat_url, share_url = get_whatsapp_links(instance.phone, whatsapp_text)
+
+                context = {
+                    'full_name': instance.full_name,
+                    'company': instance.company,
+                    'email': instance.email,
+                    'phone': instance.phone,
+                    'requirements': instance.requirements,
+                    'reference_number': instance.reference_number,
+                    'has_attachment': bool(instance.attachment),
+                    'attachment_name': instance.attachment.name.split('/')[-1] if instance.attachment else None,
+                    'logo_url': settings.FRONTEND_URL + '/images/logo.png',
+                    'whatsapp_chat_url': chat_url,
+                    'whatsapp_share_url': share_url,
+                }
+
+                html_message = render_to_string('emails/quote_request.html', context)
+                plain_message = strip_tags(html_message)
+
+                from django.core.mail import EmailMultiAlternatives
+
+                admin_emails = [email.strip() for email in site_settings.admin_email.split(',') if email.strip()]
+
+                msg = EmailMultiAlternatives(
+                    subject,
+                    plain_message,
+                    site_settings.email_host_user,
+                    admin_emails,
+                    connection=connection
+                )
+                msg.attach_alternative(html_message, "text/html")
+
+                # Attach the uploaded file to the email if present
+                if instance.attachment:
+                    try:
+                        instance.attachment.open('rb')
+                        msg.attach(
+                            instance.attachment.name.split('/')[-1],
+                            instance.attachment.read(),
+                            'application/octet-stream'
+                        )
+                        instance.attachment.close()
+                    except Exception as e:
+                        logger.error(f"Error attaching file to email: {e}")
+
+                logger.info("Sending quote request email to admin...")
+                msg.send(fail_silently=False)
+                logger.info("Quote request email sent to admin successfully.")
+
+                # Send acknowledgment email to user
+                user_subject = f"Thank you for your quote request - {instance.reference_number}"
+                user_html_message = render_to_string('emails/quote_request_acknowledgement.html', context)
+                user_plain_message = strip_tags(user_html_message)
+
+                user_msg = EmailMultiAlternatives(
+                    user_subject,
+                    user_plain_message,
+                    site_settings.email_host_user,
+                    [instance.email],
+                    connection=connection
+                )
+                user_msg.attach_alternative(user_html_message, "text/html")
+                logger.info("Sending quote request acknowledgment email to user...")
+                user_msg.send(fail_silently=False)
+                logger.info("Quote request acknowledgment email sent successfully.")
+
+            else:
+                logger.warning("Missing site settings or email configuration.")
+
+        except Exception as e:
+            logger.error(f"Error sending quote request email: {e}")
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+
+        threading.Thread(
+            target=self.send_quote_emails,
+            args=(instance,),
+            daemon=True
+        ).start()
 
 class ServiceBookingViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = ServiceBooking.objects.all()

@@ -330,6 +330,40 @@ class ContactEnquiry(models.Model):
     def __str__(self):
         return f'Contact from {self.name} - {self.company}'
 
+class QuoteRequest(models.Model):
+    reference_number = models.CharField(max_length=50, unique=True, blank=True, null=True)
+    full_name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    requirements = models.TextField(blank=True, null=True)
+    attachment = models.FileField(upload_to='quote_attachments/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'Quote Requests'
+        ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        if not self.reference_number:
+            latest = QuoteRequest.objects.all().order_by('-id').first()
+            if latest and latest.reference_number:
+                try:
+                    parts = latest.reference_number.split('-')
+                    if len(parts) == 2 and parts[1].isdigit():
+                        next_num = int(parts[1]) + 1
+                        self.reference_number = f"STQ-{next_num}"
+                    else:
+                        self.reference_number = f"STQ-{latest.id + 10001}"
+                except Exception:
+                    self.reference_number = f"STQ-10001"
+            else:
+                self.reference_number = "STQ-10001"
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'Quote Request from {self.full_name} ({self.reference_number})'
+
 class ServiceBooking(models.Model):
     reference_number = models.CharField(max_length=50, unique=True, blank=True, null=True)
     name = models.CharField(max_length=100)

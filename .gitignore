@@ -152,3 +152,8 @@ __pycache__
 venv
 .qodo
 config/local_settings.py
+.local
+powershell.cmd
+*.sql
+static/
+staticfiles/

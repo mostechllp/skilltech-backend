@@ -85,10 +85,10 @@ if IS_LOCAL:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'skilltechdb',
-            'USER': 'skilltechuser',
-            'PASSWORD': 's3k@illt3e@cHd4Bv',
-            'HOST': 'localhost',
+            'NAME': 'skilltechardb',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': '127.0.0.1',
             'PORT': '3306',
         }
     }
@@ -218,8 +218,9 @@ else:
         }
     }
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+if IS_LOCAL:
+    try:
+        from .local_settings import *
+    except ImportError:
+        pass
 

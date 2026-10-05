@@ -4,7 +4,7 @@ import datetime
 from django.utils import timezone
 from django.http import HttpResponse
 from django.urls import path
-from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition, BranchLocation
+from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, QuoteRequest, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition, BranchLocation
 
 @admin.register(CareerPosition)
 class CareerPositionAdmin(admin.ModelAdmin):
@@ -255,6 +255,13 @@ class ContactEnquiryAdmin(AdminIPLogMixin, admin.ModelAdmin):
     list_display = ('name', 'company', 'email', 'phone', 'subject', 'created_at')
     search_fields = ('name', 'company', 'email', 'message', 'subject')
     readonly_fields = ('created_at',)
+
+@admin.register(QuoteRequest)
+class QuoteRequestAdmin(AdminIPLogMixin, admin.ModelAdmin):
+    list_display = ('reference_number', 'full_name', 'company', 'email', 'phone', 'attachment', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('reference_number', 'full_name', 'company', 'email', 'phone', 'requirements')
+    readonly_fields = ('reference_number', 'created_at')
 
 @admin.register(ServiceBooking)
 class ServiceBookingAdmin(AdminIPLogMixin, admin.ModelAdmin):
