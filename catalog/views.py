@@ -176,6 +176,27 @@ class ProductViewSet(CachedReadOnlyModelViewSet):
 
         return super().paginate_queryset(queryset)
 
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        lookup_value = self.kwargs[lookup_url_kwarg]
+
+        # 1. Try exact slug_path
+        obj = queryset.filter(slug_path=lookup_value).first()
+        if obj:
+            self.check_object_permissions(self.request, obj)
+            return obj
+
+        # 2. Try matching by product's own slug (e.g. sh-ttl09-86fp)
+        product_slug = lookup_value.rstrip("/").split("/")[-1]
+        obj = queryset.filter(slug=product_slug).first()
+        if obj:
+            self.check_object_permissions(self.request, obj)
+            return obj
+
+        from rest_framework.generics import get_object_or_404
+        return get_object_or_404(queryset, **{self.lookup_field: lookup_value})
+
     def get_serializer_class(self):
         if self.action == "retrieve":
             return ProductDetailSerializer
