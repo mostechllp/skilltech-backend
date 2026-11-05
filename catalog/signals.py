@@ -9,7 +9,7 @@ from .models import (
     Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,
     Project, SEOPage, SiteSettings, Service, ServiceFAQ, BranchLocation,
     GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition,
-    Arm, NewsPost, NewsCategory
+    Arm, NewsPost, NewsCategory, CountrySetting
 )
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ CACHE_INVALIDATION_MODELS = [
     Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,
     Project, SEOPage, SiteSettings, Service, ServiceFAQ, BranchLocation,
     GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition,
-    Arm, NewsPost, NewsCategory
+    Arm, NewsPost, NewsCategory, CountrySetting
 ]
 
 def clear_cache_handler(sender, instance, **kwargs):

@@ -1,10 +1,11 @@
 from django.db import models
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.contrib.admin.models import LogEntry
 from django.utils import timezone
+from .utils import convert_image_to_webp
 
 
 class MainCategory(models.Model):
@@ -149,6 +150,19 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000,db_index=True)
+
+    def generate_slug_path(self):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        if (not self.slug_path or self.slug_path.count('/') < 2) and self.subcategory_id:
+            try:
+                subcat = self.subcategory
+                cat_slug = subcat.category.slug if subcat and subcat.category else ""
+                sub_slug = subcat.slug if subcat else ""
+                parts = [cat_slug, sub_slug, self.slug]
+                self.slug_path = "/".join([p for p in parts if p])
+            except Exception:
+                pass
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -915,3 +929,110 @@ class BranchLocation(models.Model):
 
     def __str__(self):
         return self.title
+
+
+# =====================================================================
+# Signals for WebP conversion on product image upload
+# =====================================================================
+@receiver(pre_save, sender=Product)
+def product_pre_save_webp(sender, instance, **kwargs):
+    """
+    Automatically converts new product images to WebP format.
+    Safely skips existing images and handles errors gracefully.
+    """
+    if hasattr(instance, 'generate_slug_path'):
+        instance.generate_slug_path()
+
+    for field_name in ('main_image', 'drawing_image', 'box_3d_image'):
+        field_file = getattr(instance, field_name, None)
+        if field_file:
+            convert_image_to_webp(field_file)
+
+
+@receiver(pre_save, sender=ProductImage)
+def product_image_pre_save_webp(sender, instance, **kwargs):
+    """
+    Automatically converts gallery images of a product to WebP format.
+    """
+    if instance.image:
+        convert_image_to_webp(instance.image)
+
+
+
+# =====================================================================
+# Visitor Analytics Model
+# =====================================================================
+class VisitorLog(models.Model):
+    DEVICE_CHOICES = [
+        ('desktop', 'Desktop'),
+        ('mobile', 'Mobile'),
+        ('tablet', 'Tablet'),
+        ('bot', 'Bot / Crawler'),
+    ]
+
+    ip_address = models.CharField(max_length=50, db_index=True)
+    country = models.CharField(max_length=100, default='Unknown', db_index=True)
+    country_code = models.CharField(max_length=10, blank=True, null=True, db_index=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    path = models.CharField(max_length=500, db_index=True)
+    referrer = models.CharField(max_length=500, blank=True, null=True)
+    user_agent = models.TextField(blank=True, null=True)
+    device_type = models.CharField(max_length=20, choices=DEVICE_CHOICES, default='desktop', db_index=True)
+    is_bot = models.BooleanField(default=False, db_index=True)
+    session_id = models.CharField(max_length=100, blank=True, null=True, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Visitor Log'
+        verbose_name = 'Visitor Report'
+        verbose_name_plural = 'Visitor Reports'
+        indexes = [
+            models.Index(fields=['created_at', 'is_bot']),
+            models.Index(fields=['ip_address', 'created_at']),
+            models.Index(fields=['country', 'created_at']),
+        ]
+
+    def __str__(self):
+        return f"{self.ip_address} ({self.country}) - {self.path} - {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+
+
+
+class CountrySetting(models.Model):
+    COUNTRY_CHOICES = [
+        ('ae', 'UAE (United Arab Emirates)'),
+        ('sa', 'Saudi Arabia'),
+        ('qa', 'Qatar'),
+        ('kw', 'Kuwait'),
+        ('bh', 'Bahrain'),
+        ('om', 'Oman'),
+    ]
+
+    country_code = models.CharField(max_length=5, choices=COUNTRY_CHOICES, unique=True, db_index=True)
+    country_name = models.CharField(max_length=100)
+    country_name_ar = models.CharField(max_length=100, blank=True, null=True)
+
+    # Contact Details
+    company_name = models.CharField(max_length=200, blank=True, null=True, help_text="e.g. Skill Mount Trading WLL - Bahrain")
+    copyright_text = models.CharField(max_length=255, blank=True, null=True, help_text="e.g. Skill Mount Trading WLL - Bahrain")
+    phone = models.CharField(max_length=50, blank=True, null=True, help_text="Landline phone")
+    mobile = models.CharField(max_length=50, blank=True, null=True, help_text="Mobile / Secondary phone")
+    email = models.EmailField(blank=True, null=True)
+    whatsapp = models.CharField(max_length=50, blank=True, null=True, help_text="WhatsApp number with country code")
+
+    # Address
+    address_heading = models.CharField(max_length=100, default="Our Office", blank=True, null=True)
+    address_heading_ar = models.CharField(max_length=100, blank=True, null=True)
+    address = models.TextField(blank=True, null=True, help_text="English Address")
+    address_ar = models.TextField(blank=True, null=True, help_text="Arabic Address")
+
+    active = models.BooleanField(default=True, db_index=True)
+    order = models.PositiveIntegerField(default=0, db_index=True)
+
+    class Meta:
+        verbose_name = "Country Setting"
+        verbose_name_plural = "Country Settings"
+        ordering = ['order', 'country_name']
+
+    def __str__(self):
+        return f"{self.country_name} ({self.country_code.upper()})"
