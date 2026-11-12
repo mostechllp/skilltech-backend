@@ -4,7 +4,7 @@ import datetime
 from django.utils import timezone
 from django.http import HttpResponse
 from django.urls import path
-from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, QuoteRequest, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition, BranchLocation
+from .models import Category, LogEntryExtra, Project, SubCategory, Product, ProductImage, ProductFeature, ProductBulletFeature, ProductSpecification, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, QuoteRequest, ServiceBooking, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost,SEOPage, SiteSettings, Service, ServiceFAQ, InstallationType, TVSize, AvailableTime, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic, CareerPosition, BranchLocation, CountrySetting
 
 @admin.register(CareerPosition)
 class CareerPositionAdmin(admin.ModelAdmin):
@@ -205,15 +205,21 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     inlines = [ProductFeatureInline, ProductBulletFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
 
     def save_model(self, request, obj, form, change):
-        # Generate slug_path only if it's empty
-        if not obj.slug_path:
-            category_slug = obj.subcategory.category.slug if obj.subcategory else ""
-            subcategory_slug = obj.subcategory.slug if obj.subcategory else ""
-            product_slug = obj.slug
+        # Ensure slug is generated first before computing slug_path
+        if not obj.slug:
+            from django.utils.text import slugify
+            obj.slug = slugify(obj.name)
 
-            # Build slug_path safely
-            parts = [category_slug, subcategory_slug, product_slug]
-            obj.slug_path = "/".join([p for p in parts if p])
+        category_slug = obj.subcategory.category.slug if (obj.subcategory and obj.subcategory.category) else ""
+        subcategory_slug = obj.subcategory.slug if obj.subcategory else ""
+        product_slug = obj.slug
+
+        parts = [category_slug, subcategory_slug, product_slug]
+        full_slug_path = "/".join([p for p in parts if p])
+
+        # If slug_path is missing or incomplete (missing product slug), generate it
+        if not obj.slug_path or obj.slug_path.count('/') < 2:
+            obj.slug_path = full_slug_path
 
         super().save_model(request, obj, form, change)
 
@@ -520,3 +526,178 @@ class NewsPostAdmin(AdminIPLogMixin, admin.ModelAdmin):
     list_display = ('title', 'title_ar', 'category', 'status', 'published_at', 'order')
     list_editable = ('order',)
     search_fields = ('title', 'title_ar', 'content', 'content_ar')
+
+
+
+# =====================================================================
+# Visitor Analytics Admin Dashboard
+# =====================================================================
+from django.utils.html import format_html
+from django.shortcuts import redirect
+from django.contrib import messages
+from .models import VisitorLog
+
+
+@admin.register(VisitorLog)
+class VisitorLogAdmin(admin.ModelAdmin):
+    list_display = ('created_at', 'ip_address', 'country_badge', 'device_badge', 'path_display', 'referrer_display')
+    list_filter = ('device_type', 'is_bot', 'country')
+    search_fields = ('ip_address', 'path', 'country', 'referrer', 'user_agent')
+    date_hierarchy = 'created_at'
+    ordering = ('-created_at',)
+    list_per_page = 50
+    actions = ['export_selected_as_csv']
+
+    def export_selected_as_csv(self, request, queryset):
+        import csv
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="visitor_reports_{timezone.now().strftime("%Y%m%d_%H%M")}.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Date & Time', 'IP Address', 'Country', 'Country Code', 'Device Type', 'Is Bot', 'Visited Path', 'Referrer'])
+
+        for log in queryset:
+            writer.writerow([
+                log.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                log.ip_address,
+                log.country,
+                log.country_code or '',
+                log.device_type,
+                'Yes' if log.is_bot else 'No',
+                log.path,
+                log.referrer or ''
+            ])
+        return response
+    export_selected_as_csv.short_description = "📥 Export selected to CSV (Excel)"
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def country_badge(self, obj):
+        flag = f" ({obj.country_code})" if obj.country_code else ""
+        return f"{obj.country}{flag}"
+    country_badge.short_description = 'Country'
+    country_badge.admin_order_field = 'country'
+
+    def device_badge(self, obj):
+        colors = {
+            'desktop': '#062e5c',
+            'mobile': '#0ea5e9',
+            'tablet': '#8b5cf6',
+            'bot': '#ef4444',
+        }
+        color = colors.get(obj.device_type, '#6b7280')
+        return format_html(
+            '<span style="background: {}; color: #fff; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase;">{}</span>',
+            color,
+            obj.device_type
+        )
+    device_badge.short_description = 'Device'
+    device_badge.admin_order_field = 'device_type'
+
+    def path_display(self, obj):
+        return format_html('<code style="color: #062e5c; font-weight: 500;">{}</code>', obj.path[:60])
+    path_display.short_description = 'Path'
+    path_display.admin_order_field = 'path'
+
+    def referrer_display(self, obj):
+        if not obj.referrer:
+            return '-'
+        ref = obj.referrer
+        short_ref = ref[:40] + ('...' if len(ref) > 40 else '')
+        return format_html('<span title="{}">{}</span>', ref, short_ref)
+    referrer_display.short_description = 'Referrer'
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('send-report/', self.admin_site.admin_view(self.trigger_weekly_report), name='visitorlog-send-report'),
+            path('preview-report/', self.admin_site.admin_view(self.preview_report_html), name='visitorlog-preview-report'),
+            path('download-csv/', self.admin_site.admin_view(self.download_csv_report), name='visitorlog-download-csv'),
+        ]
+        return custom_urls + urls
+
+    def preview_report_html(self, request):
+        from catalog.management.commands.send_weekly_report import generate_weekly_report_data, build_email_html
+        data = generate_weekly_report_data()
+        html_content = build_email_html(data)
+        return HttpResponse(html_content, content_type='text/html')
+
+    def download_csv_report(self, request):
+        import csv
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="all_visitor_reports_{timezone.now().strftime("%Y%m%d")}.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Date & Time', 'IP Address', 'Country', 'Country Code', 'Device Type', 'Is Bot', 'Visited Path', 'Referrer'])
+
+        logs = VisitorLog.objects.filter(is_bot=False).order_by('-created_at')[:10000]
+        for log in logs:
+            writer.writerow([
+                log.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                log.ip_address,
+                log.country,
+                log.country_code or '',
+                log.device_type,
+                'Yes' if log.is_bot else 'No',
+                log.path,
+                log.referrer or ''
+            ])
+        return response
+
+    def trigger_weekly_report(self, request):
+        from catalog.management.commands.send_weekly_report import send_weekly_report_email
+        from catalog.models import SiteSettings
+
+        site_settings = SiteSettings.objects.first()
+        if not site_settings or not site_settings.email_host or not site_settings.email_host_user:
+            self.message_user(
+                request,
+                "SMTP configuration missing: Please fill in 'Email host', 'Email host user', and 'Email host password' under Catalog > Site Settings first.",
+                messages.WARNING
+            )
+            return redirect('admin:catalog_visitorlog_changelist')
+
+        try:
+            recipient = send_weekly_report_email()
+            self.message_user(request, f"Weekly visitor report successfully sent to {recipient}!", messages.SUCCESS)
+        except Exception as e:
+            self.message_user(request, f"Failed to send email: {e}", messages.ERROR)
+
+        return redirect('admin:catalog_visitorlog_changelist')
+
+
+
+@admin.register(CountrySetting)
+class CountrySettingAdmin(AdminIPLogMixin, admin.ModelAdmin):
+    list_display = ('country_name', 'country_code', 'phone', 'mobile', 'email', 'company_name', 'active', 'order')
+    list_editable = ('active', 'order')
+    search_fields = ('country_name', 'country_name_ar', 'country_code', 'email', 'phone', 'company_name')
+    list_filter = ('active',)
+    fieldsets = (
+        ("Country Identification", {
+            "fields": (("country_code", "country_name", "country_name_ar"), ("active", "order")),
+            "description": "Select the GCC country code and enter English/Arabic country names.",
+        }),
+        ("Company & Copyright Details", {
+            "fields": ("company_name", "copyright_text"),
+            "description": "Displayed in the footer copyright notice and official company representation.",
+        }),
+        ("Contact Details", {
+            "fields": (("phone", "mobile"), ("email", "whatsapp")),
+            "description": "Displayed in the top header, footer, and floating WhatsApp button when this country is selected.",
+        }),
+        ("Office Address", {
+            "fields": (("address_heading", "address_heading_ar"), "address", "address_ar"),
+            "description": "Physical branch/office address shown in the footer and contact sections.",
+        }),
+    )
+
+    def has_add_permission(self, request):
+        """Prevent adding duplicate or non-GCC countries."""
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        """Prevent accidental deletion of GCC countries."""
+        return False

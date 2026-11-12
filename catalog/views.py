@@ -4,12 +4,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 from .models import Category, ProductFeature, SubCategory, Product, HomepageBanner, Offer, ProductEnquiry, ContactEnquiry, QuoteRequest, ServiceBooking
-from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, CareerPosition, BranchLocation
+from .models import ServiceFAQ, CareerApplication, GlobalLocation, HomeStatistic, ServiceStatistic,MainCategory, Client, Catalogue, Certificate, Gallery, PageBanner, BlogPost, Project, SEOPage, SiteSettings, Service, CareerPosition, BranchLocation, CountrySetting
 from .models import NewsCategory,NewsPost,Arm
 from .serializers import CategorySerializer, SubCategorySerializer, ProductDetailSerializer,ProductListSerializer, HomepageBannerSerializer
 from .serializers import OfferSerializer, ProductEnquirySerializer, ContactEnquirySerializer, QuoteRequestSerializer, ServiceBookingSerializer, ClientSerializer, CatalogueSerializer
 from .serializers import  CertificateSerializer, GallerySerializer, PageBannerSerializer, BlogPostSerializer, ProjectSerializer, SEOPageSerializer, SiteSettingsSerializer
-from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer, CareerPositionSerializer, BranchLocationSerializer
+from .serializers import  ServiceSerializer, ServiceFAQSerializer, CareerApplicationSerializer, GlobalLocationSerializer, StatisticSerializer, ServiceStatisticSerializer,MainCategorySerializer, CareerPositionSerializer, BranchLocationSerializer, CountrySettingSerializer
 from .serializers import NewsPostSerializer,ArmSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -58,6 +58,11 @@ class CachedReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
 class CareerPositionViewSet(CachedReadOnlyModelViewSet):
     queryset = CareerPosition.objects.filter(active=True).order_by('name')
     serializer_class = CareerPositionSerializer
+
+class CountrySettingViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = CountrySetting.objects.filter(active=True).order_by('order', 'country_name')
+    serializer_class = CountrySettingSerializer
+    lookup_field = 'country_code'
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 32
@@ -1228,3 +1233,85 @@ def product_datasheet_redirect(request, slug):
     else:
         fallback_url = f"{frontend_url}/"
     return redirect(fallback_url)
+
+
+
+@csrf_exempt
+def track_visitor_view(request):
+    """
+    Non-blocking endpoint called by Next.js frontend to log page views.
+    Supports both POST and GET (navigator.sendBeacon).
+    """
+    if request.method in ('POST', 'GET'):
+        try:
+            from .utils import log_visitor
+            path = '/'
+            referrer = ''
+            if request.method == 'POST':
+                try:
+                    payload = json.loads(request.body.decode('utf-8')) if request.body else {}
+                except Exception:
+                    payload = request.POST or {}
+                path = payload.get('path') or request.META.get('HTTP_REFERER') or '/'
+                referrer = payload.get('referrer') or ''
+            else:
+                path = request.GET.get('path') or request.META.get('HTTP_REFERER') or '/'
+                referrer = request.GET.get('referrer') or ''
+
+            log_visitor(request, path=path, referrer=referrer)
+        except Exception:
+            pass
+
+    response = JsonResponse({'status': 'ok'})
+    response['Access-Control-Allow-Origin'] = '*'
+    response['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
+
+
+@csrf_exempt
+def detect_country_view(request):
+    """
+    Detects whether the visitor's IP is from one of the 6 GCC countries:
+    Bahrain (BH), Kuwait (KW), Oman (OM), Qatar (QA), Saudi Arabia (SA), UAE (AE).
+    If outside GCC, defaults to 'ae'.
+    """
+    try:
+        from .utils import get_client_ip, get_country_from_request
+
+        ip = get_client_ip(request) or '0.0.0.0'
+        country_name, code = get_country_from_request(request, ip)
+        code = (code or '').upper()
+
+        gcc_map = {
+            'AE': 'ae',
+            'SA': 'sa',
+            'QA': 'qa',
+            'KW': 'kw',
+            'BH': 'bh',
+            'OM': 'om',
+        }
+
+        if code in gcc_map:
+            response_data = {
+                'country': gcc_map[code],
+                'is_gcc': True,
+                'detected_country': country_name or code,
+            }
+        else:
+            response_data = {
+                'country': 'ae',
+                'is_gcc': False,
+                'detected_country': country_name or code or 'Unknown',
+            }
+    except Exception as e:
+        logger.debug("detect_country_view fallback: %s", e)
+        response_data = {
+            'country': 'ae',
+            'is_gcc': False,
+            'detected_country': 'Unknown',
+        }
+
+    response = JsonResponse(response_data)
+    response['Access-Control-Allow-Origin'] = '*'
+    response['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response

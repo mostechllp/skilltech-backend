@@ -4,10 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 from rest_framework.routers import DefaultRouter
-from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, CareerPositionViewSet
+from catalog.views import CategoryViewSet, SubCategoryViewSet, ProductViewSet, HomepageBannerViewSet, CareerPositionViewSet, CountrySettingViewSet
 from catalog.views import OfferViewSet, ContactEnquiryViewSet, QuoteRequestViewSet, ServiceBookingViewSet, ClientViewSet, CatalogueViewSet, CertificateViewSet, GalleryViewSet, PageBannerViewSet, BlogPostViewSet, ProjectViewSet, SEOPageViewSet, SiteSettingsViewSet, ServiceViewSet, ServiceFAQViewSet, CareerApplicationViewSet, GlobalLocationViewSet, SitemapDataViewSet, StatisticViewSet, ServiceStatisticViewSet, generate_captcha, validate_captcha, BranchLocationViewSet
 from catalog.views import  NewsPostViewset
-from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet,ArmsViewSet, product_datasheet_redirect
+from catalog.views import CatalogueThumbnailDownloadView,MainCategoryViewSet,ArmsViewSet, product_datasheet_redirect, track_visitor_view, detect_country_view
 def robots_txt(request):
     lines = [
         "User-agent: *",
@@ -49,12 +49,15 @@ router.register(r'service-statistics', ServiceStatisticViewSet)
 router.register(r'career-positions', CareerPositionViewSet)
 router.register(r'sitemap-data', SitemapDataViewSet, basename='sitemap-data'),
 router.register(r'newspost',NewsPostViewset,basename="newspost"),
-router.register(r'arms',ArmsViewSet,basename="arms")
+router.register(r'arms',ArmsViewSet,basename="arms"),
+router.register(r'country-settings', CountrySettingViewSet, basename='country-settings')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/captcha/', generate_captcha, name='captcha'),
     path('api/validate-captcha/', validate_captcha, name='validate_captcha'),
+    path('api/track-visit/', track_visitor_view, name='track-visitor'),
+    path('api/detect-country/', detect_country_view, name='detect-country'),
     path('api/', include(router.urls)),
     path('robots.txt', robots_txt),
     path('api/catalogue/<int:pk>/download-thumbnail/',CatalogueThumbnailDownloadView.as_view(),name="catalogue-thumbnail-download"),
