@@ -13,22 +13,22 @@ class CareerPositionSerializer(serializers.ModelSerializer):
 class InstallationTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstallationType
-        fields = ['id', 'name', 'name_ar']
+        fields = ['id', 'name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru']
 
 class TVSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TVSize
-        fields = ['id', 'size', 'size_ar']
+        fields = ['id', 'size', 'size_ar', 'size_hi', 'size_es', 'size_pt', 'size_fr', 'size_ru']
 
 class AvailableTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AvailableTime
-        fields = ['id', 'time_slot', 'time_slot_ar']
+        fields = ['id', 'time_slot', 'time_slot_ar', 'time_slot_hi', 'time_slot_es', 'time_slot_pt', 'time_slot_fr', 'time_slot_ru']
 
 class ServiceFAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceFAQ
-        fields = ['id', 'question', 'question_ar', 'answer', 'answer_ar', 'order']
+        fields = ['id', 'question', 'question_ar', 'question_hi', 'question_es', 'question_pt', 'question_fr', 'question_ru', 'answer', 'answer_ar', 'answer_hi', 'answer_es', 'answer_pt', 'answer_fr', 'answer_ru', 'order']
 
 class ServiceSerializer(serializers.ModelSerializer):
     installation_types = InstallationTypeSerializer(many=True, read_only=True)
@@ -53,7 +53,7 @@ class GlobalLocationSerializer(serializers.ModelSerializer):
 class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model=Feature
-        fields=['id','title','title_ar','order']
+        fields=['id','title','title_ar','title_hi','title_es','title_pt','title_fr', 'title_ru','order']
 
 class ProductFeatureSerializer(serializers.ModelSerializer):
     feature=FeatureSerializer(read_only=True)
@@ -64,12 +64,12 @@ class ProductFeatureSerializer(serializers.ModelSerializer):
 class ProductBulletFeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductBulletFeature
-        fields = ['id', 'title', 'title_ar', 'text', 'text_ar', 'order']
+        fields = ['id', 'title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'text', 'text_ar', 'text_hi', 'text_es', 'text_pt', 'text_fr', 'text_ru', 'order']
 
 class ProductSpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSpecification
-        fields = ['key', 'key_ar', 'value', 'value_ar']
+        fields = ['key', 'key_ar', 'key_hi', 'key_es', 'key_pt', 'key_fr', 'key_ru', 'value', 'value_ar', 'value_hi', 'value_es', 'value_pt', 'value_fr', 'value_ru']
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -87,7 +87,7 @@ class SimilarProductSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Product
-        fields = ['id', 'name', 'title', 'title_ar', 'slug', 'slug_path', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
+        fields = ['id', 'name', 'title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'slug', 'slug_path', 'main_image', 'main_image_alt', 'subcategory_slug', 'category_slug']
 
 class CategorySerializer2(serializers.ModelSerializer):    
     class Meta:
@@ -116,23 +116,34 @@ class MainCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MainCategory
-        fields = ["id", "name", "name_ar", "slug", "order", "categories"]
+        fields = ["id", "name", "name_ar", "name_hi", "name_es", "name_pt", "name_fr", "name_ru", "slug", "order", "categories"]
 class ProductListSerializer(serializers.ModelSerializer):
     subcategory_slug = serializers.CharField(source='subcategory.slug', read_only=True)
     category_slug = serializers.CharField(source='subcategory.category.slug', read_only=True)
     category = serializers.CharField(source='subcategory.category.name', read_only=True)
     category_ar = serializers.CharField(source='subcategory.category.name_ar', read_only=True)
+    category_hi = serializers.CharField(source='subcategory.category.name_hi', read_only=True)
+    category_es = serializers.CharField(source='subcategory.category.name_es', read_only=True)
+    category_pt = serializers.CharField(source='subcategory.category.name_pt', read_only=True)
+    category_fr = serializers.CharField(source='subcategory.category.name_fr', read_only=True)
+    category_ru = serializers.CharField(source='subcategory.category.name_ru', read_only=True)
     subcategory_name_ar = serializers.CharField(source='subcategory.name_ar', read_only=True)
+    subcategory_name_hi = serializers.CharField(source='subcategory.name_hi', read_only=True)
+    subcategory_name_es = serializers.CharField(source='subcategory.name_es', read_only=True)
+    subcategory_name_pt = serializers.CharField(source='subcategory.name_pt', read_only=True)
+    subcategory_name_fr = serializers.CharField(source='subcategory.name_fr', read_only=True)
+    subcategory_name_ru = serializers.CharField(source='subcategory.name_ru', read_only=True)
     card_features = serializers.SerializerMethodField()
     
     class Meta:
         model = Product
         # Explicitly listing fields is safer and faster than '__all__'
         fields = [
-            'id', 'name', 'title', 'title_ar', 'slug', 'slug_path',
+            'id', 'name', 'title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'slug', 'slug_path',
             'main_image', 'main_image_alt', 
-            'short_description', 'short_description_ar',
-            'subcategory_slug', 'category_slug', 'category', 'category_ar', 'subcategory_name_ar',
+            'short_description', 'short_description_ar', 'short_description_hi', 'short_description_es', 'short_description_pt', 'short_description_fr', 'short_description_ru',
+            'subcategory_slug', 'category_slug', 'category', 'category_ar', 'category_hi', 'category_es', 'category_pt', 'category_fr', 'category_ru',
+            'subcategory_name_ar', 'subcategory_name_hi', 'subcategory_name_es', 'subcategory_name_pt', 'subcategory_name_fr', 'subcategory_name_ru',
             'show_in_home', 'active', 'order','show_economic',
             'card_features'
         ]

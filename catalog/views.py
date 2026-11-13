@@ -181,6 +181,26 @@ class ProductViewSet(CachedReadOnlyModelViewSet):
 
         return super().paginate_queryset(queryset)
 
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            return super().retrieve(request, *args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in ProductViewSet retrieve: {e}", exc_info=True)
+            lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+            lookup_value = self.kwargs.get(lookup_url_kwarg, "")
+            clean_value = lookup_value.strip("/")
+            product_slug = clean_value.split("/")[-1]
+            
+            obj = Product.objects.filter(
+                Q(slug_path=lookup_value) |
+                Q(slug_path=clean_value) |
+                Q(slug=product_slug)
+            ).first()
+            if obj:
+                serializer = self.get_serializer(obj)
+                return Response(serializer.data)
+            raise
+
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
@@ -192,8 +212,15 @@ class ProductViewSet(CachedReadOnlyModelViewSet):
             self.check_object_permissions(self.request, obj)
             return obj
 
+        # Strip or add trailing slash check
+        clean_value = lookup_value.strip("/")
+        obj = queryset.filter(Q(slug_path=clean_value) | Q(slug_path=clean_value + "/")).first()
+        if obj:
+            self.check_object_permissions(self.request, obj)
+            return obj
+
         # 2. Try matching by product's own slug (e.g. sh-ttl09-86fp)
-        product_slug = lookup_value.rstrip("/").split("/")[-1]
+        product_slug = clean_value.split("/")[-1]
         obj = queryset.filter(slug=product_slug).first()
         if obj:
             self.check_object_permissions(self.request, obj)
@@ -915,6 +942,19 @@ class BlogPostViewSet(CachedReadOnlyModelViewSet):
 
 
     lookup_field = 'slug'
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            return super().retrieve(request, *args, **kwargs)
+        except Exception as e:
+            logger.error(f"Error in BlogPostViewSet retrieve: {e}", exc_info=True)
+            slug = self.kwargs.get(self.lookup_field, "")
+            clean_slug = slug.strip("/").split("/")[-1]
+            obj = BlogPost.objects.filter(Q(slug=slug) | Q(slug=clean_slug)).first()
+            if obj:
+                serializer = self.get_serializer(obj)
+                return Response(serializer.data)
+            raise
 
 class ProjectViewSet(CachedReadOnlyModelViewSet):
     queryset = Project.objects.filter(active=True).order_by('order')

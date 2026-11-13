@@ -166,3 +166,33 @@ def log_visitor(request, path=None, referrer=None):
     except Exception as e:
         logger.debug("Visitor logging silently skipped: %s", e)
         return None
+
+
+def translate_text(text, target_lang="hi", source_lang="en"):
+    """
+    Translates text automatically using Google Translate API.
+    Fails safe without throwing exceptions.
+    """
+    if not text or not str(text).strip():
+        return text
+    try:
+        import requests
+        url = "https://translate.googleapis.com/translate_a/single"
+        params = {
+            "client": "gtx",
+            "sl": source_lang,
+            "tl": target_lang,
+            "dt": "t",
+            "q": str(text),
+        }
+        headers = {"User-Agent": "Mozilla/5.0"}
+        res = requests.get(url, params=params, headers=headers, timeout=10)
+        if res.status_code == 200:
+            data = res.json()
+            if data and isinstance(data, list) and len(data) > 0 and isinstance(data[0], list):
+                translated = "".join([segment[0] for segment in data[0] if segment and segment[0]])
+                if translated:
+                    return translated
+    except Exception as e:
+        logger.warning(f"Translation failed for '{str(text)[:30]}': {e}")
+    return text

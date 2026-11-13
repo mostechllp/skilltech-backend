@@ -5,12 +5,17 @@ from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.contrib.admin.models import LogEntry
 from django.utils import timezone
-from .utils import convert_image_to_webp
+from .utils import convert_image_to_webp, translate_text
 
 
 class MainCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
     name_ar = models.CharField(max_length=100, blank=True, null=True)
+    name_hi = models.CharField(max_length=100, blank=True, null=True)
+    name_es = models.CharField(max_length=100, blank=True, null=True)
+    name_pt = models.CharField(max_length=100, blank=True, null=True)
+    name_fr = models.CharField(max_length=100, blank=True, null=True)
+    name_ru = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000, db_index=True)
     active = models.BooleanField(default=True, db_index=True)
@@ -18,6 +23,16 @@ class MainCategory(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        if not self.name_hi and self.name:
+            self.name_hi = translate_text(self.name, target_lang="hi")[:100]
+        if not self.name_es and self.name:
+            self.name_es = translate_text(self.name, target_lang="es")[:100]
+        if not self.name_pt and self.name:
+            self.name_pt = translate_text(self.name, target_lang="pt")[:100]
+        if not self.name_fr and self.name:
+            self.name_fr = translate_text(self.name, target_lang="fr")[:100]
+        if not self.name_ar and self.name:
+            self.name_ar = translate_text(self.name, target_lang="ar")[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -36,6 +51,11 @@ class Category(models.Model):
     )
     name = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100, blank=True, null=True)
+    name_hi = models.CharField(max_length=100, blank=True, null=True)
+    name_es = models.CharField(max_length=100, blank=True, null=True)
+    name_pt = models.CharField(max_length=100, blank=True, null=True)
+    name_fr = models.CharField(max_length=100, blank=True, null=True)
+    name_ru = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='categories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio). Transparent PNG preferred.")
     show_in_home=models.BooleanField(default=False, db_index=True)
@@ -57,6 +77,16 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        if not self.name_hi and self.name:
+            self.name_hi = translate_text(self.name, target_lang="hi")[:100]
+        if not self.name_es and self.name:
+            self.name_es = translate_text(self.name, target_lang="es")[:100]
+        if not self.name_pt and self.name:
+            self.name_pt = translate_text(self.name, target_lang="pt")[:100]
+        if not self.name_fr and self.name:
+            self.name_fr = translate_text(self.name, target_lang="fr")[:100]
+        if not self.name_ar and self.name:
+            self.name_ar = translate_text(self.name, target_lang="ar")[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -69,6 +99,11 @@ class SubCategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100, blank=True, null=True)
+    name_hi = models.CharField(max_length=100, blank=True, null=True)
+    name_es = models.CharField(max_length=100, blank=True, null=True)
+    name_pt = models.CharField(max_length=100, blank=True, null=True)
+    name_fr = models.CharField(max_length=100, blank=True, null=True)
+    name_ru = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True, null=True, help_text="Recommended size: 400x400px (1:1 aspect ratio).")
     active = models.BooleanField(default=True, db_index=True)
@@ -85,6 +120,16 @@ class SubCategory(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        if not self.name_hi and self.name:
+            self.name_hi = translate_text(self.name, target_lang="hi")[:100]
+        if not self.name_es and self.name:
+            self.name_es = translate_text(self.name, target_lang="es")[:100]
+        if not self.name_pt and self.name:
+            self.name_pt = translate_text(self.name, target_lang="pt")[:100]
+        if not self.name_fr and self.name:
+            self.name_fr = translate_text(self.name, target_lang="fr")[:100]
+        if not self.name_ar and self.name:
+            self.name_ar = translate_text(self.name, target_lang="ar")[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -98,13 +143,28 @@ class Product(models.Model):
     name = models.CharField(max_length=100, help_text='Model Name, e.g., SH 380R',db_index=True)
     title = models.CharField(max_length=255, help_text='Full Title, e.g., 360 Rotate Wall Mount...',db_index=True)
     title_ar = models.CharField(max_length=255, blank=True, null=True, help_text='Arabic Full Title', db_index=True)
+    title_hi = models.CharField(max_length=255, blank=True, null=True, help_text='Hindi Full Title', db_index=True)
+    title_es = models.CharField(max_length=255, blank=True, null=True, help_text='Spanish Full Title', db_index=True)
+    title_pt = models.CharField(max_length=255, blank=True, null=True, help_text='Portuguese Full Title', db_index=True)
+    title_fr = models.CharField(max_length=255, blank=True, null=True, help_text='French Full Title', db_index=True)
+    title_ru = models.CharField(max_length=255, blank=True, null=True, help_text='Russian Full Title', db_index=True)
     slug = models.SlugField(unique=True, blank=True)
     slug_path = models.CharField(max_length=500,blank=True,null=True,unique=True)
     
     short_description = models.CharField(max_length=255, blank=True, null=True)
     short_description_ar = models.CharField(max_length=255, blank=True, null=True)
+    short_description_hi = models.CharField(max_length=255, blank=True, null=True)
+    short_description_es = models.CharField(max_length=255, blank=True, null=True)
+    short_description_pt = models.CharField(max_length=255, blank=True, null=True)
+    short_description_fr = models.CharField(max_length=255, blank=True, null=True)
+    short_description_ru = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(help_text='Full product description')
     description_ar = models.TextField(blank=True, null=True, help_text='Arabic Full product description')
+    description_hi = models.TextField(blank=True, null=True, help_text='Hindi Full product description')
+    description_es = models.TextField(blank=True, null=True, help_text='Spanish Full product description')
+    description_pt = models.TextField(blank=True, null=True, help_text='Portuguese Full product description')
+    description_fr = models.TextField(blank=True, null=True, help_text='French Full product description')
+    description_ru = models.TextField(blank=True, null=True, help_text='Russian Full product description')
     
     main_image = models.ImageField(upload_to='products/main/',max_length=500, help_text="Recommended size: 1600x1600px (1:1 aspect ratio). Transparent PNG preferred for listing consistency.")
     main_image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
@@ -119,11 +179,16 @@ class Product(models.Model):
     
     tags = models.TextField(blank=True, help_text='Comma separated tags, e.g. Tag1, Tag2')
     tags_ar = models.TextField(blank=True, null=True, help_text='Arabic comma separated tags')
+    tags_hi = models.TextField(blank=True, null=True, help_text='Hindi comma separated tags')
+    tags_es = models.TextField(blank=True, null=True, help_text='Spanish comma separated tags')
+    tags_pt = models.TextField(blank=True, null=True, help_text='Portuguese comma separated tags')
+    tags_fr = models.TextField(blank=True, null=True, help_text='French comma separated tags')
+    tags_ru = models.TextField(blank=True, null=True, help_text='Russian comma separated tags')
 
     # New fields
     datasheet = models.FileField(upload_to='products/datasheets/',max_length=500, blank=True, null=True)
     show_in_home = models.BooleanField(default=False,db_index=True)
-    similar_products = models.ManyToManyField('self', blank=True, related_name='similar_to')
+    similar_products = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='similar_to')
     show_cbm_calculator = models.BooleanField(default=False)
     show_economic=models.BooleanField(default=False)    
     
@@ -167,6 +232,59 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+
+        # 1. Auto-translate to Hindi if fields are empty
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang="hi")[:255]
+        if not self.short_description_hi and self.short_description:
+            self.short_description_hi = translate_text(self.short_description, target_lang="hi")[:255]
+        if not self.description_hi and self.description:
+            self.description_hi = translate_text(self.description, target_lang="hi")
+        if hasattr(self, "tags_hi") and not self.tags_hi and getattr(self, "tags", None):
+            tag_items = [t.strip() for t in self.tags.split(',') if t.strip()]
+            self.tags_hi = ", ".join([translate_text(t, target_lang="hi") for t in tag_items])
+
+        # 2. Auto-translate to Spanish if fields are empty
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang="es")[:255]
+        if not self.short_description_es and self.short_description:
+            self.short_description_es = translate_text(self.short_description, target_lang="es")[:255]
+        if not self.description_es and self.description:
+            self.description_es = translate_text(self.description, target_lang="es")
+        if hasattr(self, "tags_es") and not self.tags_es and getattr(self, "tags", None):
+            tag_items = [t.strip() for t in self.tags.split(',') if t.strip()]
+            self.tags_es = ", ".join([translate_text(t, target_lang="es") for t in tag_items])
+
+        # 3. Auto-translate to Portuguese if fields are empty
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang="pt")[:255]
+        if not self.short_description_pt and self.short_description:
+            self.short_description_pt = translate_text(self.short_description, target_lang="pt")[:255]
+        if not self.description_pt and self.description:
+            self.description_pt = translate_text(self.description, target_lang="pt")
+        if hasattr(self, "tags_pt") and not self.tags_pt and getattr(self, "tags", None):
+            tag_items = [t.strip() for t in self.tags.split(',') if t.strip()]
+            self.tags_pt = ", ".join([translate_text(t, target_lang="pt") for t in tag_items])
+
+        # 4. Auto-translate to French if fields are empty
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang="fr")[:255]
+        if not self.short_description_fr and self.short_description:
+            self.short_description_fr = translate_text(self.short_description, target_lang="fr")[:255]
+        if not self.description_fr and self.description:
+            self.description_fr = translate_text(self.description, target_lang="fr")
+        if hasattr(self, "tags_fr") and not self.tags_fr and getattr(self, "tags", None):
+            tag_items = [t.strip() for t in self.tags.split(',') if t.strip()]
+            self.tags_fr = ", ".join([translate_text(t, target_lang="fr") for t in tag_items])
+
+        # 5. Auto-translate to Arabic if fields are empty
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang="ar")[:255]
+        if not self.short_description_ar and self.short_description:
+            self.short_description_ar = translate_text(self.short_description, target_lang="ar")[:255]
+        if not self.description_ar and self.description:
+            self.description_ar = translate_text(self.description, target_lang="ar")
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -185,6 +303,7 @@ class Product(models.Model):
 class Arm(models.Model):
     name=models.CharField(max_length=50,null=True,blank=True,unique=True)
     name_ar=models.CharField(max_length=50,null=True,blank=True)
+    name_ru=models.CharField(max_length=50,null=True,blank=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
     active=models.BooleanField(default=True)
     show_in_articulating=models.BooleanField(default=True)
@@ -194,6 +313,8 @@ class Arm(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        if not self.name_ar and self.name:
+            self.name_ar = translate_text(self.name, target_lang="ar")[:50]
         super().save(*args, **kwargs)
 
     class Meta:
@@ -205,10 +326,28 @@ class Arm(models.Model):
 class Feature(models.Model):
     title=models.CharField(max_length=100)
     title_ar=models.CharField(max_length=100, null=True, blank=True)
+    title_hi=models.CharField(max_length=100, null=True, blank=True)
+    title_es=models.CharField(max_length=100, null=True, blank=True)
+    title_pt=models.CharField(max_length=100, null=True, blank=True)
+    title_fr=models.CharField(max_length=100, null=True, blank=True)
+    title_ru=models.CharField(max_length=100, null=True, blank=True)
     order=models.DecimalField(max_digits=5,decimal_places=3,default=0.000)
     class Meta:
         ordering = ['order']
     
+    def save(self, *args, **kwargs):
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')[:100]
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')[:100]
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')[:100]
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')[:100]
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -226,12 +365,55 @@ class ProductBulletFeature(models.Model):
     product = models.ForeignKey(Product, related_name='bullet_features', on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=True, null=True, help_text="Bold part of the feature (e.g. 360° Screen Rotation)")
     title_ar = models.CharField(max_length=255, blank=True, null=True, help_text="Arabic bold part of the feature")
+    title_hi = models.CharField(max_length=255, blank=True, null=True, help_text="Hindi bold part of the feature")
+    title_es = models.CharField(max_length=255, blank=True, null=True, help_text="Spanish bold part of the feature")
+    title_pt = models.CharField(max_length=255, blank=True, null=True, help_text="Portuguese bold part of the feature")
+    title_fr = models.CharField(max_length=255, blank=True, null=True, help_text="French bold part of the feature")
+    title_ru = models.CharField(max_length=255, blank=True, null=True, help_text="Russian bold part of the feature")
     text = models.TextField(help_text="Main description of the feature")
     text_ar = models.TextField(blank=True, null=True, help_text="Arabic main description of the feature")
+    text_hi = models.TextField(blank=True, null=True, help_text="Hindi main description of the feature")
+    text_es = models.TextField(blank=True, null=True, help_text="Spanish main description of the feature")
+    text_pt = models.TextField(blank=True, null=True, help_text="Portuguese main description of the feature")
+    text_fr = models.TextField(blank=True, null=True, help_text="French main description of the feature")
+    text_ru = models.TextField(blank=True, null=True, help_text="Russian main description of the feature")
     order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000)
 
     class Meta:
         ordering = ['order']
+
+    def save(self, *args, **kwargs):
+        # Auto-translate to Hindi if not filled or if identical to English
+        if (not self.title_hi or (self.title and self.title_hi.strip().lower() == self.title.strip().lower())) and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')
+        if (not self.text_hi or (self.text and self.text_hi.strip().lower() == self.text.strip().lower())) and self.text:
+            self.text_hi = translate_text(self.text, target_lang='hi')
+
+        # Auto-translate to Arabic if not filled or if identical to English
+        if (not self.title_ar or (self.title and self.title_ar.strip().lower() == self.title.strip().lower())) and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')
+        if (not self.text_ar or (self.text and self.text_ar.strip().lower() == self.text.strip().lower())) and self.text:
+            self.text_ar = translate_text(self.text, target_lang='ar')
+
+        # Auto-translate to Spanish if not filled or if identical to English
+        if (not self.title_es or (self.title and self.title_es.strip().lower() == self.title.strip().lower())) and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')
+        if (not self.text_es or (self.text and self.text_es.strip().lower() == self.text.strip().lower())) and self.text:
+            self.text_es = translate_text(self.text, target_lang='es')
+
+        # Auto-translate to Portuguese if not filled or if identical to English
+        if (not self.title_pt or (self.title and self.title_pt.strip().lower() == self.title.strip().lower())) and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')
+        if (not self.text_pt or (self.text and self.text_pt.strip().lower() == self.text.strip().lower())) and self.text:
+            self.text_pt = translate_text(self.text, target_lang='pt')
+
+        # Auto-translate to French if not filled or if identical to English
+        if (not self.title_fr or (self.title and self.title_fr.strip().lower() == self.title.strip().lower())) and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')
+        if (not self.text_fr or (self.text and self.text_fr.strip().lower() == self.text.strip().lower())) and self.text:
+            self.text_fr = translate_text(self.text, target_lang='fr')
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Bullet feature for {self.product.name}"
@@ -240,8 +422,53 @@ class ProductSpecification(models.Model):
     product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
     key = models.CharField(max_length=200)
     key_ar = models.CharField(max_length=200, blank=True, null=True, help_text="Arabic key")
+    key_hi = models.CharField(max_length=200, blank=True, null=True, help_text="Hindi key")
+    key_es = models.CharField(max_length=200, blank=True, null=True, help_text="Spanish key")
+    key_pt = models.CharField(max_length=200, blank=True, null=True, help_text="Portuguese key")
+    key_fr = models.CharField(max_length=200, blank=True, null=True, help_text="French key")
+    key_ru = models.CharField(max_length=200, blank=True, null=True, help_text="Russian key")
     value = models.CharField(max_length=500)
     value_ar = models.CharField(max_length=500, blank=True, null=True, help_text="Arabic value")
+    value_hi = models.CharField(max_length=500, blank=True, null=True, help_text="Hindi value")
+    value_es = models.CharField(max_length=500, blank=True, null=True, help_text="Spanish value")
+    value_pt = models.CharField(max_length=500, blank=True, null=True, help_text="Portuguese value")
+    value_fr = models.CharField(max_length=500, blank=True, null=True, help_text="French value")
+    value_ru = models.CharField(max_length=500, blank=True, null=True, help_text="Russian value")
+
+    def save(self, *args, **kwargs):
+        # Auto-translate to Hindi if not filled
+        if not self.key_hi and self.key:
+            self.key_hi = translate_text(self.key, target_lang='hi')
+        if not self.value_hi and self.value:
+            self.value_hi = translate_text(self.value, target_lang='hi')
+
+        # Auto-translate to Arabic if not filled
+        if not self.key_ar and self.key:
+            self.key_ar = translate_text(self.key, target_lang='ar')
+        if not self.value_ar and self.value:
+            self.value_ar = translate_text(self.value, target_lang='ar')
+
+        # Auto-translate to Spanish if not filled
+        if not self.key_es and self.key:
+            self.key_es = translate_text(self.key, target_lang='es')
+        if not self.value_es and self.value:
+            self.value_es = translate_text(self.value, target_lang='es')
+
+        # Auto-translate to Portuguese if not filled
+        if not self.key_pt and self.key:
+            self.key_pt = translate_text(self.key, target_lang='pt')
+        if not self.value_pt and self.value:
+            self.value_pt = translate_text(self.value, target_lang='pt')
+
+        # Auto-translate to French if not filled
+        if not self.key_fr and self.key:
+            self.key_fr = translate_text(self.key, target_lang='fr')
+        if not self.value_fr and self.value:
+            self.value_fr = translate_text(self.value, target_lang='fr')
+
+        super().save(*args, **kwargs)
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.key}: {self.value}'
@@ -273,6 +500,7 @@ class HomepageBanner(models.Model):
     link = models.CharField(max_length=200, default='/')
     image = models.ImageField(upload_to='banners/', help_text="Recommended size: 2000x2000px (1:1 aspect ratio) for square desktop rendering. Ensure focal point is centered.")
     image_ar = models.ImageField(upload_to='banners/', blank=True, null=True, help_text="Arabic banner image. If null or empty, the default Image field is used.")
+    image_ru = models.ImageField(upload_to='banners/', blank=True, null=True, help_text="Russian banner image. If null or empty, the default Image field is used.")
     image_alt = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for SEO")
     active = models.BooleanField(default=True)
     order = models.DecimalField(max_digits=5, decimal_places=3, default=0.000)
@@ -283,18 +511,77 @@ class HomepageBanner(models.Model):
 class Offer(models.Model):
     title = models.CharField(max_length=100)
     title_ar = models.CharField(max_length=100, blank=True, null=True)
+    title_hi = models.CharField(max_length=100, blank=True, null=True)
+    title_es = models.CharField(max_length=100, blank=True, null=True)
+    title_pt = models.CharField(max_length=100, blank=True, null=True)
+    title_fr = models.CharField(max_length=100, blank=True, null=True)
+    title_ru = models.CharField(max_length=100, blank=True, null=True)
     subtitle = models.CharField(max_length=100, blank=True, help_text='e.g. New Arrival, Trending, Hot Pick')
     subtitle_ar = models.CharField(max_length=100, blank=True, null=True, help_text='e.g. New Arrival, Trending, Hot Pick')
+    subtitle_hi = models.CharField(max_length=100, blank=True, null=True, help_text='e.g. New Arrival, Trending, Hot Pick')
+    subtitle_es = models.CharField(max_length=100, blank=True, null=True, help_text='e.g. New Arrival, Trending, Hot Pick')
+    subtitle_pt = models.CharField(max_length=100, blank=True, null=True, help_text='e.g. New Arrival, Trending, Hot Pick')
+    subtitle_fr = models.CharField(max_length=100, blank=True, null=True, help_text='e.g. New Arrival, Trending, Hot Pick')
+    subtitle_ru = models.CharField(max_length=100, blank=True, null=True, help_text='e.g. New Arrival, Trending, Hot Pick')
     image = models.ImageField(upload_to='offers/', help_text="Size depends on position. Big: 1200x1200px, Small: 800x600px, Wide: 1600x600px.")
     button_text = models.CharField(max_length=50, default='Explore')
     button_text_ar = models.CharField(max_length=50, blank=True, null=True)
+    button_text_hi = models.CharField(max_length=50, blank=True, null=True)
+    button_text_es = models.CharField(max_length=50, blank=True, null=True)
+    button_text_pt = models.CharField(max_length=50, blank=True, null=True)
+    button_text_fr = models.CharField(max_length=50, blank=True, null=True)
+    button_text_ru = models.CharField(max_length=50, blank=True, null=True)
     button_link = models.CharField(max_length=200, default='/')
     button_link_ar = models.CharField(max_length=200, blank=True, null=True)
+    button_link_ru = models.CharField(max_length=200, blank=True, null=True)
     active = models.BooleanField(default=True)
     order = models.IntegerField(default=0, db_index=True)
 
     class Meta:
         ordering = ['order']
+
+    def save(self, *args, **kwargs):
+        # Auto-translate to Hindi if not filled
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')[:100]
+        if not self.subtitle_hi and self.subtitle:
+            self.subtitle_hi = translate_text(self.subtitle, target_lang='hi')[:100]
+        if not self.button_text_hi and self.button_text:
+            self.button_text_hi = translate_text(self.button_text, target_lang='hi')[:50]
+
+        # Auto-translate to Arabic if not filled
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')[:100]
+        if not self.subtitle_ar and self.subtitle:
+            self.subtitle_ar = translate_text(self.subtitle, target_lang='ar')[:100]
+        if not self.button_text_ar and self.button_text:
+            self.button_text_ar = translate_text(self.button_text, target_lang='ar')[:50]
+
+        # Auto-translate to Spanish if not filled
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')[:100]
+        if not self.subtitle_es and self.subtitle:
+            self.subtitle_es = translate_text(self.subtitle, target_lang='es')[:100]
+        if not self.button_text_es and self.button_text:
+            self.button_text_es = translate_text(self.button_text, target_lang='es')[:50]
+
+        # Auto-translate to Portuguese if not filled
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')[:100]
+        if not self.subtitle_pt and self.subtitle:
+            self.subtitle_pt = translate_text(self.subtitle, target_lang='pt')[:100]
+        if not self.button_text_pt and self.button_text:
+            self.button_text_pt = translate_text(self.button_text, target_lang='pt')[:50]
+
+        # Auto-translate to French if not filled
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        if not self.subtitle_fr and self.subtitle:
+            self.subtitle_fr = translate_text(self.subtitle, target_lang='fr')[:100]
+        if not self.button_text_fr and self.button_text:
+            self.button_text_fr = translate_text(self.button_text, target_lang='fr')[:50]
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -439,6 +726,11 @@ class Catalogue(models.Model):
 
     title = models.CharField(max_length=100)
     title_ar = models.CharField(max_length=100, null=True, blank=True)
+    title_hi = models.CharField(max_length=100, null=True, blank=True)
+    title_es = models.CharField(max_length=100, null=True, blank=True)
+    title_pt = models.CharField(max_length=100, null=True, blank=True)
+    title_fr = models.CharField(max_length=100, null=True, blank=True)
+    title_ru = models.CharField(max_length=100, null=True, blank=True)
 
     thumbnail = models.ImageField(upload_to='catalogues/thumbnails/', help_text="Recommended size: 600x800px (Portrait/Cover).")
 
@@ -448,65 +740,59 @@ class Catalogue(models.Model):
 
     active = models.BooleanField(default=True)
 
-
-
     class Meta:
-
         ordering = ['order']
 
-
+    def save(self, *args, **kwargs):
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')[:100]
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')[:100]
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')[:100]
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')[:100]
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        super().save(*args, **kwargs)
 
     def __str__(self):
-
         return self.title
 
-
-
 class Certificate(models.Model):
-
-
-
     title = models.CharField(max_length=100)
     title_ar = models.CharField(max_length=100, null=True, blank=True)
-
-
+    title_hi = models.CharField(max_length=100, null=True, blank=True)
+    title_es = models.CharField(max_length=100, null=True, blank=True)
+    title_pt = models.CharField(max_length=100, null=True, blank=True)
+    title_fr = models.CharField(max_length=100, null=True, blank=True)
+    title_ru = models.CharField(max_length=100, null=True, blank=True)
 
     thumbnail = models.ImageField(upload_to='certificates/thumbnails/', help_text="Recommended size: 800x600px (Landscape).")
 
-
-
     file = models.FileField(upload_to='certificates/files/')
-
-
 
     order = models.IntegerField(default=0, db_index=True)
 
-
-
     active = models.BooleanField(default=True)
 
-
-
-
-
-
-
     class Meta:
-
-
-
         ordering = ['order']
 
-
-
-
-
-
+    def save(self, *args, **kwargs):
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')[:100]
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')[:100]
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')[:100]
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')[:100]
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        super().save(*args, **kwargs)
 
     def __str__(self):
-
-
-
         return self.title
 
 
@@ -520,6 +806,7 @@ class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery/', help_text="Recommended size: 1600x1200px (Landscape).")
     title = models.CharField(max_length=100, blank=True)
     title_ar = models.CharField(max_length=100, blank=True, null=True)
+    title_ru = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -548,22 +835,92 @@ class PageBanner(models.Model):
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     title_ar = models.CharField(max_length=200, blank=True, null=True)
+    title_hi = models.CharField(max_length=200, blank=True, null=True)
+    title_es = models.CharField(max_length=200, blank=True, null=True)
+    title_pt = models.CharField(max_length=200, blank=True, null=True)
+    title_fr = models.CharField(max_length=200, blank=True, null=True)
+    title_ru = models.CharField(max_length=200, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True)
     image = models.ImageField(upload_to='blog/', help_text="Recommended size: 1600x1000px (Landscape).")
     image_ar = models.ImageField(upload_to='blog/', blank=True, null=True, help_text="Recommended size: 1600x1000px (Landscape).")
+    image_ru = models.ImageField(upload_to='blog/', blank=True, null=True, help_text="Recommended size: 1600x1000px (Landscape).")
     content = models.TextField()
     content_ar = models.TextField(blank=True, null=True)
+    content_hi = models.TextField(blank=True, null=True)
+    content_es = models.TextField(blank=True, null=True)
+    content_pt = models.TextField(blank=True, null=True)
+    content_fr = models.TextField(blank=True, null=True)
+    content_ru = models.TextField(blank=True, null=True)
     short_description = models.TextField(blank=True, help_text="Summary displayed on the list page")
     short_description_ar = models.TextField(blank=True, null=True, help_text="Summary displayed on the list page")
+    short_description_hi = models.TextField(blank=True, null=True, help_text="Summary displayed on the list page")
+    short_description_es = models.TextField(blank=True, null=True, help_text="Summary displayed on the list page")
+    short_description_pt = models.TextField(blank=True, null=True, help_text="Summary displayed on the list page")
+    short_description_fr = models.TextField(blank=True, null=True, help_text="Summary displayed on the list page")
+    short_description_ru = models.TextField(blank=True, null=True, help_text="Summary displayed on the list page")
     tags = models.TextField(blank=True, help_text="Comma separated tags, e.g. Tech, News, Update")
     author = models.CharField(max_length=100, default="Admin")
     author_ar = models.CharField(max_length=100, blank=True, null=True)
+    author_hi = models.CharField(max_length=100, blank=True, null=True)
+    author_es = models.CharField(max_length=100, blank=True, null=True)
+    author_pt = models.CharField(max_length=100, blank=True, null=True)
+    author_fr = models.CharField(max_length=100, blank=True, null=True)
+    author_ru = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+
+        # Auto-translate to Hindi if not filled
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')
+        if not self.short_description_hi and self.short_description:
+            self.short_description_hi = translate_text(self.short_description, target_lang='hi')
+        if not self.content_hi and self.content:
+            self.content_hi = translate_text(self.content, target_lang='hi')
+        if not self.author_hi and self.author:
+            self.author_hi = translate_text(self.author, target_lang='hi')
+
+        # Auto-translate to Arabic if not filled
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')
+        if not self.short_description_ar and self.short_description:
+            self.short_description_ar = translate_text(self.short_description, target_lang='ar')
+        if not self.content_ar and self.content:
+            self.content_ar = translate_text(self.content, target_lang='ar')
+
+        # Auto-translate to Spanish if not filled
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')
+        if not self.short_description_es and self.short_description:
+            self.short_description_es = translate_text(self.short_description, target_lang='es')
+        if not self.content_es and self.content:
+            self.content_es = translate_text(self.content, target_lang='es')
+        if not self.author_es and self.author:
+            self.author_es = translate_text(self.author, target_lang='es')
+
+        # Auto-translate to Portuguese if not filled
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')
+        if not self.short_description_pt and self.short_description:
+            self.short_description_pt = translate_text(self.short_description, target_lang='pt')
+        if not self.content_pt and self.content:
+            self.content_pt = translate_text(self.content, target_lang='pt')
+        if not self.author_pt and self.author:
+            self.author_pt = translate_text(self.author, target_lang='pt')
+
+        # Auto-translate to French if not filled
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')
+        if not self.short_description_fr and self.short_description:
+            self.short_description_fr = translate_text(self.short_description, target_lang='fr')
+        if not self.content_fr and self.content:
+            self.content_fr = translate_text(self.content, target_lang='fr')
+        if not self.author_fr and self.author:
+            self.author_fr = translate_text(self.author, target_lang='fr')
+
         super().save(*args, **kwargs)
 
     class Meta:
@@ -576,12 +933,27 @@ class Project(models.Model):
 
     title = models.CharField(max_length=100)
     title_ar = models.CharField(max_length=100, blank=True, null=True)
+    title_hi = models.CharField(max_length=100, blank=True, null=True)
+    title_es = models.CharField(max_length=100, blank=True, null=True)
+    title_pt = models.CharField(max_length=100, blank=True, null=True)
+    title_fr = models.CharField(max_length=100, blank=True, null=True)
+    title_ru = models.CharField(max_length=100, blank=True, null=True)
 
     subtitle = models.CharField(max_length=100, blank=True)
     subtitle_ar = models.CharField(max_length=100, blank=True, null=True)
+    subtitle_hi = models.CharField(max_length=100, blank=True, null=True)
+    subtitle_es = models.CharField(max_length=100, blank=True, null=True)
+    subtitle_pt = models.CharField(max_length=100, blank=True, null=True)
+    subtitle_fr = models.CharField(max_length=100, blank=True, null=True)
+    subtitle_ru = models.CharField(max_length=100, blank=True, null=True)
 
     location = models.CharField(max_length=100, blank=True)
     location_ar = models.CharField(max_length=100, blank=True, null=True)
+    location_hi = models.CharField(max_length=100, blank=True, null=True)
+    location_es = models.CharField(max_length=100, blank=True, null=True)
+    location_pt = models.CharField(max_length=100, blank=True, null=True)
+    location_fr = models.CharField(max_length=100, blank=True, null=True)
+    location_ru = models.CharField(max_length=100, blank=True, null=True)
 
     image = models.ImageField(upload_to='projects/', help_text="Recommended size: 1200x800px (Landscape).")
 
@@ -589,11 +961,51 @@ class Project(models.Model):
 
     active = models.BooleanField(default=True)
 
-
-
     class Meta:
-
         ordering = ['order']
+
+    def save(self, *args, **kwargs):
+        # Auto-translate to Hindi if not filled
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')[:100]
+        if not self.subtitle_hi and self.subtitle:
+            self.subtitle_hi = translate_text(self.subtitle, target_lang='hi')[:100]
+        if not self.location_hi and self.location:
+            self.location_hi = translate_text(self.location, target_lang='hi')[:100]
+
+        # Auto-translate to Arabic if not filled
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')[:100]
+        if not self.subtitle_ar and self.subtitle:
+            self.subtitle_ar = translate_text(self.subtitle, target_lang='ar')[:100]
+        if not self.location_ar and self.location:
+            self.location_ar = translate_text(self.location, target_lang='ar')[:100]
+
+        # Auto-translate to Spanish if not filled
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')[:100]
+        if not self.subtitle_es and self.subtitle:
+            self.subtitle_es = translate_text(self.subtitle, target_lang='es')[:100]
+        if not self.location_es and self.location:
+            self.location_es = translate_text(self.location, target_lang='es')[:100]
+
+        # Auto-translate to Portuguese if not filled
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')[:100]
+        if not self.subtitle_pt and self.subtitle:
+            self.subtitle_pt = translate_text(self.subtitle, target_lang='pt')[:100]
+        if not self.location_pt and self.location:
+            self.location_pt = translate_text(self.location, target_lang='pt')[:100]
+
+        # Auto-translate to French if not filled
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        if not self.subtitle_fr and self.subtitle:
+            self.subtitle_fr = translate_text(self.subtitle, target_lang='fr')[:100]
+        if not self.location_fr and self.location:
+            self.location_fr = translate_text(self.location, target_lang='fr')[:100]
+
+        super().save(*args, **kwargs)
 
 
 
@@ -660,8 +1072,10 @@ class SiteSettings(models.Model):
     
     address_heading = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
     address_heading_ar = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
+    address_heading_ru = models.CharField(max_length=100, blank=True, null=True, default="Our Office")
     address = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")
     address_ar = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")
+    address_ru = models.TextField(blank=True, null=True, help_text="Enter address with line breaks")
     google_map_link = models.URLField(blank=True, null=True, help_text="Google Maps Location URL")
 
     demo = models.BooleanField(default=False, help_text="If checked, adds 'noindex' to meta tags")
@@ -683,9 +1097,32 @@ class SiteSettings(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100, blank=True, null=True)
+    name_hi = models.CharField(max_length=100, blank=True, null=True)
+    name_es = models.CharField(max_length=100, blank=True, null=True)
+    name_pt = models.CharField(max_length=100, blank=True, null=True)
+    name_fr = models.CharField(max_length=100, blank=True, null=True)
+    name_ru = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True)
     description_ar = models.TextField(blank=True, null=True)
+    description_hi = models.TextField(blank=True, null=True)
+    description_es = models.TextField(blank=True, null=True)
+    description_pt = models.TextField(blank=True, null=True)
+    description_fr = models.TextField(blank=True, null=True)
+    description_ru = models.TextField(blank=True, null=True)
     active = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        if not self.name_hi and self.name:
+            self.name_hi = translate_text(self.name, target_lang='hi')[:100]
+        if not self.name_ar and self.name:
+            self.name_ar = translate_text(self.name, target_lang='ar')[:100]
+        if not self.name_es and self.name:
+            self.name_es = translate_text(self.name, target_lang='es')[:100]
+        if not self.name_pt and self.name:
+            self.name_pt = translate_text(self.name, target_lang='pt')[:100]
+        if not self.name_fr and self.name:
+            self.name_fr = translate_text(self.name, target_lang='fr')[:100]
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -694,6 +1131,24 @@ class InstallationType(models.Model):
     service = models.ForeignKey(Service, related_name='installation_types', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     name_ar = models.CharField(max_length=100, blank=True, null=True)
+    name_hi = models.CharField(max_length=100, blank=True, null=True)
+    name_es = models.CharField(max_length=100, blank=True, null=True)
+    name_pt = models.CharField(max_length=100, blank=True, null=True)
+    name_fr = models.CharField(max_length=100, blank=True, null=True)
+    name_ru = models.CharField(max_length=100, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.name_hi and self.name:
+            self.name_hi = translate_text(self.name, target_lang='hi')[:100]
+        if not self.name_ar and self.name:
+            self.name_ar = translate_text(self.name, target_lang='ar')[:100]
+        if not self.name_es and self.name:
+            self.name_es = translate_text(self.name, target_lang='es')[:100]
+        if not self.name_pt and self.name:
+            self.name_pt = translate_text(self.name, target_lang='pt')[:100]
+        if not self.name_fr and self.name:
+            self.name_fr = translate_text(self.name, target_lang='fr')[:100]
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -702,6 +1157,24 @@ class TVSize(models.Model):
     service = models.ForeignKey(Service, related_name='tv_sizes', on_delete=models.CASCADE)
     size = models.CharField(max_length=50)
     size_ar = models.CharField(max_length=50, blank=True, null=True)
+    size_hi = models.CharField(max_length=50, blank=True, null=True)
+    size_es = models.CharField(max_length=50, blank=True, null=True)
+    size_pt = models.CharField(max_length=50, blank=True, null=True)
+    size_fr = models.CharField(max_length=50, blank=True, null=True)
+    size_ru = models.CharField(max_length=50, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.size_hi and self.size:
+            self.size_hi = translate_text(self.size, target_lang='hi')
+        if not self.size_ar and self.size:
+            self.size_ar = translate_text(self.size, target_lang='ar')
+        if not self.size_es and self.size:
+            self.size_es = translate_text(self.size, target_lang='es')
+        if not self.size_pt and self.size:
+            self.size_pt = translate_text(self.size, target_lang='pt')
+        if not self.size_fr and self.size:
+            self.size_fr = translate_text(self.size, target_lang='fr')
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.size
@@ -710,6 +1183,24 @@ class AvailableTime(models.Model):
     service = models.ForeignKey(Service, related_name='available_times', on_delete=models.CASCADE)
     time_slot = models.CharField(max_length=100)
     time_slot_ar = models.CharField(max_length=100, blank=True, null=True)
+    time_slot_hi = models.CharField(max_length=100, blank=True, null=True)
+    time_slot_es = models.CharField(max_length=100, blank=True, null=True)
+    time_slot_pt = models.CharField(max_length=100, blank=True, null=True)
+    time_slot_fr = models.CharField(max_length=100, blank=True, null=True)
+    time_slot_ru = models.CharField(max_length=100, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.time_slot_hi and self.time_slot:
+            self.time_slot_hi = translate_text(self.time_slot, target_lang='hi')
+        if not self.time_slot_ar and self.time_slot:
+            self.time_slot_ar = translate_text(self.time_slot, target_lang='ar')
+        if not self.time_slot_es and self.time_slot:
+            self.time_slot_es = translate_text(self.time_slot, target_lang='es')
+        if not self.time_slot_pt and self.time_slot:
+            self.time_slot_pt = translate_text(self.time_slot, target_lang='pt')
+        if not self.time_slot_fr and self.time_slot:
+            self.time_slot_fr = translate_text(self.time_slot, target_lang='fr')
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.time_slot
@@ -717,8 +1208,18 @@ class AvailableTime(models.Model):
 class ServiceFAQ(models.Model):
     question = models.CharField(max_length=255)
     question_ar = models.CharField(max_length=255, blank=True, null=True)
+    question_hi = models.CharField(max_length=255, blank=True, null=True)
+    question_es = models.CharField(max_length=255, blank=True, null=True)
+    question_pt = models.CharField(max_length=255, blank=True, null=True)
+    question_fr = models.CharField(max_length=255, blank=True, null=True)
+    question_ru = models.CharField(max_length=255, blank=True, null=True)
     answer = models.TextField()
     answer_ar = models.TextField(blank=True, null=True)
+    answer_hi = models.TextField(blank=True, null=True)
+    answer_es = models.TextField(blank=True, null=True)
+    answer_pt = models.TextField(blank=True, null=True)
+    answer_fr = models.TextField(blank=True, null=True)
+    answer_ru = models.TextField(blank=True, null=True)
     order = models.IntegerField(default=0, db_index=True)
     active = models.BooleanField(default=True)
 
@@ -726,6 +1227,39 @@ class ServiceFAQ(models.Model):
         ordering = ['order']
         verbose_name = 'Service FAQ'
         verbose_name_plural = 'Service FAQs'
+
+    def save(self, *args, **kwargs):
+        # Auto-translate to Hindi if not filled
+        if not self.question_hi and self.question:
+            self.question_hi = translate_text(self.question, target_lang='hi')
+        if not self.answer_hi and self.answer:
+            self.answer_hi = translate_text(self.answer, target_lang='hi')
+
+        # Auto-translate to Arabic if not filled
+        if not self.question_ar and self.question:
+            self.question_ar = translate_text(self.question, target_lang='ar')
+        if not self.answer_ar and self.answer:
+            self.answer_ar = translate_text(self.answer, target_lang='ar')
+
+        # Auto-translate to Spanish if not filled
+        if not self.question_es and self.question:
+            self.question_es = translate_text(self.question, target_lang='es')
+        if not self.answer_es and self.answer:
+            self.answer_es = translate_text(self.answer, target_lang='es')
+
+        # Auto-translate to Portuguese if not filled
+        if not self.question_pt and self.question:
+            self.question_pt = translate_text(self.question, target_lang='pt')
+        if not self.answer_pt and self.answer:
+            self.answer_pt = translate_text(self.answer, target_lang='pt')
+
+        # Auto-translate to French if not filled
+        if not self.question_fr and self.question:
+            self.question_fr = translate_text(self.question, target_lang='fr')
+        if not self.answer_fr and self.answer:
+            self.answer_fr = translate_text(self.answer, target_lang='fr')
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.question}"
@@ -758,8 +1292,10 @@ class CareerApplication(models.Model):
 class GlobalLocation(models.Model):
     country = models.CharField(max_length=100)
     country_ar = models.CharField(max_length=100, blank=True, null=True)
+    country_ru = models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField()
     address_ar = models.TextField(blank=True, null=True)
+    address_ru = models.TextField(blank=True, null=True)
     email = models.EmailField()
     map_iframe = models.TextField(help_text='Paste the full iframe code from Google Maps (Share -> Embed a map)')
     map_link = models.URLField(help_text='Google Maps Link (for Get Directions button)')
@@ -775,8 +1311,10 @@ class GlobalLocation(models.Model):
 class HomeStatistic(models.Model):
     value = models.IntegerField(help_text="Numeric value for the counter (e.g. 100 for 100K)")
     value_ar = models.CharField(max_length=50, blank=True, null=True, help_text="Optional Arabic value override")
+    value_ru = models.CharField(max_length=50, blank=True, null=True, help_text="Optional Russian value override")
     label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
     label_ar = models.CharField(max_length=100, blank=True, null=True, help_text="Arabic label below the number")
+    label_ru = models.CharField(max_length=100, blank=True, null=True, help_text="Russian label below the number")
     suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
     icon = models.ImageField(upload_to='statistics/', blank=True, null=True, help_text="Optional icon")
     order = models.IntegerField(default=0, db_index=True)
@@ -791,8 +1329,10 @@ class HomeStatistic(models.Model):
 class ServiceStatistic(models.Model):
     value = models.IntegerField(help_text="Numeric value for the counter (e.g. 100 for 100K)")
     value_ar = models.CharField(max_length=50, blank=True, null=True, help_text="Optional Arabic value override")
+    value_ru = models.CharField(max_length=50, blank=True, null=True, help_text="Optional Russian value override")
     label = models.CharField(max_length=100, help_text="Label below the number (e.g. Projects)")
     label_ar = models.CharField(max_length=100, blank=True, null=True, help_text="Arabic label below the number")
+    label_ru = models.CharField(max_length=100, blank=True, null=True, help_text="Russian label below the number")
     suffix = models.CharField(max_length=20, blank=True, help_text="Suffix after number (e.g. K+, +)")
     icon = models.ImageField(upload_to='service_statistics/', blank=True, null=True, help_text="Optional icon")
     order = models.IntegerField(default=0, db_index=True)
@@ -855,6 +1395,11 @@ class NewsPost(models.Model):
 
     title = models.CharField(max_length=255)
     title_ar = models.CharField(max_length=255, blank=True, null=True)
+    title_hi = models.CharField(max_length=255, blank=True, null=True)
+    title_es = models.CharField(max_length=255, blank=True, null=True)
+    title_pt = models.CharField(max_length=255, blank=True, null=True)
+    title_fr = models.CharField(max_length=255, blank=True, null=True)
+    title_ru = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=300, unique=True, blank=True)
 
     # For cards
@@ -863,6 +1408,11 @@ class NewsPost(models.Model):
     # Main content (simple version)
     content = models.TextField()  # later you can replace with RichTextField / EditorJS\
     content_ar = models.TextField(blank=True, null=True)
+    content_hi = models.TextField(blank=True, null=True)
+    content_es = models.TextField(blank=True, null=True)
+    content_pt = models.TextField(blank=True, null=True)
+    content_fr = models.TextField(blank=True, null=True)
+    content_ru = models.TextField(blank=True, null=True)
     video_url=models.URLField(blank=True,null=True)
 
     # Publishing
@@ -895,6 +1445,35 @@ class NewsPost(models.Model):
         if self.status == self.Status.PUBLISHED and self.published_at is None:
             self.published_at = timezone.now()
 
+        # Auto-translate to Hindi if not filled
+        if not self.title_hi and self.title:
+            self.title_hi = translate_text(self.title, target_lang='hi')
+        if not self.content_hi and self.content:
+            self.content_hi = translate_text(self.content, target_lang='hi')
+
+        # Auto-translate to Arabic if not filled
+        if not self.title_ar and self.title:
+            self.title_ar = translate_text(self.title, target_lang='ar')
+        if not self.content_ar and self.content:
+            self.content_ar = translate_text(self.content, target_lang='ar')
+
+        # Auto-translate to Spanish if not filled
+        if not self.title_es and self.title:
+            self.title_es = translate_text(self.title, target_lang='es')
+        if not self.content_es and self.content:
+            self.content_es = translate_text(self.content, target_lang='es')
+
+        # Auto-translate to Portuguese if not filled
+        if not self.title_pt and self.title:
+            self.title_pt = translate_text(self.title, target_lang='pt')
+        if not self.content_pt and self.content:
+            self.content_pt = translate_text(self.content, target_lang='pt')
+
+        # Auto-translate to French if not filled
+        if not self.title_fr and self.title:
+            self.title_fr = translate_text(self.title, target_lang='fr')
+        if not self.content_fr and self.content:
+            self.content_fr = translate_text(self.content, target_lang='fr')
 
         super().save(*args, **kwargs)
 
@@ -909,10 +1488,12 @@ class BranchLocation(models.Model):
 
     title = models.CharField(max_length=120, help_text="e.g. Showroom")
     title_ar = models.CharField(max_length=120, blank=True, null=True, help_text="Arabic title")
+    title_ru = models.CharField(max_length=120, blank=True, null=True, help_text="Russian title")
     icon = models.CharField(max_length=30, choices=ICON_CHOICES, default='store')
     
     address = models.TextField(help_text="Line breaks will be preserved on the frontend")
     address_ar = models.TextField(blank=True, null=True, help_text="Arabic address")
+    address_ru = models.TextField(blank=True, null=True, help_text="Russian address")
     
     tel1 = models.CharField(max_length=50, blank=True, null=True, help_text="Primary telephone / mobile")
     tel2 = models.CharField(max_length=50, blank=True, null=True, help_text="Secondary telephone / mobile")
@@ -920,6 +1501,7 @@ class BranchLocation(models.Model):
     
     working_hours = models.TextField(blank=True, null=True, help_text="e.g. Monday to Saturday 09.00am to 10.00 pm | Sunday: Holiday")
     working_hours_ar = models.TextField(blank=True, null=True, help_text="Arabic working hours")
+    working_hours_ru = models.TextField(blank=True, null=True, help_text="Russian working hours")
     
     active = models.BooleanField(default=True, db_index=True)
     order = models.IntegerField(default=0, db_index=True)
@@ -1011,6 +1593,7 @@ class CountrySetting(models.Model):
     country_code = models.CharField(max_length=5, choices=COUNTRY_CHOICES, unique=True, db_index=True)
     country_name = models.CharField(max_length=100)
     country_name_ar = models.CharField(max_length=100, blank=True, null=True)
+    country_name_ru = models.CharField(max_length=100, blank=True, null=True)
 
     # Contact Details
     company_name = models.CharField(max_length=200, blank=True, null=True, help_text="e.g. Skill Mount Trading WLL - Bahrain")
@@ -1023,8 +1606,10 @@ class CountrySetting(models.Model):
     # Address
     address_heading = models.CharField(max_length=100, default="Our Office", blank=True, null=True)
     address_heading_ar = models.CharField(max_length=100, blank=True, null=True)
+    address_heading_ru = models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField(blank=True, null=True, help_text="English Address")
     address_ar = models.TextField(blank=True, null=True, help_text="Arabic Address")
+    address_ru = models.TextField(blank=True, null=True, help_text="Russian Address")
 
     active = models.BooleanField(default=True, db_index=True)
     order = models.PositiveIntegerField(default=0, db_index=True)
