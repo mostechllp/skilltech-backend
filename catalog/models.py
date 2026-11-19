@@ -31,6 +31,8 @@ class MainCategory(models.Model):
             self.name_pt = translate_text(self.name, target_lang="pt")[:100]
         if not self.name_fr and self.name:
             self.name_fr = translate_text(self.name, target_lang="fr")[:100]
+        if not self.name_ru and self.name:
+            self.name_ru = translate_text(self.name, target_lang="ru")[:100]
         if not self.name_ar and self.name:
             self.name_ar = translate_text(self.name, target_lang="ar")[:100]
         super().save(*args, **kwargs)
@@ -85,6 +87,8 @@ class Category(models.Model):
             self.name_pt = translate_text(self.name, target_lang="pt")[:100]
         if not self.name_fr and self.name:
             self.name_fr = translate_text(self.name, target_lang="fr")[:100]
+        if not self.name_ru and self.name:
+            self.name_ru = translate_text(self.name, target_lang="ru")[:100]
         if not self.name_ar and self.name:
             self.name_ar = translate_text(self.name, target_lang="ar")[:100]
         super().save(*args, **kwargs)
@@ -128,6 +132,8 @@ class SubCategory(models.Model):
             self.name_pt = translate_text(self.name, target_lang="pt")[:100]
         if not self.name_fr and self.name:
             self.name_fr = translate_text(self.name, target_lang="fr")[:100]
+        if not self.name_ru and self.name:
+            self.name_ru = translate_text(self.name, target_lang="ru")[:100]
         if not self.name_ar and self.name:
             self.name_ar = translate_text(self.name, target_lang="ar")[:100]
         super().save(*args, **kwargs)
@@ -285,6 +291,17 @@ class Product(models.Model):
         if not self.description_ar and self.description:
             self.description_ar = translate_text(self.description, target_lang="ar")
 
+        # 6. Auto-translate to Russian if fields are empty
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang="ru")[:255]
+        if not self.short_description_ru and self.short_description:
+            self.short_description_ru = translate_text(self.short_description, target_lang="ru")[:255]
+        if not self.description_ru and self.description:
+            self.description_ru = translate_text(self.description, target_lang="ru")
+        if hasattr(self, "tags_ru") and not self.tags_ru and getattr(self, "tags", None):
+            tag_items = [t.strip() for t in self.tags.split(',') if t.strip()]
+            self.tags_ru = ", ".join([translate_text(t, target_lang="ru") for t in tag_items])
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -315,6 +332,8 @@ class Arm(models.Model):
             self.slug = slugify(self.name)
         if not self.name_ar and self.name:
             self.name_ar = translate_text(self.name, target_lang="ar")[:50]
+        if not self.name_ru and self.name:
+            self.name_ru = translate_text(self.name, target_lang="ru")[:50]
         super().save(*args, **kwargs)
 
     class Meta:
@@ -346,6 +365,8 @@ class Feature(models.Model):
             self.title_pt = translate_text(self.title, target_lang='pt')[:100]
         if not self.title_fr and self.title:
             self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -413,6 +434,12 @@ class ProductBulletFeature(models.Model):
         if (not self.text_fr or (self.text and self.text_fr.strip().lower() == self.text.strip().lower())) and self.text:
             self.text_fr = translate_text(self.text, target_lang='fr')
 
+        # Auto-translate to Russian if not filled or if identical to English
+        if (not self.title_ru or (self.title and self.title_ru.strip().lower() == self.title.strip().lower())) and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')
+        if (not self.text_ru or (self.text and self.text_ru.strip().lower() == self.text.strip().lower())) and self.text:
+            self.text_ru = translate_text(self.text, target_lang='ru')
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -466,7 +493,11 @@ class ProductSpecification(models.Model):
         if not self.value_fr and self.value:
             self.value_fr = translate_text(self.value, target_lang='fr')
 
-        super().save(*args, **kwargs)
+        # Auto-translate to Russian if not filled
+        if not self.key_ru and self.key:
+            self.key_ru = translate_text(self.key, target_lang='ru')
+        if not self.value_ru and self.value:
+            self.value_ru = translate_text(self.value, target_lang='ru')
 
         super().save(*args, **kwargs)
 
@@ -580,6 +611,14 @@ class Offer(models.Model):
             self.subtitle_fr = translate_text(self.subtitle, target_lang='fr')[:100]
         if not self.button_text_fr and self.button_text:
             self.button_text_fr = translate_text(self.button_text, target_lang='fr')[:50]
+
+        # Auto-translate to Russian if not filled
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')[:100]
+        if not self.subtitle_ru and self.subtitle:
+            self.subtitle_ru = translate_text(self.subtitle, target_lang='ru')[:100]
+        if not self.button_text_ru and self.button_text:
+            self.button_text_ru = translate_text(self.button_text, target_lang='ru')[:50]
 
         super().save(*args, **kwargs)
 
@@ -754,6 +793,8 @@ class Catalogue(models.Model):
             self.title_pt = translate_text(self.title, target_lang='pt')[:100]
         if not self.title_fr and self.title:
             self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -790,6 +831,8 @@ class Certificate(models.Model):
             self.title_pt = translate_text(self.title, target_lang='pt')[:100]
         if not self.title_fr and self.title:
             self.title_fr = translate_text(self.title, target_lang='fr')[:100]
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -921,6 +964,16 @@ class BlogPost(models.Model):
         if not self.author_fr and self.author:
             self.author_fr = translate_text(self.author, target_lang='fr')
 
+        # Auto-translate to Russian if not filled
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')
+        if not self.short_description_ru and self.short_description:
+            self.short_description_ru = translate_text(self.short_description, target_lang='ru')
+        if not self.content_ru and self.content:
+            self.content_ru = translate_text(self.content, target_lang='ru')
+        if not self.author_ru and self.author:
+            self.author_ru = translate_text(self.author, target_lang='ru')
+
         super().save(*args, **kwargs)
 
     class Meta:
@@ -1004,6 +1057,14 @@ class Project(models.Model):
             self.subtitle_fr = translate_text(self.subtitle, target_lang='fr')[:100]
         if not self.location_fr and self.location:
             self.location_fr = translate_text(self.location, target_lang='fr')[:100]
+
+        # Auto-translate to Russian if not filled
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')[:100]
+        if not self.subtitle_ru and self.subtitle:
+            self.subtitle_ru = translate_text(self.subtitle, target_lang='ru')[:100]
+        if not self.location_ru and self.location:
+            self.location_ru = translate_text(self.location, target_lang='ru')[:100]
 
         super().save(*args, **kwargs)
 
@@ -1122,6 +1183,8 @@ class Service(models.Model):
             self.name_pt = translate_text(self.name, target_lang='pt')[:100]
         if not self.name_fr and self.name:
             self.name_fr = translate_text(self.name, target_lang='fr')[:100]
+        if not self.name_ru and self.name:
+            self.name_ru = translate_text(self.name, target_lang='ru')[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -1148,6 +1211,8 @@ class InstallationType(models.Model):
             self.name_pt = translate_text(self.name, target_lang='pt')[:100]
         if not self.name_fr and self.name:
             self.name_fr = translate_text(self.name, target_lang='fr')[:100]
+        if not self.name_ru and self.name:
+            self.name_ru = translate_text(self.name, target_lang='ru')[:100]
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -1174,6 +1239,8 @@ class TVSize(models.Model):
             self.size_pt = translate_text(self.size, target_lang='pt')
         if not self.size_fr and self.size:
             self.size_fr = translate_text(self.size, target_lang='fr')
+        if not self.size_ru and self.size:
+            self.size_ru = translate_text(self.size, target_lang='ru')
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -1200,6 +1267,8 @@ class AvailableTime(models.Model):
             self.time_slot_pt = translate_text(self.time_slot, target_lang='pt')
         if not self.time_slot_fr and self.time_slot:
             self.time_slot_fr = translate_text(self.time_slot, target_lang='fr')
+        if not self.time_slot_ru and self.time_slot:
+            self.time_slot_ru = translate_text(self.time_slot, target_lang='ru')
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -1258,6 +1327,12 @@ class ServiceFAQ(models.Model):
             self.question_fr = translate_text(self.question, target_lang='fr')
         if not self.answer_fr and self.answer:
             self.answer_fr = translate_text(self.answer, target_lang='fr')
+
+        # Auto-translate to Russian if not filled
+        if not self.question_ru and self.question:
+            self.question_ru = translate_text(self.question, target_lang='ru')
+        if not self.answer_ru and self.answer:
+            self.answer_ru = translate_text(self.answer, target_lang='ru')
 
         super().save(*args, **kwargs)
 
@@ -1474,6 +1549,12 @@ class NewsPost(models.Model):
             self.title_fr = translate_text(self.title, target_lang='fr')
         if not self.content_fr and self.content:
             self.content_fr = translate_text(self.content, target_lang='fr')
+
+        # Auto-translate to Russian if not filled
+        if not self.title_ru and self.title:
+            self.title_ru = translate_text(self.title, target_lang='ru')
+        if not self.content_ru and self.content:
+            self.content_ru = translate_text(self.content, target_lang='ru')
 
         super().save(*args, **kwargs)
 
