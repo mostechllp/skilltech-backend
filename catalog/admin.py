@@ -557,13 +557,23 @@ class VisitorLogAdmin(admin.ModelAdmin):
         writer = csv.writer(response)
         writer.writerow(['Date & Time', 'IP Address', 'Country', 'Country Code', 'Device Type', 'Is Bot', 'Visited Path', 'Referrer'])
 
+        from .utils import parse_device_info
+        category_labels = {
+            'desktop': 'Laptop / PC',
+            'mobile': 'Mobile',
+            'tablet': 'Tablet',
+            'bot': 'Bot',
+        }
         for log in queryset:
+            device_name, category = parse_device_info(log.user_agent, log.device_type, log.is_bot)
+            cat_label = category_labels.get(category, 'Laptop / PC')
+            full_device = f"{cat_label} · {device_name}"
             writer.writerow([
                 log.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                 log.ip_address,
                 log.country,
                 log.country_code or '',
-                log.device_type,
+                full_device,
                 'Yes' if log.is_bot else 'No',
                 log.path,
                 log.referrer or ''
@@ -578,23 +588,54 @@ class VisitorLogAdmin(admin.ModelAdmin):
         return False
 
     def country_badge(self, obj):
-        flag = f" ({obj.country_code})" if obj.country_code else ""
-        return f"{obj.country}{flag}"
+        from .utils import get_country_name
+        code = (obj.country_code or '').upper()
+        raw_country = (obj.country or '').strip()
+
+        if len(raw_country) == 2:
+            country_name = get_country_name(raw_country)
+        elif raw_country:
+            country_name = raw_country
+        elif code:
+            country_name = get_country_name(code)
+        else:
+            country_name = 'Unknown'
+
+        flag = f" ({code})" if code and code != country_name else ""
+        return f"{country_name}{flag}"
     country_badge.short_description = 'Country'
     country_badge.admin_order_field = 'country'
 
     def device_badge(self, obj):
+        from .utils import parse_device_info
+        device_name, category = parse_device_info(obj.user_agent, obj.device_type, obj.is_bot)
+
         colors = {
             'desktop': '#062e5c',
-            'mobile': '#0ea5e9',
-            'tablet': '#8b5cf6',
-            'bot': '#ef4444',
+            'mobile': '#0284c7',
+            'tablet': '#7c3aed',
+            'bot': '#dc2626',
         }
-        color = colors.get(obj.device_type, '#6b7280')
+        color = colors.get(category, '#4b5563')
+
+        category_config = {
+            'desktop': ('💻', 'Laptop / PC'),
+            'mobile': ('📱', 'Mobile'),
+            'tablet': ('📱', 'Tablet'),
+            'bot': ('🤖', 'Bot'),
+        }
+        icon, cat_label = category_config.get(category, ('💻', 'Laptop / PC'))
+
         return format_html(
-            '<span style="background: {}; color: #fff; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase;">{}</span>',
+            '<div style="display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; white-space: nowrap;" title="User Agent: {}">'
+            '<span style="background: {}; color: #ffffff; padding: 2px 9px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; line-height: 1.4;">{} {}</span>'
+            '<span style="color: #334155; font-size: 11px; font-weight: 600; line-height: 1.3; white-space: nowrap; padding-left: 2px;">{}</span>'
+            '</div>',
+            obj.user_agent or '',
             color,
-            obj.device_type
+            icon,
+            cat_label,
+            device_name
         )
     device_badge.short_description = 'Device'
     device_badge.admin_order_field = 'device_type'
@@ -634,14 +675,24 @@ class VisitorLogAdmin(admin.ModelAdmin):
         writer = csv.writer(response)
         writer.writerow(['Date & Time', 'IP Address', 'Country', 'Country Code', 'Device Type', 'Is Bot', 'Visited Path', 'Referrer'])
 
+        from .utils import parse_device_info
+        category_labels = {
+            'desktop': 'Laptop / PC',
+            'mobile': 'Mobile',
+            'tablet': 'Tablet',
+            'bot': 'Bot',
+        }
         logs = VisitorLog.objects.filter(is_bot=False).order_by('-created_at')[:10000]
         for log in logs:
+            device_name, category = parse_device_info(log.user_agent, log.device_type, log.is_bot)
+            cat_label = category_labels.get(category, 'Laptop / PC')
+            full_device = f"{cat_label} · {device_name}"
             writer.writerow([
                 log.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                 log.ip_address,
                 log.country,
                 log.country_code or '',
-                log.device_type,
+                full_device,
                 'Yes' if log.is_bot else 'No',
                 log.path,
                 log.referrer or ''
@@ -673,25 +724,41 @@ class VisitorLogAdmin(admin.ModelAdmin):
 
 @admin.register(CountrySetting)
 class CountrySettingAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('country_name', 'country_code', 'phone', 'mobile', 'email', 'company_name', 'active', 'order')
-    list_editable = ('active', 'order')
+    list_display = ('country_name', 'country_code', 'phone', 'mobile', 'email', 'company_name')
     search_fields = ('country_name', 'country_name_ar', 'country_code', 'email', 'phone', 'company_name')
-    list_filter = ('active',)
+    ordering = ('order', 'country_name')
     fieldsets = (
         ("Country Identification", {
-            "fields": (("country_code", "country_name", "country_name_ar"), ("active", "order")),
+            "fields": (
+                "country_code",
+                "country_name",
+                "country_name_ar",
+            ),
             "description": "Select the GCC country code and enter English/Arabic country names.",
         }),
         ("Company & Copyright Details", {
-            "fields": ("company_name", "copyright_text"),
+            "fields": (
+                "company_name",
+                "copyright_text",
+            ),
             "description": "Displayed in the footer copyright notice and official company representation.",
         }),
         ("Contact Details", {
-            "fields": (("phone", "mobile"), ("email", "whatsapp")),
+            "fields": (
+                "phone",
+                "mobile",
+                "email",
+                "whatsapp",
+            ),
             "description": "Displayed in the top header, footer, and floating WhatsApp button when this country is selected.",
         }),
         ("Office Address", {
-            "fields": (("address_heading", "address_heading_ar"), "address", "address_ar"),
+            "fields": (
+                "address_heading",
+                "address_heading_ar",
+                "address",
+                "address_ar",
+            ),
             "description": "Physical branch/office address shown in the footer and contact sections.",
         }),
     )

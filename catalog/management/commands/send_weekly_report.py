@@ -78,6 +78,8 @@ def generate_weekly_report_data():
 
 
 def build_email_html(data):
+    from catalog.utils import get_country_name
+
     top_pages_rows = "".join(
         f"""<tr>
             <td style="padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 13px; color: #333;">
@@ -93,7 +95,7 @@ def build_email_html(data):
     top_countries_rows = "".join(
         f"""<tr>
             <td style="padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 13px; color: #333;">
-                {c['country']}
+                {get_country_name(c['country']) if len(str(c['country']).strip()) == 2 else c['country']}
             </td>
             <td style="padding: 10px 12px; border-bottom: 1px solid #eee; text-align: right; font-weight: 600; color: #333;">
                 {c['views']:,}

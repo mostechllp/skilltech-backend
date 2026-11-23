@@ -60,7 +60,7 @@ class CareerPositionViewSet(CachedReadOnlyModelViewSet):
     serializer_class = CareerPositionSerializer
 
 class CountrySettingViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = CountrySetting.objects.filter(active=True).order_by('order', 'country_name')
+    queryset = CountrySetting.objects.all().order_by('order', 'country_name')
     serializer_class = CountrySettingSerializer
     lookup_field = 'country_code'
 
