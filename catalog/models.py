@@ -1322,16 +1322,16 @@ class ServiceFAQ(models.Model):
         if not self.answer_pt and self.answer:
             self.answer_pt = translate_text(self.answer, target_lang='pt')
 
-        # Auto-translate to French if not filled
-        if not self.question_fr and self.question:
+        # Auto-translate to French if not filled or if same as English
+        if (not self.question_fr or self.question_fr == self.question) and self.question:
             self.question_fr = translate_text(self.question, target_lang='fr')
-        if not self.answer_fr and self.answer:
+        if (not self.answer_fr or self.answer_fr == self.answer) and self.answer:
             self.answer_fr = translate_text(self.answer, target_lang='fr')
 
-        # Auto-translate to Russian if not filled
-        if not self.question_ru and self.question:
+        # Auto-translate to Russian if not filled or if same as English
+        if (not self.question_ru or self.question_ru == self.question) and self.question:
             self.question_ru = translate_text(self.question, target_lang='ru')
-        if not self.answer_ru and self.answer:
+        if (not self.answer_ru or self.answer_ru == self.answer) and self.answer:
             self.answer_ru = translate_text(self.answer, target_lang='ru')
 
         super().save(*args, **kwargs)
@@ -1544,16 +1544,16 @@ class NewsPost(models.Model):
         if not self.content_pt and self.content:
             self.content_pt = translate_text(self.content, target_lang='pt')
 
-        # Auto-translate to French if not filled
-        if not self.title_fr and self.title:
+        # Auto-translate to French if not filled or if same as English
+        if (not self.title_fr or self.title_fr == self.title) and self.title:
             self.title_fr = translate_text(self.title, target_lang='fr')
-        if not self.content_fr and self.content:
+        if (not self.content_fr or self.content_fr == self.content) and self.content:
             self.content_fr = translate_text(self.content, target_lang='fr')
 
-        # Auto-translate to Russian if not filled
-        if not self.title_ru and self.title:
+        # Auto-translate to Russian if not filled or if same as English
+        if (not self.title_ru or self.title_ru == self.title) and self.title:
             self.title_ru = translate_text(self.title, target_lang='ru')
-        if not self.content_ru and self.content:
+        if (not self.content_ru or self.content_ru == self.content) and self.content:
             self.content_ru = translate_text(self.content, target_lang='ru')
 
         super().save(*args, **kwargs)

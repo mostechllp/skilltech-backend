@@ -371,18 +371,38 @@ def translate_text(text, target_lang="hi", source_lang="en"):
         return text
     try:
         import requests
-        url = "https://translate.googleapis.com/translate_a/single"
-        params = {
+        headers = {"User-Agent": "Mozilla/5.0"}
+        
+        # Primary: Google dict-chrome-ex client (highly reliable, no 429 rate limit)
+        url_primary = "https://clients5.google.com/translate_a/t"
+        params_primary = {
+            "client": "dict-chrome-ex",
+            "sl": source_lang,
+            "tl": target_lang,
+            "q": str(text),
+        }
+        res = requests.get(url_primary, params=params_primary, headers=headers, timeout=10)
+        if res.status_code == 200:
+            data = res.json()
+            if isinstance(data, list) and len(data) > 0:
+                translated = data[0] if isinstance(data[0], str) else "".join(data)
+                if translated:
+                    return translated
+            elif isinstance(data, str) and data:
+                return data
+
+        # Secondary fallback: gtx client
+        url_gtx = "https://translate.googleapis.com/translate_a/single"
+        params_gtx = {
             "client": "gtx",
             "sl": source_lang,
             "tl": target_lang,
             "dt": "t",
             "q": str(text),
         }
-        headers = {"User-Agent": "Mozilla/5.0"}
-        res = requests.get(url, params=params, headers=headers, timeout=10)
-        if res.status_code == 200:
-            data = res.json()
+        res_gtx = requests.get(url_gtx, params=params_gtx, headers=headers, timeout=10)
+        if res_gtx.status_code == 200:
+            data = res_gtx.json()
             if data and isinstance(data, list) and len(data) > 0 and isinstance(data[0], list):
                 translated = "".join([segment[0] for segment in data[0] if segment and segment[0]])
                 if translated:
