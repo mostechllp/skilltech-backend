@@ -209,12 +209,14 @@ def send_weekly_report_email(recipient_override=None):
     # Determine recipient
     if recipient_override:
         recipient = recipient_override
+    elif getattr(settings, 'WEEKLY_REPORT_EMAIL', None):
+        recipient = settings.WEEKLY_REPORT_EMAIL
     elif site_settings and site_settings.admin_email:
         recipient = site_settings.admin_email.split(',')[0].strip()
     elif site_settings and site_settings.email:
         recipient = site_settings.email
     else:
-        recipient = getattr(settings, 'WEEKLY_REPORT_EMAIL', 'info@skilltechonline.com')
+        recipient = 'skilltechdm@gmail.com'
 
     subject = f"Skilltech Weekly Visitor Report ({data['start_date']} – {data['end_date']})"
     text_message = (

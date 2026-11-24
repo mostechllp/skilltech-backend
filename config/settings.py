@@ -224,3 +224,7 @@ if IS_LOCAL:
     except ImportError:
         pass
 
+# Dedicated recipient for weekly visitor analytics reports
+WEEKLY_REPORT_EMAIL = 'skilltechdm@gmail.com'
+
+
