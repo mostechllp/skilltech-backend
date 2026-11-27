@@ -157,3 +157,5 @@ powershell.cmd
 *.sql
 static/
 staticfiles/
+scripts_archive/
+

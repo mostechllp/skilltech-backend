@@ -1,4 +1,5 @@
 import os
+import re
 import logging
 from io import BytesIO
 from PIL import Image
@@ -100,20 +101,216 @@ def get_device_type(user_agent):
     return 'desktop', False
 
 
+def parse_device_info(user_agent, device_type='desktop', is_bot=False):
+    """
+    Parses detailed hardware/OS device info from the HTTP User-Agent string.
+    Returns: (display_name, category)
+    e.g. ("iPhone (iOS 17.4)", "mobile"), ("Samsung (SM-S918B)", "mobile"), ("Windows 11 PC", "desktop")
+    """
+    if is_bot:
+        return "Bot / Crawler", "bot"
+
+    if not user_agent:
+        category = device_type or 'desktop'
+        return f"{category.capitalize()} Device", category
+
+    ua = user_agent.lower()
+
+    # 1. Check Bot indicators
+    bot_indicators = (
+        'googlebot', 'bingbot', 'yandex', 'baiduspider', 'ahrefs', 'semrush',
+        'dotbot', 'facebookexternalhit', 'whatsapp', 'curl', 'python-requests',
+        'headlesschrome', 'lighthouse', 'crawl', 'spider', 'slurp', 'bot'
+    )
+    for b in bot_indicators:
+        if b in ua:
+            clean_bot = 'Googlebot' if 'googlebot' in b else ('Bingbot' if 'bingbot' in b else 'Bot / Crawler')
+            return clean_bot, "bot"
+
+    # 2. iPhone
+    if 'iphone' in ua:
+        ios_match = re.search(r'os\s+([\d_]+)', ua)
+        if ios_match:
+            ver = ios_match.group(1).replace('_', '.')
+            parts = ver.split('.')
+            short_ver = '.'.join(parts[:2]) if len(parts) >= 2 else parts[0]
+            return f"iPhone (iOS {short_ver})", "mobile"
+        return "iPhone (iOS)", "mobile"
+
+    # 3. iPad
+    if 'ipad' in ua or ('macintosh' in ua and 'mobile' in ua):
+        ipad_match = re.search(r'os\s+([\d_]+)', ua)
+        if ipad_match:
+            ver = ipad_match.group(1).replace('_', '.')
+            parts = ver.split('.')
+            short_ver = '.'.join(parts[:2]) if len(parts) >= 2 else parts[0]
+            return f"iPad (iOS {short_ver})", "tablet"
+        return "iPad (iPadOS)", "tablet"
+
+    # 4. Android
+    if 'android' in ua:
+        is_tablet = 'tablet' in ua or 'silk' in ua or 'playbook' in ua
+        category = "tablet" if is_tablet else "mobile"
+
+        # Model extraction e.g. "Linux; Android 14; SM-S918B Build/..."
+        # Avoid capturing locale tags (en-us, en-in) or Chrome reduction dummy 'K'
+        m = re.search(r'android\s+[\d\.]+;\s*([^;\)]+?)(?:build|\)|;)', user_agent, re.IGNORECASE)
+        raw_model = m.group(1).strip() if m else ""
+        if raw_model.lower() in ('k', 'u', 'wv') or re.match(r'^[a-z]{2}(?:-[a-z]{2,4})?$', raw_model, re.IGNORECASE):
+            m2 = re.search(r'android\s+[\d\.]+;.*?;\s*([^;\)]+?)(?:build|\)|;)', user_agent, re.IGNORECASE)
+            raw_model = m2.group(1).strip() if m2 else ""
+
+        model = ""
+        if raw_model and not any(k in raw_model.lower() for k in ('kav', 'wv', 'mobile', 'tablet')) and not re.match(r'^[a-z]{2}(?:-[a-z]{2,4})?$', raw_model, re.IGNORECASE):
+            model = raw_model
+
+        # Android version
+        ver_match = re.search(r'android\s+([\d\.]+)', ua)
+        android_ver = f"Android {ver_match.group(1)}" if ver_match else "Android"
+
+        if model:
+            if model.upper().startswith(('SM-', 'GT-', 'SCH-')):
+                brand_str = f"Samsung ({model})"
+            elif model.lower().startswith(('pixel', 'nexus')):
+                brand_str = f"Google {model}"
+            elif model.lower().startswith(('redmi', 'mi ', 'poco')):
+                brand_str = f"Xiaomi {model}"
+            elif model.lower().startswith(('cph', 'rpk', 'oppo')):
+                brand_str = f"OPPO ({model})"
+            elif model.lower().startswith(('v2', 'vivo')):
+                brand_str = f"Vivo ({model})"
+            elif model.lower().startswith(('oneplus', 'gm', 'hd')):
+                brand_str = f"OnePlus ({model})"
+            elif model.lower().startswith(('moto', 'xt')):
+                brand_str = f"Motorola ({model})"
+            else:
+                brand_str = model
+
+            return f"{brand_str} · {android_ver}", category
+
+        return f"{android_ver}", category
+
+    # 5. Windows PC / Laptop
+    if 'windows nt' in ua:
+        if 'windows nt 10.0' in ua:
+            win_ver = "Windows 10/11"
+        elif 'windows nt 6.3' in ua:
+            win_ver = "Windows 8.1"
+        elif 'windows nt 6.1' in ua:
+            win_ver = "Windows 7"
+        else:
+            win_ver = "Windows"
+        return win_ver, "desktop"
+
+    # 6. Mac / MacBook
+    if 'macintosh' in ua or 'mac os x' in ua:
+        return "macOS / Mac", "desktop"
+
+    # 7. ChromeOS / Chromebook
+    if 'cros' in ua:
+        return "Chromebook", "desktop"
+
+    # 8. Linux
+    if 'linux' in ua:
+        return "Linux", "desktop"
+
+    category = device_type or 'desktop'
+    return f"{category.capitalize()}", category
+
+
+COUNTRY_CODE_TO_NAME = {
+    'AE': 'United Arab Emirates',
+    'SA': 'Saudi Arabia',
+    'OM': 'Oman',
+    'QA': 'Qatar',
+    'KW': 'Kuwait',
+    'BH': 'Bahrain',
+    'IN': 'India',
+    'US': 'United States',
+    'GB': 'United Kingdom',
+    'UK': 'United Kingdom',
+    'CA': 'Canada',
+    'AU': 'Australia',
+    'NZ': 'New Zealand',
+    'DE': 'Germany',
+    'FR': 'France',
+    'IT': 'Italy',
+    'ES': 'Spain',
+    'NL': 'Netherlands',
+    'BE': 'Belgium',
+    'CH': 'Switzerland',
+    'SE': 'Sweden',
+    'NO': 'Norway',
+    'DK': 'Denmark',
+    'FI': 'Finland',
+    'PL': 'Poland',
+    'AT': 'Austria',
+    'IE': 'Ireland',
+    'PT': 'Portugal',
+    'GR': 'Greece',
+    'TR': 'Turkey',
+    'RU': 'Russia',
+    'UA': 'Ukraine',
+    'EG': 'Egypt',
+    'JO': 'Jordan',
+    'LB': 'Lebanon',
+    'IQ': 'Iraq',
+    'YE': 'Yemen',
+    'SY': 'Syria',
+    'PS': 'Palestine',
+    'MA': 'Morocco',
+    'DZ': 'Algeria',
+    'TN': 'Tunisia',
+    'LY': 'Libya',
+    'SD': 'Sudan',
+    'IR': 'Iran',
+    'PK': 'Pakistan',
+    'BD': 'Bangladesh',
+    'LK': 'Sri Lanka',
+    'NP': 'Nepal',
+    'AF': 'Afghanistan',
+    'CN': 'China',
+    'JP': 'Japan',
+    'KR': 'South Korea',
+    'SG': 'Singapore',
+    'MY': 'Malaysia',
+    'ID': 'Indonesia',
+    'TH': 'Thailand',
+    'VN': 'Vietnam',
+    'PH': 'Philippines',
+    'ZA': 'South Africa',
+    'NG': 'Nigeria',
+    'KE': 'Kenya',
+    'BR': 'Brazil',
+    'MX': 'Mexico',
+    'AR': 'Argentina',
+    'CL': 'Chile',
+    'CO': 'Colombia',
+}
+
+def get_country_name(code):
+    if not code:
+        return 'Unknown'
+    return COUNTRY_CODE_TO_NAME.get(code.upper(), code.upper())
+
+
 def get_country_from_request(request, ip_address):
     """
     Detects country from Cloudflare/Proxy headers or identifies local IPs.
+    Returns (country_name, country_code).
     """
     # 1. Cloudflare header (0ms overhead on live server)
     cf_country = request.META.get('HTTP_CF_IPCOUNTRY')
     if cf_country and len(cf_country) == 2 and cf_country != 'XX':
-        return cf_country.upper(), cf_country.upper()
+        code = cf_country.upper()
+        return get_country_name(code), code
 
     # 2. Other proxy headers
     for header in ('HTTP_X_COUNTRY_CODE', 'HTTP_GEOIP_COUNTRY_CODE'):
         code = request.META.get(header)
         if code and len(code) == 2:
-            return code.upper(), code.upper()
+            code = code.upper()
+            return get_country_name(code), code
 
     # 3. Local/private IP check
     if not ip_address or ip_address in ('127.0.0.1', '::1', 'localhost'):
@@ -166,3 +363,53 @@ def log_visitor(request, path=None, referrer=None):
     except Exception as e:
         logger.debug("Visitor logging silently skipped: %s", e)
         return None
+
+
+def translate_text(text, target_lang="hi", source_lang="en"):
+    """
+    Translates text automatically using Google Translate API.
+    Fails safe without throwing exceptions.
+    """
+    if not text or not str(text).strip():
+        return text
+    try:
+        import requests
+        headers = {"User-Agent": "Mozilla/5.0"}
+        
+        # Primary: Google dict-chrome-ex client (highly reliable, no 429 rate limit)
+        url_primary = "https://clients5.google.com/translate_a/t"
+        params_primary = {
+            "client": "dict-chrome-ex",
+            "sl": source_lang,
+            "tl": target_lang,
+            "q": str(text),
+        }
+        res = requests.get(url_primary, params=params_primary, headers=headers, timeout=10)
+        if res.status_code == 200:
+            data = res.json()
+            if isinstance(data, list) and len(data) > 0:
+                translated = data[0] if isinstance(data[0], str) else "".join(data)
+                if translated:
+                    return translated
+            elif isinstance(data, str) and data:
+                return data
+
+        # Secondary fallback: gtx client
+        url_gtx = "https://translate.googleapis.com/translate_a/single"
+        params_gtx = {
+            "client": "gtx",
+            "sl": source_lang,
+            "tl": target_lang,
+            "dt": "t",
+            "q": str(text),
+        }
+        res_gtx = requests.get(url_gtx, params=params_gtx, headers=headers, timeout=10)
+        if res_gtx.status_code == 200:
+            data = res_gtx.json()
+            if data and isinstance(data, list) and len(data) > 0 and isinstance(data[0], list):
+                translated = "".join([segment[0] for segment in data[0] if segment and segment[0]])
+                if translated:
+                    return translated
+    except Exception as e:
+        logger.warning(f"Translation failed for '{str(text)[:30]}': {e}")
+    return text

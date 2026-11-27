@@ -22,23 +22,23 @@ from .forms import ProductAdminForm
 
 class InstallationTypeInline(admin.TabularInline):
     model = InstallationType
-    fields = ('name', 'name_ar')
+    fields = ('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru')
     extra = 1
 
 class TVSizeInline(admin.TabularInline):
     model = TVSize
-    fields = ('size', 'size_ar')
+    fields = ('size', 'size_ar', 'size_hi', 'size_es', 'size_pt', 'size_fr', 'size_ru')
     extra = 1
 
 class AvailableTimeInline(admin.TabularInline):
     model = AvailableTime
-    fields = ('time_slot', 'time_slot_ar')
+    fields = ('time_slot', 'time_slot_ar', 'time_slot_hi', 'time_slot_es', 'time_slot_pt', 'time_slot_fr', 'time_slot_ru')
     extra = 1
 
 @admin.register(Service)
 class ServiceAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'name_ar', 'active')
-    search_fields = ('name', 'name_ar', 'description', 'description_ar')
+    list_display = ('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru', 'active')
+    search_fields = ('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru', 'description', 'description_ar', 'description_hi', 'description_es', 'description_pt', 'description_fr', 'description_ru')
     inlines = [InstallationTypeInline, TVSizeInline, AvailableTimeInline]
 
 
@@ -75,12 +75,12 @@ class ProductFeatureInline(admin.StackedInline):
 
 class ProductBulletFeatureInline(admin.StackedInline):
     model = ProductBulletFeature
-    fields = ('title', 'title_ar', 'text', 'text_ar', 'order')
+    fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'text', 'text_ar', 'text_hi', 'text_es', 'text_pt', 'text_fr', 'text_ru', 'order')
     extra = 1
 
 class ProductSpecificationInline(admin.TabularInline):
     model = ProductSpecification
-    fields = ('key', 'key_ar', 'value', 'value_ar')
+    fields = ('key', 'key_ar', 'key_hi', 'key_es', 'key_pt', 'key_fr', 'key_ru', 'value', 'value_ar', 'value_hi', 'value_es', 'value_pt', 'value_fr', 'value_ru')
     extra = 1
 
 class ProductSeoInline(admin.StackedInline):
@@ -95,27 +95,27 @@ class ArmAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(MainCategory)
 class MainCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'name_ar', 'slug', 'active', 'order')
+    list_display = ('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru', 'slug', 'active', 'order')
     list_editable = ('active', 'order')
-    search_fields = ('name', 'name_ar')
+    search_fields = ('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru')
     prepopulated_fields = {'slug': ('name',)}
 @admin.register(Category)
 class CategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'name_ar', 'slug', 'active', 'order','homepage_order')
+    list_display = ('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru', 'slug', 'active', 'order','homepage_order')
     list_editable = ('active','order','homepage_order',)
-    search_fields=('name', 'name_ar')
+    search_fields=('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru')
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('name', 'name_ar', 'category', 'slug','order', 'active')
+    list_display = ('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru', 'category', 'slug','order', 'active')
     list_editable = ('active','order')
-    search_fields=('name', 'name_ar')
+    search_fields=('name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru')
     list_filter = ('category', 'active')
     prepopulated_fields = {'slug': ('name',)}
     fieldsets = (
         (None, {
-            'fields': ('category', 'name', 'name_ar', 'slug', 'image', 'active', 'order', 'multi_expand')
+            'fields': ('category', 'name', 'name_ar', 'name_hi', 'name_es', 'name_pt', 'name_fr', 'name_ru', 'slug', 'image', 'active', 'order', 'multi_expand')
         }),
         ('SEO Settings', {
             'fields': ('meta_title', 'meta_description', 'meta_image', 'meta_keywords', 'canonical_url'),
@@ -177,13 +177,13 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     #     super().save_model(request, obj, form, change)
     fields = [
         # 🔥 Priority fields (top)
-        "category","subcategory","arm_fk","name","title", "title_ar",
+        "category","subcategory","arm_fk","name","title", "title_ar", "title_hi", "title_es", "title_pt", "title_fr", "title_ru",
         # Basic content
-        "slug","slug_path","short_description","short_description_ar","description","description_ar",
+        "slug","slug_path","short_description","short_description_ar","short_description_hi","short_description_es","short_description_pt","short_description_fr","short_description_ru","description","description_ar","description_hi","description_es","description_pt","description_fr","description_ru",
         # Images
         "main_image","main_image_alt","drawing_image","drawing_image_alt","box_3d_image","box_3d_image_alt","video_url","product_video_url",
 
-        "tags","tags_ar",
+        "tags","tags_ar","tags_hi","tags_es","tags_pt","tags_fr","tags_ru",
         # Files
         "datasheet",
         # Flags
@@ -200,7 +200,7 @@ class ProductAdmin(AdminIPLogMixin, ImportExportModelAdmin):
     list_display = ('name', 'title', 'subcategory','order', 'slug', 'active')
     list_editable = ('active','order')
     list_filter = ('subcategory', 'subcategory__category', 'active')
-    search_fields = ('name', 'title', 'title_ar', 'description', 'description_ar')
+    search_fields = ('name', 'title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'description', 'description_ar', 'description_hi', 'description_es', 'description_pt', 'description_fr', 'description_ru')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductFeatureInline, ProductBulletFeatureInline, ProductSpecificationInline, ProductImageInline,ProductSeoInline]
 
@@ -237,14 +237,14 @@ class HomepageBannerAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Offer)
 class OfferAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'title_ar', 'subtitle', 'subtitle_ar', 'active', 'order')
+    list_display = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'subtitle', 'active', 'order')
     list_editable = ('active', 'order')
-    search_fields = ('title', 'title_ar', 'subtitle', 'subtitle_ar')
+    search_fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'subtitle', 'subtitle_ar')
     fields = (
-        'title', 'title_ar',
-        'subtitle', 'subtitle_ar',
+        'title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru',
+        'subtitle', 'subtitle_ar', 'subtitle_hi', 'subtitle_es', 'subtitle_pt', 'subtitle_fr', 'subtitle_ru',
         'image',
-        'button_text', 'button_text_ar',
+        'button_text', 'button_text_ar', 'button_text_hi', 'button_text_es', 'button_text_pt', 'button_text_fr', 'button_text_ru',
         'button_link', 'button_link_ar',
         'active', 'order'
     )
@@ -348,15 +348,17 @@ class ClientAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Catalogue)
 class CatalogueAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'title_ar', 'active', 'order')
+    list_display = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'active', 'order')
     list_editable = ('active', 'order')
-    search_fields = ('title', 'title_ar')
+    search_fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru')
+    fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'thumbnail', 'file', 'order', 'active')
 
 @admin.register(Certificate)
 class CertificateAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'title_ar', 'active', 'order')
+    list_display = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'active', 'order')
     list_editable = ('active', 'order')
-    search_fields = ('title', 'title_ar')
+    search_fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru')
+    fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'thumbnail', 'file', 'order', 'active')
 
 @admin.register(Gallery)
 class GalleryAdmin(AdminIPLogMixin, admin.ModelAdmin):
@@ -372,31 +374,29 @@ class PageBannerAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display=('title', 'title_ar', 'subtitle', 'subtitle_ar', 'location', 'location_ar', 'image', 'order', 'active')
-    search_fields=('title', 'title_ar', 'subtitle', 'subtitle_ar', 'location', 'location_ar')
+    list_display=('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'subtitle', 'location', 'image', 'order', 'active')
+    search_fields=('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'subtitle', 'location')
     fields = (
-        'title', 'title_ar',
-        'subtitle', 'subtitle_ar',
-        'location', 'location_ar',
+        'title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru',
+        'subtitle', 'subtitle_ar', 'subtitle_hi', 'subtitle_es', 'subtitle_pt', 'subtitle_fr', 'subtitle_ru',
+        'location', 'location_ar', 'location_hi', 'location_es', 'location_pt', 'location_fr', 'location_ru',
         'image', 'order', 'active'
     )
 
-    
-
 @admin.register(BlogPost)
 class BlogPostAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'title_ar', 'created_at', 'active')
+    list_display = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'created_at', 'active')
     list_filter = ('active', 'created_at')
-    search_fields = ('title', 'title_ar', 'content', 'content_ar', 'author', 'author_ar')
+    search_fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'content', 'author')
     prepopulated_fields = {'slug': ('title',)}
     fields = (
-        'title', 'title_ar',
+        'title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru',
         'slug',
         'image', 'image_ar',
-        'short_description', 'short_description_ar',
-        'content', 'content_ar',
+        'short_description', 'short_description_ar', 'short_description_hi', 'short_description_es', 'short_description_pt', 'short_description_fr', 'short_description_ru',
+        'content', 'content_ar', 'content_hi', 'content_es', 'content_pt', 'content_fr', 'content_ru',
         'tags',
-        'author', 'author_ar',
+        'author', 'author_ar', 'author_hi', 'author_es', 'author_pt', 'author_fr', 'author_ru',
         'active'
     )
     
@@ -438,8 +438,9 @@ class SiteSettingsAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(ServiceFAQ)
 class ServiceFAQAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('question', 'question_ar', 'active')
-    search_fields = ('question', 'question_ar', 'answer', 'answer_ar')
+    list_display = ('question', 'question_ar', 'question_hi', 'question_es', 'question_pt', 'question_fr', 'question_ru', 'active')
+    search_fields = ('question', 'question_ar', 'question_hi', 'question_es', 'question_pt', 'question_fr', 'question_ru', 'answer', 'answer_ar', 'answer_hi', 'answer_es', 'answer_pt', 'answer_fr', 'answer_ru')
+    fields = ('question', 'question_ar', 'question_hi', 'question_es', 'question_pt', 'question_fr', 'question_ru', 'answer', 'answer_ar', 'answer_hi', 'answer_es', 'answer_pt', 'answer_fr', 'answer_ru', 'order', 'active')
 
 @admin.register(HomeStatistic)
 class HomeStatisticAdmin(AdminIPLogMixin, admin.ModelAdmin):
@@ -455,9 +456,10 @@ class ServiceStatisticAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(Feature)
 class FeatureAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'title_ar', 'order')
+    list_display = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'order')
     list_editable = ('order',)
-    search_fields = ('title', 'title_ar')
+    search_fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru')
+    fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'order')
 
 
 
@@ -523,9 +525,9 @@ class NewsCategoryAdmin(AdminIPLogMixin, admin.ModelAdmin):
 
 @admin.register(NewsPost)
 class NewsPostAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('title', 'title_ar', 'category', 'status', 'published_at', 'order')
+    list_display = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'category', 'status', 'published_at', 'order')
     list_editable = ('order',)
-    search_fields = ('title', 'title_ar', 'content', 'content_ar')
+    search_fields = ('title', 'title_ar', 'title_hi', 'title_es', 'title_pt', 'title_fr', 'title_ru', 'content', 'content_ar', 'content_hi', 'content_es', 'content_pt', 'content_fr')
 
 
 
@@ -555,13 +557,23 @@ class VisitorLogAdmin(admin.ModelAdmin):
         writer = csv.writer(response)
         writer.writerow(['Date & Time', 'IP Address', 'Country', 'Country Code', 'Device Type', 'Is Bot', 'Visited Path', 'Referrer'])
 
+        from .utils import parse_device_info
+        category_labels = {
+            'desktop': 'Laptop / PC',
+            'mobile': 'Mobile',
+            'tablet': 'Tablet',
+            'bot': 'Bot',
+        }
         for log in queryset:
+            device_name, category = parse_device_info(log.user_agent, log.device_type, log.is_bot)
+            cat_label = category_labels.get(category, 'Laptop / PC')
+            full_device = f"{cat_label} · {device_name}"
             writer.writerow([
                 log.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                 log.ip_address,
                 log.country,
                 log.country_code or '',
-                log.device_type,
+                full_device,
                 'Yes' if log.is_bot else 'No',
                 log.path,
                 log.referrer or ''
@@ -576,23 +588,54 @@ class VisitorLogAdmin(admin.ModelAdmin):
         return False
 
     def country_badge(self, obj):
-        flag = f" ({obj.country_code})" if obj.country_code else ""
-        return f"{obj.country}{flag}"
+        from .utils import get_country_name
+        code = (obj.country_code or '').upper()
+        raw_country = (obj.country or '').strip()
+
+        if len(raw_country) == 2:
+            country_name = get_country_name(raw_country)
+        elif raw_country:
+            country_name = raw_country
+        elif code:
+            country_name = get_country_name(code)
+        else:
+            country_name = 'Unknown'
+
+        flag = f" ({code})" if code and code != country_name else ""
+        return f"{country_name}{flag}"
     country_badge.short_description = 'Country'
     country_badge.admin_order_field = 'country'
 
     def device_badge(self, obj):
+        from .utils import parse_device_info
+        device_name, category = parse_device_info(obj.user_agent, obj.device_type, obj.is_bot)
+
         colors = {
             'desktop': '#062e5c',
-            'mobile': '#0ea5e9',
-            'tablet': '#8b5cf6',
-            'bot': '#ef4444',
+            'mobile': '#0284c7',
+            'tablet': '#7c3aed',
+            'bot': '#dc2626',
         }
-        color = colors.get(obj.device_type, '#6b7280')
+        color = colors.get(category, '#4b5563')
+
+        category_config = {
+            'desktop': ('💻', 'Laptop / PC'),
+            'mobile': ('📱', 'Mobile'),
+            'tablet': ('📱', 'Tablet'),
+            'bot': ('🤖', 'Bot'),
+        }
+        icon, cat_label = category_config.get(category, ('💻', 'Laptop / PC'))
+
         return format_html(
-            '<span style="background: {}; color: #fff; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase;">{}</span>',
+            '<div style="display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; white-space: nowrap;" title="User Agent: {}">'
+            '<span style="background: {}; color: #ffffff; padding: 2px 9px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; line-height: 1.4;">{} {}</span>'
+            '<span style="color: #334155; font-size: 11px; font-weight: 600; line-height: 1.3; white-space: nowrap; padding-left: 2px;">{}</span>'
+            '</div>',
+            obj.user_agent or '',
             color,
-            obj.device_type
+            icon,
+            cat_label,
+            device_name
         )
     device_badge.short_description = 'Device'
     device_badge.admin_order_field = 'device_type'
@@ -632,14 +675,24 @@ class VisitorLogAdmin(admin.ModelAdmin):
         writer = csv.writer(response)
         writer.writerow(['Date & Time', 'IP Address', 'Country', 'Country Code', 'Device Type', 'Is Bot', 'Visited Path', 'Referrer'])
 
+        from .utils import parse_device_info
+        category_labels = {
+            'desktop': 'Laptop / PC',
+            'mobile': 'Mobile',
+            'tablet': 'Tablet',
+            'bot': 'Bot',
+        }
         logs = VisitorLog.objects.filter(is_bot=False).order_by('-created_at')[:10000]
         for log in logs:
+            device_name, category = parse_device_info(log.user_agent, log.device_type, log.is_bot)
+            cat_label = category_labels.get(category, 'Laptop / PC')
+            full_device = f"{cat_label} · {device_name}"
             writer.writerow([
                 log.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                 log.ip_address,
                 log.country,
                 log.country_code or '',
-                log.device_type,
+                full_device,
                 'Yes' if log.is_bot else 'No',
                 log.path,
                 log.referrer or ''
@@ -671,25 +724,41 @@ class VisitorLogAdmin(admin.ModelAdmin):
 
 @admin.register(CountrySetting)
 class CountrySettingAdmin(AdminIPLogMixin, admin.ModelAdmin):
-    list_display = ('country_name', 'country_code', 'phone', 'mobile', 'email', 'company_name', 'active', 'order')
-    list_editable = ('active', 'order')
+    list_display = ('country_name', 'country_code', 'phone', 'mobile', 'email', 'company_name')
     search_fields = ('country_name', 'country_name_ar', 'country_code', 'email', 'phone', 'company_name')
-    list_filter = ('active',)
+    ordering = ('order', 'country_name')
     fieldsets = (
         ("Country Identification", {
-            "fields": (("country_code", "country_name", "country_name_ar"), ("active", "order")),
+            "fields": (
+                "country_code",
+                "country_name",
+                "country_name_ar",
+            ),
             "description": "Select the GCC country code and enter English/Arabic country names.",
         }),
         ("Company & Copyright Details", {
-            "fields": ("company_name", "copyright_text"),
+            "fields": (
+                "company_name",
+                "copyright_text",
+            ),
             "description": "Displayed in the footer copyright notice and official company representation.",
         }),
         ("Contact Details", {
-            "fields": (("phone", "mobile"), ("email", "whatsapp")),
+            "fields": (
+                "phone",
+                "mobile",
+                "email",
+                "whatsapp",
+            ),
             "description": "Displayed in the top header, footer, and floating WhatsApp button when this country is selected.",
         }),
         ("Office Address", {
-            "fields": (("address_heading", "address_heading_ar"), "address", "address_ar"),
+            "fields": (
+                "address_heading",
+                "address_heading_ar",
+                "address",
+                "address_ar",
+            ),
             "description": "Physical branch/office address shown in the footer and contact sections.",
         }),
     )

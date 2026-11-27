@@ -36,12 +36,22 @@ def generate_weekly_report_data():
         .order_by('-views')[:10]
     )
 
-    # Top 5 Countries
-    top_countries = list(
-        curr_qs.values('country')
-        .annotate(views=Count('id'))
-        .order_by('-views')[:5]
-    )
+    # Top 5 Countries (merged and normalized to eliminate duplicate code vs full-name rows)
+    from catalog.utils import get_country_name
+    raw_countries = curr_qs.values('country', 'country_code').annotate(views=Count('id'))
+    country_totals = {}
+    for c in raw_countries:
+        raw_c = (c['country'] or '').strip()
+        code = (c['country_code'] or '').strip()
+        name = get_country_name(raw_c) if len(raw_c) == 2 else (raw_c or get_country_name(code))
+        if not name:
+            name = 'Unknown'
+        country_totals[name] = country_totals.get(name, 0) + c['views']
+
+    top_countries = [
+        {'country': name, 'views': views}
+        for name, views in sorted(country_totals.items(), key=lambda x: x[1], reverse=True)[:5]
+    ]
 
     # Devices
     device_counts = dict(
@@ -78,6 +88,8 @@ def generate_weekly_report_data():
 
 
 def build_email_html(data):
+    from catalog.utils import get_country_name
+
     top_pages_rows = "".join(
         f"""<tr>
             <td style="padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 13px; color: #333;">
@@ -93,7 +105,7 @@ def build_email_html(data):
     top_countries_rows = "".join(
         f"""<tr>
             <td style="padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 13px; color: #333;">
-                {c['country']}
+                {get_country_name(c['country']) if len(str(c['country']).strip()) == 2 else c['country']}
             </td>
             <td style="padding: 10px 12px; border-bottom: 1px solid #eee; text-align: right; font-weight: 600; color: #333;">
                 {c['views']:,}
@@ -207,12 +219,14 @@ def send_weekly_report_email(recipient_override=None):
     # Determine recipient
     if recipient_override:
         recipient = recipient_override
+    elif getattr(settings, 'WEEKLY_REPORT_EMAIL', None):
+        recipient = settings.WEEKLY_REPORT_EMAIL
     elif site_settings and site_settings.admin_email:
         recipient = site_settings.admin_email.split(',')[0].strip()
     elif site_settings and site_settings.email:
         recipient = site_settings.email
     else:
-        recipient = getattr(settings, 'WEEKLY_REPORT_EMAIL', 'info@skilltechonline.com')
+        recipient = 'skilltechdm@gmail.com'
 
     subject = f"Skilltech Weekly Visitor Report ({data['start_date']} – {data['end_date']})"
     text_message = (
