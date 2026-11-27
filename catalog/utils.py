@@ -153,13 +153,16 @@ def parse_device_info(user_agent, device_type='desktop', is_bot=False):
         category = "tablet" if is_tablet else "mobile"
 
         # Model extraction e.g. "Linux; Android 14; SM-S918B Build/..."
-        model_match = re.search(r'android\s+[\d\.]+;\s*([^;\)]+?)(?:build|\)|;)', user_agent, re.IGNORECASE)
+        # Avoid capturing locale tags (en-us, en-in) or Chrome reduction dummy 'K'
+        m = re.search(r'android\s+[\d\.]+;\s*([^;\)]+?)(?:build|\)|;)', user_agent, re.IGNORECASE)
+        raw_model = m.group(1).strip() if m else ""
+        if raw_model.lower() in ('k', 'u', 'wv') or re.match(r'^[a-z]{2}(?:-[a-z]{2,4})?$', raw_model, re.IGNORECASE):
+            m2 = re.search(r'android\s+[\d\.]+;.*?;\s*([^;\)]+?)(?:build|\)|;)', user_agent, re.IGNORECASE)
+            raw_model = m2.group(1).strip() if m2 else ""
+
         model = ""
-        if model_match:
-            raw_model = model_match.group(1).strip()
-            # Clean unwanted tokens
-            if raw_model and not any(k in raw_model.lower() for k in ('kav', 'wv', 'mobile', 'tablet')):
-                model = raw_model
+        if raw_model and not any(k in raw_model.lower() for k in ('kav', 'wv', 'mobile', 'tablet')) and not re.match(r'^[a-z]{2}(?:-[a-z]{2,4})?$', raw_model, re.IGNORECASE):
+            model = raw_model
 
         # Android version
         ver_match = re.search(r'android\s+([\d\.]+)', ua)

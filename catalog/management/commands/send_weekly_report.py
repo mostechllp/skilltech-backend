@@ -36,12 +36,22 @@ def generate_weekly_report_data():
         .order_by('-views')[:10]
     )
 
-    # Top 5 Countries
-    top_countries = list(
-        curr_qs.values('country')
-        .annotate(views=Count('id'))
-        .order_by('-views')[:5]
-    )
+    # Top 5 Countries (merged and normalized to eliminate duplicate code vs full-name rows)
+    from catalog.utils import get_country_name
+    raw_countries = curr_qs.values('country', 'country_code').annotate(views=Count('id'))
+    country_totals = {}
+    for c in raw_countries:
+        raw_c = (c['country'] or '').strip()
+        code = (c['country_code'] or '').strip()
+        name = get_country_name(raw_c) if len(raw_c) == 2 else (raw_c or get_country_name(code))
+        if not name:
+            name = 'Unknown'
+        country_totals[name] = country_totals.get(name, 0) + c['views']
+
+    top_countries = [
+        {'country': name, 'views': views}
+        for name, views in sorted(country_totals.items(), key=lambda x: x[1], reverse=True)[:5]
+    ]
 
     # Devices
     device_counts = dict(
