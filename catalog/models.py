@@ -1691,6 +1691,7 @@ class CountrySetting(models.Model):
     address = models.TextField(blank=True, null=True, help_text="English Address")
     address_ar = models.TextField(blank=True, null=True, help_text="Arabic Address")
     address_ru = models.TextField(blank=True, null=True, help_text="Russian Address")
+    google_map_link = models.URLField(max_length=500, blank=True, null=True, help_text="Google Maps link for this country/office")
 
     active = models.BooleanField(default=True, db_index=True)
     order = models.PositiveIntegerField(default=0, db_index=True)

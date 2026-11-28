@@ -758,8 +758,9 @@ class CountrySettingAdmin(AdminIPLogMixin, admin.ModelAdmin):
                 "address_heading_ar",
                 "address",
                 "address_ar",
+                "google_map_link",
             ),
-            "description": "Physical branch/office address shown in the footer and contact sections.",
+            "description": "Physical branch/office address and Google Maps link shown in the footer and contact sections.",
         }),
     )
 
